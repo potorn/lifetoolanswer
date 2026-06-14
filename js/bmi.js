@@ -1,16 +1,4 @@
 document.addEventListener('DOMContentLoaded', function () {
-  // Radio option click handler
-  document.querySelectorAll('.radio-option').forEach(function (opt) {
-    opt.addEventListener('click', function () {
-      var name = this.querySelector('input').getAttribute('name');
-      document.querySelectorAll('.radio-option input[name="' + name + '"]').forEach(function (r) {
-        r.closest('.radio-option').classList.remove('selected');
-      });
-      this.querySelector('input').checked = true;
-      this.classList.add('selected');
-    });
-  });
-
   document.getElementById('calcBtn').addEventListener('click', calculate);
 
   document.querySelectorAll('input[type="number"]').forEach(function (inp) {
