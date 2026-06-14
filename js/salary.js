@@ -15,9 +15,9 @@ document.addEventListener('DOMContentLoaded', function () {
     var monthly = annual / 12;
 
     // 4대보험
-    var pension = monthly * 0.045;
-    var health = monthly * 0.03545;
-    var ltc = health * 0.1295;
+    var pension = monthly * 0.0475;
+    var health = monthly * 0.03595;
+    var ltc = health * 0.1314;
     var employ = monthly * 0.009;
     var insuranceSum = pension + health + ltc + employ;
 
@@ -40,9 +40,9 @@ document.addEventListener('DOMContentLoaded', function () {
     document.getElementById('annualNetStat').textContent = fmt(annualNet);
 
     var rows = [
-      { name: '국민연금', rate: '4.50%', amount: pension },
-      { name: '건강보험', rate: '3.545%', amount: health },
-      { name: '장기요양보험', rate: '건보료×12.95%', amount: ltc },
+      { name: '국민연금', rate: '4.75%', amount: pension },
+      { name: '건강보험', rate: '3.595%', amount: health },
+      { name: '장기요양보험', rate: '건보료×13.14%', amount: ltc },
       { name: '고용보험', rate: '0.90%', amount: employ },
       { name: '소득세', rate: '간이세액표', amount: incomeTax },
       { name: '지방소득세', rate: '소득세×10%', amount: localTax },
