@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>이미지 변환기 - PNG·JPG·WebP·TGA 변환 | 생활도구</title>
+  <meta name="description" content="이미지를 PNG, JPEG, WebP, TGA 포맷으로 변환합니다. 리사이즈, 변환 전·후 파일 크기 확인. 모든 처리는 브라우저에서만 이루어집니다.">
+  <meta name="keywords" content="이미지 변환기, PNG 변환, JPG 변환, WebP 변환, TGA 변환, 이미지 리사이즈, 파일 크기 변환">
+  <meta property="og:title" content="이미지 변환기 - PNG·JPG·WebP·TGA 변환">
+  <meta property="og:description" content="이미지를 다양한 포맷으로 변환하고 리사이즈하세요. 서버 전송 없이 브라우저에서 처리.">
+  <meta property="og:type" content="website">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🔧</text></svg>">
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/tool.css">
+
+  <!-- Google AdSense (승인 후 교체) -->
+  <!--
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXXXXXXXXXX" crossorigin="anonymous"></script>
+  -->
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "이미지 변환기",
+    "description": "PNG·JPG·WebP·TGA 포맷 변환 및 리사이즈 무료 온라인 도구",
+    "applicationCategory": "UtilitiesApplication",
+    "operatingSystem": "Web",
+    "offers": { "@type": "Offer", "price": "0" }
+  }
+  </script>
+</head>
+<body>
+
+<header>
+  <div class="container">
+    <div class="header-inner">
+      <a href="../index.html" class="logo">
+        <span class="logo-icon">🔧</span>
+        <span class="logo-name">생활<span>도구</span></span>
+      </a>
+      <span class="header-desc">무료 온라인 도구 모음</span>
+    </div>
+  </div>
+</header>
+
+<main class="tool-page">
+
+  <nav class="breadcrumb">
+    <a href="../index.html">홈</a>
+    <span class="breadcrumb-sep">›</span>
+    <span>이미지 변환기</span>
+  </nav>
+
+  <div class="tool-header">
+    <span class="tool-header-icon">🖼️</span>
+    <h1>이미지 변환기</h1>
+    <p>PNG·JPG·WebP·TGA 포맷 변환, 리사이즈. 모든 처리는 브라우저에서만 이루어집니다.</p>
+  </div>
+
+  <!-- 입력 카드 -->
+  <div class="card">
+
+    <!-- 업로드 영역 -->
+    <div class="img-drop-zone" id="dropZone">
+      <input type="file" id="fileInput" accept="image/jpeg,image/png,image/webp,image/gif,image/bmp" style="display:none;">
+      <div class="img-drop-icon">🖼️</div>
+      <div class="img-drop-text">이미지를 드래그하거나 클릭하여 선택</div>
+      <div class="img-drop-sub">JPG · PNG · WebP · GIF · BMP</div>
+    </div>
+
+    <!-- 15MB 초과 경고 -->
+    <div class="img-warn" id="sizeWarn" style="display:none;">
+      ⚠️ 파일이 큽니다. 변환에 시간이 걸리거나 브라우저가 느려질 수 있습니다.
+    </div>
+
+    <!-- 포맷 선택 -->
+    <div class="form-group" id="optionsGroup" style="display:none;">
+      <label class="form-label">출력 포맷</label>
+      <div class="img-format-btns">
+        <button class="img-fmt-btn active" data-fmt="png">PNG</button>
+        <button class="img-fmt-btn" data-fmt="jpeg">JPEG</button>
+        <button class="img-fmt-btn" data-fmt="webp">WebP</button>
+        <button class="img-fmt-btn" data-fmt="tga">TGA</button>
+      </div>
+    </div>
+
+    <!-- 품질 슬라이더 (JPEG/WebP일 때만 표시) -->
+    <div class="form-group" id="qualityGroup" style="display:none;">
+      <label class="form-label">
+        품질 <span class="img-quality-val" id="qualityVal">85%</span>
+      </label>
+      <input type="range" class="img-quality-slider" id="qualitySlider" min="1" max="100" value="85">
+    </div>
+
+    <!-- 리사이즈 -->
+    <div class="form-group" id="resizeGroup" style="display:none;">
+      <label class="form-label">
+        리사이즈 <span style="font-weight:400;color:#94a3b8;font-size:0.82rem;">(선택 — 비워두면 원본 크기)</span>
+      </label>
+      <div class="img-resize-row">
+        <div class="input-wrap" style="flex:1;">
+          <input type="number" id="resizeW" placeholder="너비" min="1" inputmode="numeric">
+          <span class="input-unit">px</span>
+        </div>
+        <span class="img-resize-x">×</span>
+        <div class="input-wrap" style="flex:1;">
+          <input type="number" id="resizeH" placeholder="높이" min="1" inputmode="numeric">
+          <span class="input-unit">px</span>
+        </div>
+        <label class="img-aspect-label">
+          <input type="checkbox" id="keepAspect" checked>
+          <span>비율 유지</span>
+        </label>
+      </div>
+    </div>
+
+    <button class="btn-calc" id="convertBtn" style="display:none;">변환 &amp; 다운로드</button>
+  </div>
+
+  <!-- 광고 (AdSense 승인 후 교체) -->
+  <div class="ad-slot">광고 영역 (Google AdSense)</div>
+
+  <!-- 결과 카드 -->
+  <div class="card result-card" id="resultCard">
+    <p class="card-title">변환 결과</p>
+
+    <div class="img-preview-row">
+      <div class="img-preview-box">
+        <div class="img-preview-label">원본</div>
+        <img class="img-thumb" id="previewBefore" alt="원본 이미지">
+        <div class="img-size-info" id="infoBefore"></div>
+      </div>
+      <div class="img-preview-arrow">→</div>
+      <div class="img-preview-box">
+        <div class="img-preview-label">변환 후</div>
+        <img class="img-thumb" id="previewAfter" alt="변환된 이미지">
+        <div class="img-size-info" id="infoAfter"></div>
+      </div>
+    </div>
+
+    <div class="img-compress-rate" id="compressRate"></div>
+
+    <button class="btn-calc" id="downloadBtn" style="margin-top:12px;">다시 다운로드</button>
+  </div>
+
+  <!-- 두 번째 광고 (AdSense 승인 후 교체) -->
+  <div class="ad-slot">광고 영역 (Google AdSense)</div>
+
+  <!-- 포맷 안내 -->
+  <div class="info-card">
+    <h2>포맷별 특징</h2>
+    <table class="ref-table">
+      <thead>
+        <tr>
+          <th>포맷</th>
+          <th>특징</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td style="font-weight:600;">PNG</td>
+          <td>무손실 압축. 투명도(알파) 지원. 아이콘·그래픽에 적합.</td>
+        </tr>
+        <tr>
+          <td style="font-weight:600;">JPEG</td>
+          <td>손실 압축. 파일 크기 작음. 사진에 최적. 투명도 불가.</td>
+        </tr>
+        <tr>
+          <td style="font-weight:600;">WebP</td>
+          <td>구글 개발. PNG·JPEG 대비 20~30% 작은 크기. 투명도 지원.</td>
+        </tr>
+        <tr>
+          <td style="font-weight:600;">TGA</td>
+          <td>게임·3D 소프트웨어용. 무손실. 투명도 지원. 비압축이라 파일이 큼.</td>
+        </tr>
+      </tbody>
+    </table>
+    <p style="font-size:0.78rem; color:#94a3b8; margin-top:12px;">
+      ※ 모든 변환은 브라우저 안에서만 처리되며 파일이 서버로 전송되지 않습니다.<br>
+      ※ TGA는 출력만 지원합니다 (TGA 파일을 입력으로 업로드하는 것은 불가).
+    </p>
+  </div>
+
+</main>
+
+<footer>
+  <div class="container">
+    <div class="footer-inner">
+      <div class="footer-logo">🔧 생활도구</div>
+      <div>자주 쓰는 온라인 도구를 무료로 제공합니다.</div>
+      <div class="footer-links">
+        <a href="../index.html">홈으로</a>
+        <a href="privacy.html">개인정보처리방침</a>
+        <a href="disclaimer.html">면책 조항</a>
+      </div>
+      <div style="margin-top:8px;">© 2025 생활도구. All rights reserved.</div>
+    </div>
+  </div>
+</footer>
+
+<script src="../js/image.js"></script>
+</body>
+</html>

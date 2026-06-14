@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>대출 이자 계산기 - 월 상환금 계산 | 생활도구</title>
+  <meta name="description" content="대출금액, 이자율, 기간을 입력하면 월 상환금과 총 이자를 즉시 계산합니다. 원리금균등·원금균등·만기일시상환 모두 지원.">
+  <meta name="keywords" content="대출 이자 계산기, 월 상환금 계산, 원리금균등상환, 원금균등상환, 주택담보대출 계산">
+  <meta property="og:title" content="대출 이자 계산기 - 월 상환금 계산">
+  <meta property="og:description" content="대출금액, 이자율, 기간으로 월 상환금과 총 이자를 계산하세요.">
+  <meta property="og:type" content="website">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🔧</text></svg>">
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/tool.css">
+
+  <!-- Google AdSense (승인 후 교체) -->
+  <!--
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXXXXXXXXXX" crossorigin="anonymous"></script>
+  -->
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "대출 이자 계산기",
+    "description": "대출금액, 이자율, 기간으로 월 상환금과 총 이자를 계산하는 무료 온라인 도구",
+    "applicationCategory": "FinanceApplication",
+    "operatingSystem": "Web",
+    "offers": { "@type": "Offer", "price": "0" }
+  }
+  </script>
+</head>
+<body>
+
+<header>
+  <div class="container">
+    <div class="header-inner">
+      <a href="../index.html" class="logo">
+        <span class="logo-icon">🔧</span>
+        <span class="logo-name">생활<span>도구</span></span>
+      </a>
+      <span class="header-desc">무료 온라인 도구 모음</span>
+    </div>
+  </div>
+</header>
+
+<main class="tool-page">
+
+  <nav class="breadcrumb">
+    <a href="../index.html">홈</a>
+    <span class="breadcrumb-sep">›</span>
+    <span>대출 이자 계산기</span>
+  </nav>
+
+  <div class="tool-header">
+    <span class="tool-header-icon">🏦</span>
+    <h1>대출 이자 계산기</h1>
+    <p>대출금액, 금리, 기간을 입력하면 월 상환금과 총 이자를 즉시 계산합니다.</p>
+  </div>
+
+  <!-- 입력 카드 -->
+  <div class="card">
+    <p class="card-title">대출 정보 입력</p>
+
+    <div class="form-group">
+      <label class="form-label" for="principal">대출금액</label>
+      <div class="input-wrap">
+        <input type="number" id="principal" placeholder="예: 30000" min="1" inputmode="decimal">
+        <span class="input-unit">만원</span>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label class="form-label" for="rate">연 이자율</label>
+      <div class="input-wrap">
+        <input type="number" id="rate" placeholder="예: 4.5" min="0.01" max="100" step="0.01" inputmode="decimal">
+        <span class="input-unit">%</span>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label class="form-label" for="period">대출 기간</label>
+      <div class="input-with-toggle">
+        <div class="input-wrap">
+          <input type="number" id="period" placeholder="예: 20" min="1" inputmode="decimal">
+          <span class="input-unit" id="periodUnit">년</span>
+        </div>
+        <div class="unit-toggle">
+          <button class="unit-btn active" data-unit="year">년</button>
+          <button class="unit-btn" data-unit="month">개월</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label class="form-label" for="grace">
+        거치기간 <span style="font-weight:400;color:#94a3b8;font-size:0.82rem;">(선택)</span>
+      </label>
+      <div class="input-wrap">
+        <input type="number" id="grace" placeholder="0" min="0" inputmode="decimal">
+        <span class="input-unit">개월</span>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label class="form-label" for="method">상환 방식</label>
+      <select class="styled-select" id="method">
+        <option value="equal-payment">원리금균등상환 (매월 동일 금액)</option>
+        <option value="equal-principal">원금균등상환 (매월 원금 동일)</option>
+        <option value="bullet">만기일시상환 (만기에 원금 일시 상환)</option>
+      </select>
+    </div>
+
+    <button class="btn-calc" id="calcBtn">이자 계산하기</button>
+  </div>
+
+  <!-- 광고 (AdSense 승인 후 교체) -->
+  <div class="ad-slot">광고 영역 (Google AdSense)</div>
+
+  <!-- 결과 카드 -->
+  <div class="card result-card" id="resultCard">
+
+    <div class="loan-result-main">
+      <div class="loan-monthly-label">월 납입금</div>
+      <div class="loan-monthly-value" id="monthlyValue">—</div>
+      <div class="loan-monthly-note" id="monthlyNote"></div>
+    </div>
+
+    <div class="loan-stats">
+      <div class="stat-box">
+        <div class="stat-label">총 이자</div>
+        <div class="stat-val" id="totalInterest">—</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-label">총 상환금액</div>
+        <div class="stat-val" id="totalPayment">—</div>
+      </div>
+    </div>
+
+    <div class="ratio-section">
+      <div class="ratio-label">
+        <span>원금 vs 이자 비율</span>
+      </div>
+      <div class="ratio-bar">
+        <div class="ratio-principal" id="ratioPrincipal" style="width: 50%;"></div>
+        <div class="ratio-interest"></div>
+      </div>
+      <div class="ratio-legend">
+        <span class="legend-principal"><span class="legend-dot"></span><span id="legendPrincipal">원금</span></span>
+        <span class="legend-interest"><span class="legend-dot"></span><span id="legendInterest">이자</span></span>
+      </div>
+    </div>
+
+    <div class="schedule-title">
+      <span>상환 일정</span>
+      <span style="font-weight:400; font-size:0.78rem; color:#94a3b8;">(단위: 원)</span>
+    </div>
+    <div class="schedule-wrap">
+      <table class="schedule-table">
+        <thead>
+          <tr>
+            <th>회차</th>
+            <th>납입금</th>
+            <th>원금</th>
+            <th>이자</th>
+            <th>잔액</th>
+          </tr>
+        </thead>
+        <tbody id="scheduleBody">
+        </tbody>
+      </table>
+    </div>
+
+  </div>
+
+  <!-- 두 번째 광고 (AdSense 승인 후 교체) -->
+  <div class="ad-slot">광고 영역 (Google AdSense)</div>
+
+  <!-- 상환 방식 안내 -->
+  <div class="info-card">
+    <h2>상환 방식 비교</h2>
+    <table class="ref-table">
+      <thead>
+        <tr>
+          <th>방식</th>
+          <th>특징</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td style="font-weight:600;">원리금균등상환</td>
+          <td>매월 동일한 금액을 납입. 가장 일반적. 초기엔 이자 비중이 높음.</td>
+        </tr>
+        <tr>
+          <td style="font-weight:600;">원금균등상환</td>
+          <td>매월 원금을 동일하게 납입. 초기 부담이 크지만 총 이자가 가장 적음.</td>
+        </tr>
+        <tr>
+          <td style="font-weight:600;">만기일시상환</td>
+          <td>매월 이자만 납입, 만기에 원금 전액 상환. 총 이자 가장 많음.</td>
+        </tr>
+      </tbody>
+    </table>
+    <p style="font-size:0.78rem; color:#94a3b8; margin-top:12px;">
+      ※ 계산 결과는 참고용이며, 실제 대출 조건(중도상환수수료, 연체이자 등)과 다를 수 있습니다. 정확한 상담은 금융기관에 문의하세요.
+    </p>
+  </div>
+
+</main>
+
+<footer>
+  <div class="container">
+    <div class="footer-inner">
+      <div class="footer-logo">🔧 생활도구</div>
+      <div>계산 결과는 참고용이며 실제 대출 조건과 다를 수 있습니다.</div>
+      <div class="footer-links">
+        <a href="../index.html">홈으로</a>
+        <a href="privacy.html">개인정보처리방침</a>
+        <a href="disclaimer.html">면책 조항</a>
+      </div>
+      <div style="margin-top:8px;">© 2025 생활도구. All rights reserved.</div>
+    </div>
+  </div>
+</footer>
+
+<script src="../js/loan.js"></script>
+</body>
+</html>

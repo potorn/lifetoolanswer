@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>단위 변환기 - 길이·무게·온도·넓이·부피 변환 | 생활도구</title>
+  <meta name="description" content="길이, 무게, 온도, 넓이, 부피 단위를 즉시 변환합니다. mm↔cm↔m↔km, kg↔lb↔oz, 섭씨↔화씨↔켈빈, 평↔m² 변환 지원.">
+  <meta name="keywords" content="단위 변환기, 길이 변환, 무게 변환, 온도 변환, 섭씨 화씨, 평 m² 변환, 부피 변환">
+  <meta property="og:title" content="단위 변환기 - 길이·무게·온도·넓이·부피 변환">
+  <meta property="og:description" content="길이, 무게, 온도, 넓이, 부피 단위를 한 번에 변환하세요.">
+  <meta property="og:type" content="website">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🔧</text></svg>">
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/tool.css">
+
+  <!-- Google AdSense (승인 후 교체) -->
+  <!--
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXXXXXXXXXX" crossorigin="anonymous"></script>
+  -->
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "단위 변환기",
+    "description": "길이·무게·온도·넓이·부피 단위를 변환하는 무료 온라인 도구",
+    "applicationCategory": "UtilitiesApplication",
+    "operatingSystem": "Web",
+    "offers": { "@type": "Offer", "price": "0" }
+  }
+  </script>
+</head>
+<body>
+
+<header>
+  <div class="container">
+    <div class="header-inner">
+      <a href="../index.html" class="logo">
+        <span class="logo-icon">🔧</span>
+        <span class="logo-name">생활<span>도구</span></span>
+      </a>
+      <span class="header-desc">무료 온라인 도구 모음</span>
+    </div>
+  </div>
+</header>
+
+<main class="tool-page">
+
+  <nav class="breadcrumb">
+    <a href="../index.html">홈</a>
+    <span class="breadcrumb-sep">›</span>
+    <span>단위 변환기</span>
+  </nav>
+
+  <div class="tool-header">
+    <span class="tool-header-icon">📐</span>
+    <h1>단위 변환기</h1>
+    <p>길이, 무게, 온도, 넓이, 부피 단위를 한 번에 변환합니다.</p>
+  </div>
+
+  <!-- 입력 카드 -->
+  <div class="card">
+
+    <!-- 카테고리 선택 -->
+    <div class="conv-category-toggle">
+      <button class="conv-cat-btn active" data-cat="length">📏 길이</button>
+      <button class="conv-cat-btn" data-cat="weight">⚖️ 무게</button>
+      <button class="conv-cat-btn" data-cat="temperature">🌡️ 온도</button>
+      <button class="conv-cat-btn" data-cat="area">📐 넓이</button>
+      <button class="conv-cat-btn" data-cat="volume">💧 부피</button>
+    </div>
+
+    <div class="form-group">
+      <label class="form-label" for="valueInput">변환할 값</label>
+      <div class="input-wrap">
+        <input type="number" id="valueInput" placeholder="숫자를 입력하세요" inputmode="decimal">
+        <span class="input-unit" id="inputUnitLabel">mm</span>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label class="form-label" for="fromUnit">단위 선택</label>
+      <select class="styled-select" id="fromUnit"></select>
+    </div>
+
+    <button class="btn-calc" id="calcBtn">변환하기</button>
+  </div>
+
+  <!-- 광고 (AdSense 승인 후 교체) -->
+  <div class="ad-slot">광고 영역 (Google AdSense)</div>
+
+  <!-- 결과 카드 -->
+  <div class="card result-card" id="resultCard">
+    <p class="card-title">변환 결과</p>
+    <div class="conv-result-grid" id="resultGrid"></div>
+  </div>
+
+  <!-- 두 번째 광고 (AdSense 승인 후 교체) -->
+  <div class="ad-slot">광고 영역 (Google AdSense)</div>
+
+  <!-- 단위 안내 -->
+  <div class="info-card">
+    <h2>자주 쓰는 변환 기준</h2>
+    <table class="ref-table">
+      <thead>
+        <tr>
+          <th>카테고리</th>
+          <th>변환 기준</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td style="font-weight:600;">온도</td>
+          <td>°F = °C × 9/5 + 32 · K = °C + 273.15</td>
+        </tr>
+        <tr>
+          <td style="font-weight:600;">넓이 · 평</td>
+          <td>1평 = 3.30579 m² (한국 공식 단위)</td>
+        </tr>
+        <tr>
+          <td style="font-weight:600;">길이 · 인치</td>
+          <td>1 in = 2.54 cm · 1 ft = 30.48 cm · 1 mi = 1.609 km</td>
+        </tr>
+        <tr>
+          <td style="font-weight:600;">무게 · 파운드</td>
+          <td>1 lb = 453.592 g · 1 oz = 28.3495 g</td>
+        </tr>
+        <tr>
+          <td style="font-weight:600;">부피 · 갤런</td>
+          <td>1 gallon = 3.785 L (미국 기준)</td>
+        </tr>
+      </tbody>
+    </table>
+    <p style="font-size:0.78rem; color:#94a3b8; margin-top:12px;">
+      ※ 변환 결과는 참고용이며, 분야별 세부 기준이 다를 수 있습니다.
+    </p>
+  </div>
+
+</main>
+
+<footer>
+  <div class="container">
+    <div class="footer-inner">
+      <div class="footer-logo">🔧 생활도구</div>
+      <div>자주 쓰는 온라인 도구를 무료로 제공합니다.</div>
+      <div class="footer-links">
+        <a href="../index.html">홈으로</a>
+        <a href="privacy.html">개인정보처리방침</a>
+        <a href="disclaimer.html">면책 조항</a>
+      </div>
+      <div style="margin-top:8px;">© 2025 생활도구. All rights reserved.</div>
+    </div>
+  </div>
+</footer>
+
+<script src="../js/unit.js"></script>
+</body>
+</html>

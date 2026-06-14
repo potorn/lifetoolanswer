@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BMI 계산기 - 체질량지수 계산 | 생활도구</title>
+  <meta name="description" content="키와 몸무게를 입력하면 BMI(체질량지수)를 즉시 계산합니다. 대한비만학회 기준으로 저체중/정상/과체중/비만을 판정합니다.">
+  <meta name="keywords" content="BMI 계산기, 체질량지수, 비만도 계산, 정상 체중, 비만 판정">
+  <meta property="og:title" content="BMI 계산기 - 체질량지수 계산">
+  <meta property="og:description" content="키와 몸무게로 BMI를 계산하고 비만도를 확인하세요.">
+  <meta property="og:type" content="website">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🔧</text></svg>">
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/tool.css">
+
+  <!-- Google AdSense (승인 후 교체) -->
+  <!--
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXXXXXXXXXX" crossorigin="anonymous"></script>
+  -->
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "BMI 계산기",
+    "description": "키와 몸무게로 체질량지수(BMI)를 계산하는 무료 온라인 도구",
+    "applicationCategory": "HealthApplication",
+    "operatingSystem": "Web",
+    "offers": { "@type": "Offer", "price": "0" }
+  }
+  </script>
+</head>
+<body>
+
+<header>
+  <div class="container">
+    <div class="header-inner">
+      <a href="../index.html" class="logo">
+        <span class="logo-icon">🔧</span>
+        <span class="logo-name">생활<span>도구</span></span>
+      </a>
+      <span class="header-desc">무료 온라인 도구 모음</span>
+    </div>
+  </div>
+</header>
+
+<main class="tool-page">
+
+  <nav class="breadcrumb">
+    <a href="../index.html">홈</a>
+    <span class="breadcrumb-sep">›</span>
+    <span>BMI 계산기</span>
+  </nav>
+
+  <div class="tool-header">
+    <span class="tool-header-icon">⚖️</span>
+    <h1>BMI 계산기</h1>
+    <p>키와 몸무게를 입력하면 체질량지수(BMI)와 비만도를 즉시 계산합니다.</p>
+  </div>
+
+  <!-- 입력 카드 -->
+  <div class="card">
+    <p class="card-title">신체 정보 입력</p>
+
+    <div class="form-row">
+      <div class="form-group">
+        <label class="form-label" for="height">키</label>
+        <div class="input-wrap">
+          <input type="number" id="height" placeholder="예: 170" min="50" max="280" inputmode="decimal">
+          <span class="input-unit">cm</span>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="form-label" for="weight">몸무게</label>
+        <div class="input-wrap">
+          <input type="number" id="weight" placeholder="예: 65" min="10" max="600" inputmode="decimal">
+          <span class="input-unit">kg</span>
+        </div>
+      </div>
+    </div>
+
+    <button class="btn-calc" id="calcBtn">BMI 계산하기</button>
+  </div>
+
+  <!-- 광고 (AdSense 승인 후 교체) -->
+  <div class="ad-slot">광고 영역 (Google AdSense)</div>
+
+  <!-- 결과 카드 -->
+  <div class="card result-card" id="resultCard">
+    <div class="bmi-main">
+      <div class="bmi-value color-normal" id="bmiValue">—</div>
+      <div><span class="result-badge badge-normal" id="bmiCategory">—</span></div>
+    </div>
+
+    <div class="bmi-gauge">
+      <div class="gauge-bar">
+        <div class="gauge-marker" id="gaugeMarker" style="left: 2%;"></div>
+      </div>
+      <div class="gauge-labels">
+        <span>저체중<br>(~18.5)</span>
+        <span style="text-align:center;">정상<br>(18.5~23)</span>
+        <span style="text-align:center;">과체중<br>(23~25)</span>
+        <span style="text-align:center;">비만1<br>(25~30)</span>
+        <span style="text-align:right;">비만2<br>(30~)</span>
+      </div>
+    </div>
+
+    <div class="bmi-stats">
+      <div class="stat-box">
+        <div class="stat-label">정상 체중 범위</div>
+        <div class="stat-val" id="normalWeight">—</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-label">현재 체중 차이</div>
+        <div class="stat-val" id="diffWeight">—</div>
+      </div>
+    </div>
+
+    <div class="advice-box" id="adviceText"></div>
+  </div>
+
+  <!-- 두 번째 광고 (AdSense 승인 후 교체) -->
+  <div class="ad-slot">광고 영역 (Google AdSense)</div>
+
+  <!-- BMI 기준표 -->
+  <div class="info-card">
+    <h2>BMI 판정 기준 (대한비만학회)</h2>
+    <table class="ref-table">
+      <thead>
+        <tr>
+          <th>판정</th>
+          <th>BMI 범위</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><span class="range-dot" style="background:#3b82f6;"></span>저체중</td>
+          <td>18.5 미만</td>
+        </tr>
+        <tr>
+          <td><span class="range-dot" style="background:#22c55e;"></span>정상</td>
+          <td>18.5 이상 ~ 23 미만</td>
+        </tr>
+        <tr>
+          <td><span class="range-dot" style="background:#f59e0b;"></span>과체중</td>
+          <td>23 이상 ~ 25 미만</td>
+        </tr>
+        <tr>
+          <td><span class="range-dot" style="background:#f97316;"></span>비만 1단계</td>
+          <td>25 이상 ~ 30 미만</td>
+        </tr>
+        <tr>
+          <td><span class="range-dot" style="background:#ef4444;"></span>비만 2단계</td>
+          <td>30 이상</td>
+        </tr>
+      </tbody>
+    </table>
+    <p style="font-size:0.78rem; color:#94a3b8; margin-top:12px;">
+      ※ BMI는 키와 몸무게만으로 산출되며, 근육량·골밀도 등 개인 특성을 반영하지 않습니다. 정확한 건강 상태는 전문의 상담을 통해 확인하세요.
+    </p>
+  </div>
+
+</main>
+
+<footer>
+  <div class="container">
+    <div class="footer-inner">
+      <div class="footer-logo">🔧 생활도구</div>
+      <div>계산 결과는 참고용이며 의료적 진단을 대체하지 않습니다.</div>
+      <div class="footer-links">
+        <a href="../index.html">홈으로</a>
+        <a href="privacy.html">개인정보처리방침</a>
+        <a href="disclaimer.html">면책 조항</a>
+      </div>
+      <div style="margin-top:8px;">© 2025 생활도구. All rights reserved.</div>
+    </div>
+  </div>
+</footer>
+
+<script src="../js/bmi.js"></script>
+</body>
+</html>
