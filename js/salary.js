@@ -34,6 +34,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     document.getElementById('monthlyNet').textContent = fmt(monthlyNet);
     document.getElementById('annualNet').textContent = '세후 연봉 ' + fmt(annualNet);
+    document.getElementById('annualNet').style.display = 'block';
     document.getElementById('insuranceTotal').textContent = fmt(insuranceSum);
     document.getElementById('taxTotal').textContent = fmt(taxSum);
     document.getElementById('deductTotal').textContent = fmt(totalDeduct);
