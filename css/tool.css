@@ -362,13 +362,12 @@
 }
 
 .info-card h2 {
-  font-size: 0.95rem;
+  font-size: 0.78rem;
   font-weight: 700;
   margin-bottom: 14px;
   color: var(--text-muted);
   text-transform: uppercase;
   letter-spacing: 0.04em;
-  font-size: 0.78rem;
 }
 
 .ref-table {

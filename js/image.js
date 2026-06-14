@@ -216,6 +216,7 @@ document.addEventListener('DOMContentLoaded', function () {
     document.body.appendChild(a);
     a.click();
     document.body.removeChild(a);
+    setTimeout(function () { URL.revokeObjectURL(a.href); }, 100);
   }
 
   function getFilename() {

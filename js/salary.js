@@ -9,7 +9,6 @@ document.addEventListener('DOMContentLoaded', function () {
     var dependents = parseInt(document.getElementById('dependents').value) || 1;
 
     if (!salaryMan || salaryMan <= 0) { alert('연봉을 입력해주세요.'); return; }
-    if (dependents < 1) { alert('부양가족 수는 1명 이상이어야 합니다.'); return; }
 
     var annual = salaryMan * 10000;
     var monthly = annual / 12;
