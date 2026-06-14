@@ -36,6 +36,16 @@
     <priority>0.6</priority>
   </url>
   <url>
+    <loc>https://lifetoolanswer.com/tools/salary.html</loc>
+    <changefreq>yearly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://lifetoolanswer.com/tools/percent.html</loc>
+    <changefreq>yearly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://lifetoolanswer.com/tools/about.html</loc>
     <changefreq>yearly</changefreq>
     <priority>0.5</priority>

@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>퍼센트 계산기 - 할인가·증감률·역계산 | 생활도구</title>
+  <meta name="description" content="할인가 계산, 증감률 계산, 역계산(원래 가격 찾기)을 간편하게 계산하세요. 쇼핑 할인율, 성장률 분석에 활용하세요.">
+  <meta property="og:title" content="퍼센트 계산기 | 생활도구">
+  <meta property="og:description" content="할인가 계산, 증감률, 역계산을 간편하게 계산하세요.">
+  <meta property="og:type" content="website">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🔧</text></svg>">
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/tool.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "퍼센트 계산기",
+    "applicationCategory": "UtilitiesApplication",
+    "operatingSystem": "Web"
+  }
+  </script>
+</head>
+<body>
+
+<header>
+  <div class="container">
+    <div class="header-inner">
+      <a href="../index.html" class="logo">
+        <span class="logo-icon">🔧</span>
+        <span class="logo-name">생활<span>도구</span></span>
+      </a>
+      <span class="header-desc">무료 온라인 도구 모음</span>
+      <nav class="header-nav">
+        <a href="about.html" class="nav-link">사이트 소개</a>
+        <a href="guide.html" class="nav-link">사용방법</a>
+      </nav>
+    </div>
+  </div>
+</header>
+
+<main class="tool-page">
+
+  <nav class="breadcrumb">
+    <a href="../index.html">홈</a>
+    <span class="breadcrumb-sep">›</span>
+    <span>퍼센트 계산기</span>
+  </nav>
+
+  <div class="tool-header">
+    <span class="tool-header-icon">📊</span>
+    <h1>퍼센트 계산기</h1>
+    <p>할인가 계산, 증감률, 역계산을 간편하게 계산하세요.</p>
+  </div>
+
+  <div class="ad-slot">광고 영역 (Google AdSense)</div>
+
+  <div class="card">
+    <p class="card-title">계산 방식 선택</p>
+
+    <div style="display:flex; gap:10px; flex-wrap:wrap; margin-bottom:24px;">
+      <button class="radio-option selected" data-mode="discount" id="modeDiscount">할인가 계산</button>
+      <button class="radio-option" data-mode="change" id="modeChange">증감률 계산</button>
+      <button class="radio-option" data-mode="reverse" id="modeReverse">역계산</button>
+    </div>
+
+    <!-- 모드 1: 할인가 계산 -->
+    <div id="formDiscount">
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label" for="origPrice">원래 가격</label>
+          <div class="input-wrap">
+            <input type="number" id="origPrice" placeholder="예: 50000" min="0" inputmode="decimal">
+            <span class="input-unit">원</span>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="discountRate">할인율</label>
+          <div class="input-wrap">
+            <input type="number" id="discountRate" placeholder="예: 30" min="0" max="100" inputmode="decimal">
+            <span class="input-unit">%</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 모드 2: 증감률 계산 -->
+    <div id="formChange" style="display:none;">
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label" for="beforeVal">변경 전 값</label>
+          <div class="input-wrap">
+            <input type="number" id="beforeVal" placeholder="예: 100" inputmode="decimal">
+            <span class="input-unit" style="font-size:0.75rem;">이전</span>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="afterVal">변경 후 값</label>
+          <div class="input-wrap">
+            <input type="number" id="afterVal" placeholder="예: 130" inputmode="decimal">
+            <span class="input-unit" style="font-size:0.75rem;">이후</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 모드 3: 역계산 -->
+    <div id="formReverse" style="display:none;">
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label" for="salePrice">할인된 가격</label>
+          <div class="input-wrap">
+            <input type="number" id="salePrice" placeholder="예: 35000" min="0" inputmode="decimal">
+            <span class="input-unit">원</span>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="reverseRate">할인율</label>
+          <div class="input-wrap">
+            <input type="number" id="reverseRate" placeholder="예: 30" min="0" max="99" inputmode="decimal">
+            <span class="input-unit">%</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <button class="btn-calc" id="calcBtn">계산하기</button>
+  </div>
+
+  <div class="card result-card" id="resultCard">
+    <div class="bmi-stats" id="resultBoxes"></div>
+  </div>
+
+</main>
+
+<footer>
+  <div class="container">
+    <div class="footer-inner">
+      <div class="footer-logo">🔧 생활도구</div>
+      <div>자주 쓰는 온라인 도구를 무료로 제공합니다.</div>
+      <div>계산 결과는 참고용이며 전문가 상담을 대체하지 않습니다.</div>
+      <div class="footer-links">
+        <a href="privacy.html">개인정보처리방침</a>
+        <a href="disclaimer.html">면책 조항</a>
+      </div>
+      <div style="margin-top:8px;">© 2025 생활도구. All rights reserved.</div>
+    </div>
+  </div>
+</footer>
+
+<script src="../js/percent.js"></script>
+</body>
+</html>
