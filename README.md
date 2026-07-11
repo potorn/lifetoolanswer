@@ -23,7 +23,8 @@ Built with plain HTML + CSS + JS. No framework, no build step, no dependencies.
 | 도구 | 설명 | Tool | Description |
 |------|------|------|-------------|
 | [BMI 계산기](tools/bmi.html) | 체질량지수 계산 (대한비만학회 기준) | BMI Calculator | Uses Korean Society for the Study of Obesity cutoffs |
-| [이미지 변환기](tools/image.html) | PNG · JPG · WebP · TGA 형식 변환 | Image Converter | Convert between PNG, JPG, WebP, and TGA |
+| [이미지 변환기](tools/image.html) | PNG · JPG · WebP · GIF · BMP · ICO · AVIF · TGA 변환 | Image Converter | Convert between supported image formats in the browser |
+| [GIF 만들기](tools/gif-maker.html) | 사진 여러 장·짧은 동영상으로 GIF 만들기 | GIF Maker | Create GIFs from photos or short videos in the browser |
 | [대출 계산기](tools/loan.html) | 원리금균등 / 원금균등 / 만기일시 상환 | Loan Calculator | Equal payment / Equal principal / Bullet repayment |
 | [단위 변환기](tools/unit.html) | 길이 · 무게 · 온도 · 넓이 · 부피 | Unit Converter | Length, weight, temperature, area, volume |
 
@@ -40,6 +41,8 @@ Then open `http://localhost:8080` in your browser.
 
 테스트 도구·빌드 스텝 없음 — 파일을 직접 수정하고 브라우저를 새로고침하면 됩니다.  
 No tests, no build — edit a file and refresh the browser.
+
+업로드한 이미지·동영상과 도구 입력값은 브라우저에서 처리되며 생활도구 서버로 전송하거나 저장하지 않습니다. Google Fonts 등 일반 페이지 리소스는 별도로 요청될 수 있습니다.
 
 ---
 

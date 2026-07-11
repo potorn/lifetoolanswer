@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GIF 만들기 - 사진·짧은 동영상으로 움짤 만들기 | 생활도구</title>
+  <meta name="description" content="여러 장의 사진 또는 최대 15초의 짧은 동영상으로 움직이는 GIF를 만드세요. 업로드 파일은 서버 전송 없이 브라우저에서 변환됩니다.">
+  <meta name="keywords" content="GIF 만들기, 움짤 만들기, 사진 GIF 만들기, 동영상 GIF 변환, 짧은 동영상 움짤">
+  <meta name="robots" content="index,follow">
+  <link rel="canonical" href="https://lifetoolanswer.com/tools/gif-maker.html">
+  <meta property="og:title" content="GIF 만들기 - 사진·짧은 동영상으로 움짤 만들기">
+  <meta property="og:description" content="사진 여러 장과 짧은 동영상을 브라우저에서 바로 GIF로 만드세요.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://lifetoolanswer.com/tools/gif-maker.html">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🔧</text></svg>">
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/tool.css">
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@graph":[
+    {"@type":"WebApplication","name":"GIF 만들기","url":"https://lifetoolanswer.com/tools/gif-maker.html","description":"사진 여러 장 또는 짧은 동영상을 브라우저에서 GIF로 만들며 업로드 파일을 서버로 전송하지 않는 무료 도구","applicationCategory":"UtilitiesApplication","operatingSystem":"Web","offers":{"@type":"Offer","price":"0","priceCurrency":"KRW"}},
+    {"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"홈","item":"https://lifetoolanswer.com/"},{"@type":"ListItem","position":2,"name":"GIF 만들기","item":"https://lifetoolanswer.com/tools/gif-maker.html"}]},
+    {"@type":"FAQPage","mainEntity":[
+      {"@type":"Question","name":"동영상 파일이 서버로 업로드되나요?","acceptedAnswer":{"@type":"Answer","text":"아니요. 업로드한 동영상과 사진은 브라우저에서 처리되며 생활도구 서버로 전송하거나 저장하지 않습니다."}},
+      {"@type":"Question","name":"동영상 GIF는 얼마나 길게 만들 수 있나요?","acceptedAnswer":{"@type":"Answer","text":"최대 100MB, 원본 길이 5분 이하의 동영상에서 최대 15초 구간을 GIF로 만들 수 있습니다."}}
+    ]}
+  ]}
+  </script>
+</head>
+<body>
+<header><div class="container"><div class="header-inner">
+  <a href="../index.html" class="logo"><span class="logo-icon">🔧</span><span class="logo-name">생활<span>도구</span></span></a>
+  <span class="header-desc">무료 온라인 도구 모음</span>
+  <nav class="header-nav"><a href="about.html" class="nav-link">사이트 소개</a><a href="guide.html" class="nav-link">사용방법</a></nav>
+</div></div></header>
+<main class="tool-page">
+  <nav class="breadcrumb"><a href="../index.html">홈</a><span class="breadcrumb-sep">›</span><span>GIF 만들기</span></nav>
+  <div class="tool-header"><span class="tool-header-icon">🎞️</span><h1>GIF 만들기</h1><p>사진 여러 장 또는 짧은 동영상으로 움직이는 GIF를 만드세요. 업로드 파일은 브라우저에서 변환되며 서버로 전송되지 않습니다.</p></div>
+
+  <div class="card gif-maker-card">
+    <div class="gif-mode-tabs" role="tablist" aria-label="GIF 재료 선택">
+      <button type="button" class="gif-mode-tab active" data-mode="images" role="tab" aria-selected="true">🖼️ 사진 여러 장</button>
+      <button type="button" class="gif-mode-tab" data-mode="video" role="tab" aria-selected="false">🎬 짧은 동영상</button>
+    </div>
+    <p class="img-status" id="gifStatus" aria-live="polite" style="display:none;"></p>
+
+    <section id="imagesMode">
+      <div class="img-drop-zone gif-drop-zone" id="framesDropZone">
+        <input type="file" id="framesInput" accept="image/jpeg,image/png,image/webp,image/gif,image/bmp,image/x-icon,image/vnd.microsoft.icon,image/avif,.tga" multiple style="display:none;">
+        <div class="img-drop-icon">🖼️</div><div class="img-drop-text">GIF에 넣을 사진을 여러 장 선택</div><div class="img-drop-sub">JPG · PNG · WebP · GIF · BMP · ICO · AVIF · TGA · 최대 30장 / 25MB</div>
+      </div>
+      <div class="gif-frame-list" id="frameList" aria-live="polite"></div>
+      <div class="form-group gif-options">
+        <label class="form-label" for="imageDelay">사진당 재생 시간</label>
+        <select id="imageDelay"><option value="250">빠르게 (0.25초)</option><option value="500" selected>보통 (0.5초)</option><option value="1000">느리게 (1초)</option></select>
+      </div>
+      <div class="form-group gif-options">
+        <label class="form-label" for="imageWidth">출력 가로 크기</label>
+        <select id="imageWidth"><option value="480">480px</option><option value="800" selected>800px</option><option value="1200">1200px</option></select>
+      </div>
+      <label class="img-aspect-label"><input type="checkbox" id="imageLoop" checked><span>반복 재생</span></label>
+      <button class="btn-calc gif-create-btn" id="createImagesGif" disabled>GIF 만들기</button>
+    </section>
+
+    <section id="videoMode" style="display:none;">
+      <div class="img-drop-zone gif-drop-zone" id="videoDropZone">
+        <input type="file" id="videoInput" accept="video/mp4,video/webm,video/quicktime" style="display:none;">
+        <div class="img-drop-icon">🎬</div><div class="img-drop-text">GIF로 만들 짧은 동영상 선택</div><div class="img-drop-sub">MP4 · WebM · MOV · 최대 100MB / 원본 5분 / GIF 구간 15초</div>
+      </div>
+      <div class="gif-video-info" id="videoInfo" style="display:none;"></div>
+      <div class="form-group gif-options"><label class="form-label" for="videoStart">시작 지점</label><div class="input-wrap"><input type="number" id="videoStart" min="0" value="0" step="0.1" inputmode="decimal"><span class="input-unit">초</span></div></div>
+      <div class="form-group gif-options"><label class="form-label" for="videoDuration">GIF 길이 <span class="form-label-sub">(최대 15초)</span></label><div class="input-wrap"><input type="number" id="videoDuration" min="0.1" max="15" value="15" step="0.1" inputmode="decimal"><span class="input-unit">초</span></div></div>
+      <div class="form-group gif-options"><label class="form-label" for="videoWidth">출력 가로 크기</label><select id="videoWidth"><option value="480">480px (작은 파일)</option><option value="720" selected>720px (권장)</option></select></div>
+      <button class="btn-calc gif-create-btn" id="createVideoGif" disabled>동영상 GIF 만들기</button>
+      <button class="btn-secondary gif-cancel-btn" id="cancelVideoGif" type="button" style="display:none;">변환 취소</button>
+    </section>
+  </div>
+
+  <div class="ad-slot">광고 영역 (Google AdSense)</div>
+  <div class="card result-card" id="gifResultCard">
+    <p class="card-title">GIF 결과</p>
+    <img class="gif-result-preview" id="gifPreview" alt="생성된 GIF 미리보기">
+    <div class="img-size-info" id="gifResultInfo"></div>
+    <button class="btn-calc" id="gifDownloadBtn" style="margin-top:12px;">GIF 다운로드</button>
+  </div>
+
+  <div class="info-card"><h2>사진과 동영상으로 GIF 만드는 방법</h2><ol class="tool-steps"><li><strong>사진 여러 장</strong> 또는 <strong>짧은 동영상</strong>을 선택합니다.</li><li>사진은 순서를 드래그해 바꾸고, 동영상은 시작 지점과 길이를 정합니다.</li><li>GIF 만들기를 누르면 브라우저에서 파일이 변환되고 바로 다운로드할 수 있습니다.</li></ol><p class="tool-inline-link">단일 이미지를 다른 형식으로 바꾸려면 <a href="image.html">이미지 변환기</a>를 이용하세요.</p></div>
+  <div class="info-card"><h2>자주 묻는 질문</h2><h3>사진 파일과 동영상은 서버로 전송되나요?</h3><p>아니요. 업로드 파일은 브라우저에서 처리되며 생활도구 서버로 전송하거나 저장하지 않습니다. 변환 중 페이지를 닫으면 작업도 함께 종료됩니다.</p><h3>동영상 GIF가 너무 큰 경우 어떻게 하나요?</h3><p>GIF 길이를 줄이거나 480px 출력을 선택해 보세요. 결과가 15MB를 넘으면 더 작은 설정으로 다시 만들어야 합니다.</p></div>
+</main>
+<footer><div class="container"><div class="footer-inner"><div class="footer-logo">🔧 생활도구</div><div>자주 쓰는 온라인 도구를 무료로 제공합니다.</div><div class="footer-links"><a href="../index.html">홈으로</a><a href="privacy.html">개인정보처리방침</a><a href="disclaimer.html">면책 조항</a></div><div style="margin-top:8px;">© 2026 생활도구. All rights reserved.</div></div></div></footer>
+<script type="module" src="../js/gif-maker.js"></script>
+</body>
+</html>
