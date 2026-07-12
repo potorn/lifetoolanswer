@@ -1,7 +1,10 @@
 export var MAX_IMAGE_INPUT_BYTES = 25 * 1024 * 1024;
 export var MAX_IMAGE_DIMENSION = 4096;
 export var MAX_IMAGE_PIXELS = 16 * 1024 * 1024;
-export var MAX_ANIMATION_FRAMES = 60;
+// A typical 3–10 second animated WebP can easily exceed 60 frames. The
+// pixel, dimension, byte, memory, and time limits remain the hard resource
+// guards when this count is increased.
+export var MAX_ANIMATION_FRAMES = 300;
 export var MAX_ANIMATION_PIXELS = 32 * 1024 * 1024;
 export var SUPPORTED_IMAGE_FORMATS = ['png', 'jpeg', 'webp', 'gif', 'bmp', 'ico', 'avif', 'tga'];
 

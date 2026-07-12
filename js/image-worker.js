@@ -31,7 +31,7 @@ function createConfigurationFiles() {
     '<policy domain="resource" name="width" value="4096"/>',
     '<policy domain="resource" name="height" value="4096"/>',
     '<policy domain="resource" name="area" value="16MP"/>',
-    '<policy domain="resource" name="list-length" value="60"/>',
+    '<policy domain="resource" name="list-length" value="' + MAX_ANIMATION_FRAMES + '"/>',
     '<policy domain="resource" name="time" value="30"/>',
     '<policy domain="resource" name="thread" value="1"/>'
   ].join('');
@@ -50,7 +50,10 @@ function readMetadata(bytes, fileName, allowedFormats) {
   var collection = MagickImageCollection.create();
   try {
     collection.ping(bytes);
-    if (!collection.length || collection.length > MAX_ANIMATION_FRAMES) throw new Error('이미지 프레임 수가 제한을 초과했습니다.');
+    if (!collection.length) throw new Error('이미지 프레임을 확인할 수 없습니다.');
+    if (collection.length > MAX_ANIMATION_FRAMES) {
+      throw new Error('이미지 프레임 수가 제한을 초과했습니다. (감지: ' + collection.length + '개, 최대: ' + MAX_ANIMATION_FRAMES + '개)');
+    }
     var totalPixels = 0;
     collection.forEach(function (image) {
       if (!image.width || !image.height) throw new Error('이미지 크기를 확인할 수 없습니다.');
