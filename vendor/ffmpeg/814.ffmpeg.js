@@ -23,15 +23,32 @@
     return target.href;
   }
 
+  async function inflateWasm(wasmURL) {
+    if (!wasmURL.endsWith('.gz')) return { url: wasmURL, temporary: false };
+    if (typeof DecompressionStream !== 'function') {
+      throw new Error('이 브라우저는 압축된 FFmpeg 엔진을 지원하지 않습니다. 최신 Chrome, Firefox 또는 Safari를 사용해 주세요.');
+    }
+    var response = await fetch(wasmURL, { credentials: 'same-origin' });
+    if (!response.ok || !response.body) throw new Error('압축된 FFmpeg 엔진을 불러오지 못했습니다.');
+    var stream = response.body.pipeThrough(new DecompressionStream('gzip'));
+    var bytes = await new Response(stream).arrayBuffer();
+    return { url: URL.createObjectURL(new Blob([bytes], { type: 'application/wasm' })), temporary: true };
+  }
+
   async function loadCore(options) {
     var coreURL = requireLocal(options.coreURL || localUrl('./ffmpeg-core.js'));
-    var wasmURL = requireLocal(options.wasmURL || localUrl('./ffmpeg-core.wasm'));
+    var wasmURL = requireLocal(options.wasmURL || localUrl('./ffmpeg-core.wasm.gz'));
     var workerURL = requireLocal(options.workerURL || localUrl('./ffmpeg-core.worker.js'));
     importScripts(coreURL);
     if (typeof self.createFFmpegCore !== 'function') throw new Error('Local FFmpeg core could not be loaded.');
-    core = await self.createFFmpegCore({
-      mainScriptUrlOrBlob: coreURL + '#' + btoa(JSON.stringify({ wasmURL: wasmURL, workerURL: workerURL }))
-    });
+    var wasm = await inflateWasm(wasmURL);
+    try {
+      core = await self.createFFmpegCore({
+        mainScriptUrlOrBlob: coreURL + '#' + btoa(JSON.stringify({ wasmURL: wasm.url, workerURL: workerURL }))
+      });
+    } finally {
+      if (wasm.temporary) URL.revokeObjectURL(wasm.url);
+    }
     core.setLogger(function (entry) { self.postMessage({ type: TYPE.LOG, data: entry }); });
     core.setProgress(function (entry) { self.postMessage({ type: TYPE.PROGRESS, data: entry }); });
     return true;

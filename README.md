@@ -84,6 +84,8 @@ site/
 Cloudflare Pages → **Upload assets** 방식으로 `site/` 폴더 전체를 업로드합니다.  
 Upload the entire `site/` directory via Cloudflare Pages → **Upload assets**.
 
+FFmpeg WASM은 Cloudflare 단일 자산 제한을 피하기 위해 `vendor/ffmpeg/ffmpeg-core.wasm.gz`로 배포되며, 브라우저의 로컬 워커에서 압축을 풉니다. 원본 `ffmpeg-core.wasm`은 `.assetsignore`로 배포 대상에서 제외되고 공개 소스 저장소에 보존됩니다. 압축 파일은 `node scripts/compress-ffmpeg-core.mjs`로 재생성할 수 있습니다.
+
 배포 후 `sitemap.xml`과 `robots.txt`의 `your-domain.pages.dev`를 실제 도메인으로 교체하세요.  
 After deploying, replace `your-domain.pages.dev` in `sitemap.xml` and `robots.txt` with the actual domain.
 

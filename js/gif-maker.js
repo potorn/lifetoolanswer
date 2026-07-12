@@ -260,7 +260,7 @@ document.addEventListener('DOMContentLoaded', function () {
     });
     await ffmpeg.load({
       coreURL: new URL('../vendor/ffmpeg/ffmpeg-core.js', window.location.href).href,
-      wasmURL: new URL('../vendor/ffmpeg/ffmpeg-core.wasm', window.location.href).href
+      wasmURL: new URL('../vendor/ffmpeg/ffmpeg-core.wasm.gz', window.location.href).href
     });
     return ffmpeg;
   }
