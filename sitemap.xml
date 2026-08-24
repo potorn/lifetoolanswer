@@ -51,6 +51,26 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://lifetoolanswer.com/tools/vat.html</loc>
+    <changefreq>yearly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://lifetoolanswer.com/tools/text-counter.html</loc>
+    <changefreq>yearly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://lifetoolanswer.com/tools/savings.html</loc>
+    <changefreq>yearly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://lifetoolanswer.com/tools/qr.html</loc>
+    <changefreq>yearly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://lifetoolanswer.com/tools/about.html</loc>
     <changefreq>yearly</changefreq>
     <priority>0.5</priority>

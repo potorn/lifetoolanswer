@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>부가세 계산기 - 공급가액·합계금액 역산 | 생활도구</title>
+  <meta name="description" content="공급가액에서 부가세와 합계금액을 계산하거나 부가세 포함 합계금액에서 공급가액과 세액을 역산하세요.">
+  <meta name="keywords" content="부가세 계산기, 부가가치세 계산, 공급가액 계산, 부가세 역산, VAT 계산기">
+  <meta property="og:title" content="부가세 계산기 | 생활도구">
+  <meta property="og:description" content="공급가액·부가세·합계금액을 간편하게 계산하세요.">
+  <meta property="og:type" content="website">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🔧</text></svg>">
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/tool.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "부가세 계산기",
+    "applicationCategory": "FinanceApplication",
+    "operatingSystem": "Web"
+  }
+  </script>
+</head>
+<body>
+
+<header>
+  <div class="container">
+    <div class="header-inner">
+      <a href="../index.html" class="logo">
+        <span class="logo-icon">🔧</span>
+        <span class="logo-name">생활<span>도구</span></span>
+      </a>
+      <span class="header-desc">무료 온라인 도구 모음</span>
+      <nav class="header-nav">
+        <a href="about.html" class="nav-link">사이트 소개</a>
+        <a href="guide.html" class="nav-link">사용방법</a>
+      </nav>
+    </div>
+  </div>
+</header>
+
+<main class="tool-page">
+  <nav class="breadcrumb">
+    <a href="../index.html">홈</a>
+    <span class="breadcrumb-sep">›</span>
+    <span>부가세 계산기</span>
+  </nav>
+
+  <div class="tool-header">
+    <span class="tool-header-icon">🧾</span>
+    <h1>부가세 계산기</h1>
+    <p>공급가액과 부가세 포함 합계금액을 양방향으로 계산하세요.</p>
+  </div>
+
+  <div class="local-only-note">입력한 금액은 브라우저 안에서만 계산되며 서버로 전송되지 않습니다.</div>
+
+  <div class="card">
+    <p class="card-title">계산 방식 선택</p>
+    <div class="mode-tabs" role="group" aria-label="부가세 계산 방식">
+      <button type="button" class="radio-option selected" data-mode="add" aria-pressed="true">부가세 더하기</button>
+      <button type="button" class="radio-option" data-mode="reverse" aria-pressed="false">합계에서 역산</button>
+    </div>
+
+    <div class="form-group">
+      <label class="form-label" for="amount" id="amountLabel">공급가액</label>
+      <div class="input-wrap">
+        <input type="number" id="amount" placeholder="예: 1000000" min="0" step="1" inputmode="numeric" autocomplete="off">
+        <span class="input-unit">원</span>
+      </div>
+      <p class="form-help" id="amountHelp">부가세가 포함되지 않은 금액을 입력하세요.</p>
+    </div>
+
+    <button type="button" class="btn-calc" id="calcBtn">계산하기</button>
+  </div>
+
+  <div class="card result-card" id="resultCard" aria-live="polite">
+    <div class="result-summary-grid">
+      <div class="stat-box">
+        <div class="stat-label">공급가액</div>
+        <div class="stat-val" id="supplyValue">—</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-label">부가세 (10%)</div>
+        <div class="stat-val" id="taxValue">—</div>
+      </div>
+      <div class="stat-box result-primary">
+        <div class="stat-label">합계금액</div>
+        <div class="stat-val" id="totalValue">—</div>
+      </div>
+    </div>
+    <p class="result-note">일반 과세 거래의 10%를 기준으로 하며, 원 단위 반올림 후 공급가액·부가세·합계가 항상 맞도록 계산합니다. 실제 세금계산서의 절사 방식이나 면세·영세율 거래에는 그대로 적용할 수 없습니다.</p>
+  </div>
+
+  <div class="info-card">
+    <h2>계산 기준</h2>
+    <table class="ref-table">
+      <thead><tr><th>계산 방식</th><th>계산식</th></tr></thead>
+      <tbody>
+        <tr><td>부가세 더하기</td><td>공급가액 × 10%</td></tr>
+        <tr><td>합계에서 역산</td><td>합계금액 ÷ 1.1</td></tr>
+      </tbody>
+    </table>
+    <p class="info-footnote">※ 일반적인 10% 과세 거래의 간편 계산입니다. 신고·계약에 사용할 때는 국세청 또는 세무 전문가에게 확인하세요.</p>
+  </div>
+</main>
+
+<footer>
+  <div class="container">
+    <div class="footer-inner">
+      <div class="footer-logo">🔧 생활도구</div>
+      <div>자주 쓰는 온라인 도구를 무료로 제공합니다.</div>
+      <div>계산 결과는 참고용이며 전문가 상담을 대체하지 않습니다.</div>
+      <div class="footer-links">
+        <a href="privacy.html">개인정보처리방침</a>
+        <a href="disclaimer.html">면책 조항</a>
+      </div>
+      <div style="margin-top:8px;">© 2026 생활도구. All rights reserved.</div>
+    </div>
+  </div>
+</footer>
+
+<script src="../js/vat.js"></script>
+</body>
+</html>

@@ -46,7 +46,7 @@ document.addEventListener('DOMContentLoaded', function () {
   function calcDiscount() {
     var orig = parseFloat(document.getElementById('origPrice').value);
     var rate = parseFloat(document.getElementById('discountRate').value);
-    if (isNaN(orig) || isNaN(rate)) { alert('원래 가격과 할인율을 입력해주세요.'); return; }
+    if (!Number.isFinite(orig) || !Number.isFinite(rate) || orig < 0) { alert('원래 가격과 할인율을 올바르게 입력해주세요.'); return; }
     if (rate < 0 || rate > 100) { alert('할인율은 0~100% 사이여야 합니다.'); return; }
     var discountAmt = orig * (rate / 100);
     var finalPrice = orig - discountAmt;
@@ -61,7 +61,7 @@ document.addEventListener('DOMContentLoaded', function () {
   function calcChange() {
     var before = parseFloat(document.getElementById('beforeVal').value);
     var after = parseFloat(document.getElementById('afterVal').value);
-    if (isNaN(before) || isNaN(after)) { alert('변경 전·후 값을 입력해주세요.'); return; }
+    if (!Number.isFinite(before) || !Number.isFinite(after)) { alert('변경 전·후 값을 입력해주세요.'); return; }
     if (before === 0) { alert('변경 전 값은 0이 될 수 없습니다.'); return; }
     var diff = after - before;
     var rate = (diff / Math.abs(before)) * 100;
@@ -77,7 +77,7 @@ document.addEventListener('DOMContentLoaded', function () {
   function calcReverse() {
     var sale = parseFloat(document.getElementById('salePrice').value);
     var rate = parseFloat(document.getElementById('reverseRate').value);
-    if (isNaN(sale) || isNaN(rate)) { alert('할인된 가격과 할인율을 입력해주세요.'); return; }
+    if (!Number.isFinite(sale) || !Number.isFinite(rate) || sale < 0) { alert('할인된 가격과 할인율을 올바르게 입력해주세요.'); return; }
     if (rate < 0 || rate >= 100) { alert('할인율은 0~99% 사이여야 합니다.'); return; }
     var orig = sale / (1 - rate / 100);
     var discountAmt = orig - sale;

@@ -6,9 +6,10 @@ document.addEventListener('DOMContentLoaded', function () {
 
   function calculate() {
     var salaryMan = parseFloat(document.getElementById('salary').value);
-    var dependents = parseInt(document.getElementById('dependents').value) || 1;
+    var dependents = Number(document.getElementById('dependents').value || 1);
 
-    if (!salaryMan || salaryMan <= 0) { alert('연봉을 입력해주세요.'); return; }
+    if (!Number.isFinite(salaryMan) || salaryMan <= 0 || salaryMan > 1000000) { alert('연봉은 0보다 크고 1,000,000만원 이하로 입력해주세요.'); return; }
+    if (!Number.isInteger(dependents) || dependents < 1 || dependents > 10) { alert('부양가족 수는 1~10명 사이의 정수로 입력해주세요.'); return; }
 
     var annual = salaryMan * 10000;
     var monthly = annual / 12;

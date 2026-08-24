@@ -1,4 +1,4 @@
-import { MAX_IMAGE_INPUT_BYTES, SUPPORTED_IMAGE_FORMATS, validateImageBuffer, validateVideoBuffer } from './file-validation.js';
+import { MAX_IMAGE_DIMENSION, MAX_IMAGE_INPUT_BYTES, MAX_IMAGE_PIXELS, SUPPORTED_IMAGE_FORMATS, validateImageBuffer, validateVideoBuffer } from './file-validation.js';
 
 document.addEventListener('DOMContentLoaded', function () {
   var MAX_IMAGES = 30;
@@ -6,6 +6,8 @@ document.addEventListener('DOMContentLoaded', function () {
   var MAX_VIDEO_BYTES = 100 * 1024 * 1024;
   var MAX_VIDEO_SECONDS = 5 * 60;
   var MAX_GIF_BYTES = 15 * 1024 * 1024;
+  var VIDEO_PROBE_TIMEOUT_MS = 20 * 1000;
+  var VIDEO_CONVERT_TIMEOUT_MS = 2 * 60 * 1000;
   var tabs = document.querySelectorAll('.gif-mode-tab');
   var imagesMode = document.getElementById('imagesMode');
   var videoMode = document.getElementById('videoMode');
@@ -27,6 +29,8 @@ document.addEventListener('DOMContentLoaded', function () {
   var imageFrames = [];
   var videoFile = null;
   var videoLength = 0;
+  var videoWidth = 0;
+  var videoHeight = 0;
   var resultBlob = null;
   var resultName = 'my-gif.gif';
   var resultUrl = null;
@@ -152,32 +156,47 @@ document.addEventListener('DOMContentLoaded', function () {
     var currentVideoRequest = ++videoRequest;
     videoFile = null;
     videoLength = 0;
+    videoWidth = 0;
+    videoHeight = 0;
+    videoCancelled = false;
     createVideoBtn.disabled = true;
+    cancelVideoBtn.style.display = '';
     videoDropZone.classList.add('has-file');
     videoDropZone.querySelector('.img-drop-text').textContent = file.name;
     videoDropZone.querySelector('.img-drop-sub').textContent = '동영상 길이를 확인하는 중…';
     setStatus('브라우저 안에서 동영상 정보를 확인하는 중입니다.');
     try {
-      var durationSeconds = await probeVideo(file);
-      if (currentVideoRequest !== videoRequest) return;
+      var metadata = await probeVideo(file);
+      if (currentVideoRequest !== videoRequest || videoCancelled) return;
+      var durationSeconds = metadata.duration;
       if (!Number.isFinite(durationSeconds) || durationSeconds <= 0 || durationSeconds > MAX_VIDEO_SECONDS) {
         return setStatus('원본 동영상은 5분 이하만 지원합니다.', 'error');
       }
+      if (!Number.isInteger(metadata.width) || !Number.isInteger(metadata.height) ||
+          metadata.width < 1 || metadata.height < 1 ||
+          metadata.width > MAX_IMAGE_DIMENSION || metadata.height > MAX_IMAGE_DIMENSION ||
+          metadata.width * metadata.height > MAX_IMAGE_PIXELS) {
+        return setStatus('원본 동영상은 최대 4,096px, 1,600만 픽셀까지 지원합니다.', 'error');
+      }
       videoFile = file;
       videoLength = durationSeconds;
+      videoWidth = metadata.width;
+      videoHeight = metadata.height;
       var duration = Math.min(15, Math.max(0.1, videoLength));
       document.getElementById('videoStart').max = Math.max(0, videoLength - 0.1);
       document.getElementById('videoDuration').value = duration.toFixed(1);
       document.getElementById('videoDuration').max = duration;
-      videoDropZone.querySelector('.img-drop-sub').textContent = formatSize(file.size) + ' · ' + videoLength.toFixed(1) + '초';
-      videoInfo.textContent = '원본 ' + videoLength.toFixed(1) + '초 · 최대 15초 구간을 GIF로 만들 수 있습니다.';
+      videoDropZone.querySelector('.img-drop-sub').textContent = formatSize(file.size) + ' · ' + videoWidth + ' × ' + videoHeight + ' · ' + videoLength.toFixed(1) + '초';
+      videoInfo.textContent = '원본 ' + videoWidth + ' × ' + videoHeight + ' · ' + videoLength.toFixed(1) + '초 · 최대 15초 구간을 GIF로 만들 수 있습니다.';
       videoInfo.style.display = '';
       createVideoBtn.disabled = false;
       setStatus('동영상을 불러왔습니다.', 'success');
     } catch (error) {
       if (currentVideoRequest !== videoRequest) return;
       videoFile = null;
-      setStatus('동영상 정보를 읽지 못했습니다. 지원되는 코덱의 짧은 MP4·WebM·MOV 파일인지 확인해 주세요.', 'error');
+      setStatus(videoCancelled ? '동영상 처리를 취소했습니다.' : '동영상 정보를 읽지 못했습니다. 지원되는 코덱의 짧은 MP4·WebM·MOV 파일인지 확인해 주세요.', videoCancelled ? '' : 'error');
+    } finally {
+      if (currentVideoRequest === videoRequest) cancelVideoBtn.style.display = 'none';
     }
   }
 
@@ -191,12 +210,30 @@ document.addEventListener('DOMContentLoaded', function () {
     instance.on('log', onLog);
     try {
       await instance.writeFile(inputName, new Uint8Array(await file.arrayBuffer()));
-      await instance.ffprobe(['-v', 'error', '-show_entries', 'format=duration', '-of', 'default=noprint_wrappers=1:nokey=1', inputName]);
-      for (var i = output.length - 1; i >= 0; i--) {
-        var value = Number(output[i]);
-        if (Number.isFinite(value)) return value;
+      var exitCode = await instance.ffprobe([
+        '-v', 'error',
+        '-probesize', '10000000',
+        '-analyzeduration', '5000000',
+        '-select_streams', 'v:0',
+        '-show_entries', 'stream=width,height:format=duration',
+        '-of', 'default=noprint_wrappers=1',
+        inputName
+      ], VIDEO_PROBE_TIMEOUT_MS);
+      if (exitCode !== 0) throw new Error('probe failed or timed out');
+      var metadata = {};
+      output.join('\n').split(/\r?\n/).forEach(function (line) {
+        var separator = line.indexOf('=');
+        if (separator > 0) metadata[line.slice(0, separator).trim()] = line.slice(separator + 1).trim();
+      });
+      var result = {
+        duration: Number(metadata.duration),
+        width: Number(metadata.width),
+        height: Number(metadata.height)
+      };
+      if (!Number.isFinite(result.duration) || !Number.isInteger(result.width) || !Number.isInteger(result.height)) {
+        throw new Error('video metadata not found');
       }
-      throw new Error('duration not found');
+      return result;
     } finally {
       instance.off('log', onLog);
       try { await instance.deleteFile(inputName); } catch (error) { /* The file may not have been created. */ }
@@ -217,27 +254,38 @@ document.addEventListener('DOMContentLoaded', function () {
     cancelVideoBtn.style.display = '';
     videoCancelled = false;
     setStatus('동영상 변환 엔진을 준비하는 중입니다. 처음 한 번은 시간이 걸릴 수 있습니다.');
+    var instance;
+    var inputName;
     try {
-      var instance = await getFfmpeg();
+      instance = await getFfmpeg();
       if (videoCancelled) return;
-      var inputName = makeVideoInputName(videoFile, 'convert');
+      inputName = makeVideoInputName(videoFile, 'convert');
       await instance.writeFile(inputName, new Uint8Array(await videoFile.arrayBuffer()));
       var width = Number(document.getElementById('videoWidth').value);
-      var filter = 'fps=10,scale=' + width + ':-1:flags=lanczos';
+      if (width !== 480 && width !== 720) throw new Error('invalid output width');
+      var filter = 'fps=10,scale=' + width + ':' + width + ':force_original_aspect_ratio=decrease:flags=lanczos';
       setStatus('GIF 색상표를 만드는 중…');
-      await instance.exec(['-ss', String(start), '-t', String(duration), '-i', inputName, '-vf', filter + ',palettegen=stats_mode=diff', 'palette.png']);
+      var paletteExit = await instance.exec(['-ss', String(start), '-t', String(duration), '-i', inputName, '-vf', filter + ',palettegen=stats_mode=diff', 'palette.png'], VIDEO_CONVERT_TIMEOUT_MS);
+      if (paletteExit !== 0) throw new Error('palette generation failed or timed out');
       if (videoCancelled) return;
       setStatus('GIF를 생성하는 중…');
-      await instance.exec(['-ss', String(start), '-t', String(duration), '-i', inputName, '-i', 'palette.png', '-lavfi', filter + '[x];[x][1:v]paletteuse', '-loop', '0', '-an', '-y', 'output.gif']);
+      var gifExit = await instance.exec(['-ss', String(start), '-t', String(duration), '-i', inputName, '-i', 'palette.png', '-lavfi', filter + '[x];[x][1:v]paletteuse', '-loop', '0', '-an', '-y', 'output.gif'], VIDEO_CONVERT_TIMEOUT_MS);
+      if (gifExit !== 0) throw new Error('GIF generation failed or timed out');
       if (videoCancelled) return;
       var data = await instance.readFile('output.gif');
       var blob = new Blob([data.buffer], { type: 'image/gif' });
       if (blob.size > MAX_GIF_BYTES) return setStatus('결과 GIF가 15MB를 넘었습니다. 길이를 줄이거나 480px을 선택해 주세요.', 'error');
-      showResult(blob, videoFile.name.replace(/\.[^.]+$/, '') + '.gif', duration.toFixed(1) + '초 · ' + width + 'px · 10fps');
+      showResult(blob, videoFile.name.replace(/\.[^.]+$/, '') + '.gif', duration.toFixed(1) + '초 · 최대 ' + width + 'px · 10fps');
       setStatus('동영상 GIF를 만들었습니다.', 'success');
     } catch (error) {
       if (!videoCancelled) setStatus('동영상 변환에 실패했습니다. 지원되는 코덱의 짧은 MP4·WebM·MOV 파일인지 확인해 주세요.', 'error');
     } finally {
+      if (instance && ffmpeg === instance) {
+        var temporaryFiles = [inputName, 'palette.png', 'output.gif'].filter(Boolean);
+        for (var i = 0; i < temporaryFiles.length; i++) {
+          try { await instance.deleteFile(temporaryFiles[i]); } catch (error) { /* The file may not have been created. */ }
+        }
+      }
       createVideoBtn.disabled = !videoFile;
       cancelVideoBtn.style.display = 'none';
     }
@@ -245,8 +293,9 @@ document.addEventListener('DOMContentLoaded', function () {
 
   cancelVideoBtn.addEventListener('click', function () {
     videoCancelled = true;
+    videoRequest += 1;
     if (ffmpeg) { ffmpeg.terminate(); ffmpeg = null; }
-    setStatus('동영상 변환을 취소했습니다.');
+    setStatus('동영상 처리를 취소했습니다.');
     createVideoBtn.disabled = !videoFile;
     cancelVideoBtn.style.display = 'none';
   });

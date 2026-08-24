@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>글자 수 계산기 - 공백 제외·바이트·단어 수 | 생활도구</title>
+  <meta name="description" content="텍스트의 공백 포함·제외 글자 수, UTF-8 바이트, 단어 수와 줄 수를 입력 즉시 확인하세요.">
+  <meta name="keywords" content="글자 수 계산기, 글자수 세기, 바이트 계산기, 단어 수 세기, 자소서 글자수">
+  <meta property="og:title" content="글자 수 계산기 | 생활도구">
+  <meta property="og:description" content="글자 수·바이트·단어 수·줄 수를 입력 즉시 확인하세요.">
+  <meta property="og:type" content="website">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🔧</text></svg>">
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/tool.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "글자 수 계산기",
+    "applicationCategory": "UtilitiesApplication",
+    "operatingSystem": "Web"
+  }
+  </script>
+</head>
+<body>
+
+<header>
+  <div class="container">
+    <div class="header-inner">
+      <a href="../index.html" class="logo">
+        <span class="logo-icon">🔧</span>
+        <span class="logo-name">생활<span>도구</span></span>
+      </a>
+      <span class="header-desc">무료 온라인 도구 모음</span>
+      <nav class="header-nav">
+        <a href="about.html" class="nav-link">사이트 소개</a>
+        <a href="guide.html" class="nav-link">사용방법</a>
+      </nav>
+    </div>
+  </div>
+</header>
+
+<main class="tool-page">
+  <nav class="breadcrumb">
+    <a href="../index.html">홈</a>
+    <span class="breadcrumb-sep">›</span>
+    <span>글자 수 계산기</span>
+  </nav>
+
+  <div class="tool-header">
+    <span class="tool-header-icon">✍️</span>
+    <h1>글자 수 계산기</h1>
+    <p>글자 수, UTF-8 바이트, 단어 수와 줄 수를 입력 즉시 확인하세요.</p>
+  </div>
+
+  <div class="local-only-note">입력한 글은 브라우저 안에서만 처리되며 서버로 전송되거나 저장되지 않습니다.</div>
+
+  <div class="card">
+    <div class="text-counter-heading">
+      <label class="card-title" for="textInput">내용 입력</label>
+      <button type="button" class="btn-text-clear" id="clearBtn">전체 지우기</button>
+    </div>
+    <textarea id="textInput" class="text-counter-input" maxlength="200000" placeholder="글자 수를 확인할 내용을 입력하거나 붙여넣으세요." autocomplete="off" spellcheck="false"></textarea>
+    <p class="form-help">이모지와 결합 문자는 화면에 보이는 한 글자를 기준으로 계산합니다. 바이트는 UTF-8 기준입니다.</p>
+  </div>
+
+  <div class="card text-counter-results" aria-live="polite">
+    <div class="text-stat featured">
+      <span class="stat-label">공백 포함</span>
+      <strong id="withSpaces">0</strong>
+      <span>자</span>
+    </div>
+    <div class="text-stat">
+      <span class="stat-label">공백 제외</span>
+      <strong id="withoutSpaces">0</strong>
+      <span>자</span>
+    </div>
+    <div class="text-stat">
+      <span class="stat-label">UTF-8</span>
+      <strong id="byteCount">0</strong>
+      <span>바이트</span>
+    </div>
+    <div class="text-stat">
+      <span class="stat-label">단어</span>
+      <strong id="wordCount">0</strong>
+      <span>개</span>
+    </div>
+    <div class="text-stat">
+      <span class="stat-label">줄</span>
+      <strong id="lineCount">0</strong>
+      <span>개</span>
+    </div>
+  </div>
+
+  <div class="info-card">
+    <h2>계산 방식</h2>
+    <table class="ref-table">
+      <thead><tr><th>항목</th><th>기준</th></tr></thead>
+      <tbody>
+        <tr><td>공백 포함</td><td>띄어쓰기와 줄바꿈을 포함한 화면상 글자 수</td></tr>
+        <tr><td>공백 제외</td><td>띄어쓰기·탭·줄바꿈을 제외한 글자 수</td></tr>
+        <tr><td>UTF-8 바이트</td><td>웹 전송과 저장에서 널리 사용하는 UTF-8 인코딩 기준</td></tr>
+      </tbody>
+    </table>
+    <p class="info-footnote">※ 채용·원고 제출 사이트는 줄바꿈, 한글, 이모지를 서로 다른 방식으로 셀 수 있으므로 최종 제출처의 기준을 함께 확인하세요.</p>
+  </div>
+</main>
+
+<footer>
+  <div class="container">
+    <div class="footer-inner">
+      <div class="footer-logo">🔧 생활도구</div>
+      <div>자주 쓰는 온라인 도구를 무료로 제공합니다.</div>
+      <div class="footer-links">
+        <a href="privacy.html">개인정보처리방침</a>
+        <a href="disclaimer.html">면책 조항</a>
+      </div>
+      <div style="margin-top:8px;">© 2026 생활도구. All rights reserved.</div>
+    </div>
+  </div>
+</footer>
+
+<script src="../js/text-counter.js"></script>
+</body>
+</html>

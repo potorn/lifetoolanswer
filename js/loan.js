@@ -21,15 +21,15 @@ document.addEventListener('DOMContentLoaded', function () {
     var principal = parseFloat(document.getElementById('principal').value);
     var annualRate = parseFloat(document.getElementById('rate').value);
     var periodVal = parseFloat(document.getElementById('period').value);
-    var graceMonths = parseInt(document.getElementById('grace').value) || 0;
+    var graceMonths = Number(document.getElementById('grace').value || 0);
     var method = document.getElementById('method').value;
 
-    if (!principal || !annualRate || !periodVal) {
+    if (!Number.isFinite(principal) || !Number.isFinite(annualRate) || !Number.isFinite(periodVal)) {
       alert('모든 항목을 입력해주세요.');
       return;
     }
 
-    if (principal <= 0 || annualRate <= 0 || annualRate > 100 || periodVal <= 0) {
+    if (principal <= 0 || principal > 1000000 || annualRate <= 0 || annualRate > 100 || periodVal <= 0) {
       alert('올바른 값을 입력해주세요.');
       return;
     }
@@ -37,12 +37,12 @@ document.addEventListener('DOMContentLoaded', function () {
     principal = principal * 10000; // 만원 → 원
     var months = periodUnit === 'year' ? periodVal * 12 : periodVal;
 
-    if (months > 600) {
-      alert('대출 기간은 최대 50년(600개월)까지 입력 가능합니다.');
+    if (!Number.isInteger(months) || months < 1 || months > 600) {
+      alert('대출 기간은 1~600개월 사이의 정수 개월이 되도록 입력해주세요.');
       return;
     }
 
-    if (graceMonths < 0 || graceMonths >= months) {
+    if (!Number.isInteger(graceMonths) || graceMonths < 0 || graceMonths >= months) {
       alert('거치기간은 0개월 이상, 대출 기간보다 짧아야 합니다.');
       return;
     }

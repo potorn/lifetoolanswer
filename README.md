@@ -14,7 +14,7 @@
 Plain HTML + CSS + JS로 구성된 정적 사이트로, 빌드 도구나 프레임워크 없이 동작합니다.
 
 **Life Tools** is a browser-based utility site — no installation required.  
-Built with plain HTML + CSS + JS. No framework, no build step, no dependencies.
+Built with plain HTML + CSS + JS. No framework, package manager, or required build step; browser libraries are vendored locally.
 
 ---
 
@@ -27,6 +27,12 @@ Built with plain HTML + CSS + JS. No framework, no build step, no dependencies.
 | [GIF 만들기](tools/gif-maker.html) | 사진 여러 장·짧은 동영상으로 GIF 만들기 | GIF Maker | Create GIFs from photos or short videos in the browser |
 | [대출 계산기](tools/loan.html) | 원리금균등 / 원금균등 / 만기일시 상환 | Loan Calculator | Equal payment / Equal principal / Bullet repayment |
 | [단위 변환기](tools/unit.html) | 길이 · 무게 · 온도 · 넓이 · 부피 | Unit Converter | Length, weight, temperature, area, volume |
+| [연봉 실수령액 계산기](tools/salary.html) | 4대보험·소득세 예상 공제 | Salary Calculator | Estimated payroll deductions |
+| [퍼센트 계산기](tools/percent.html) | 할인·증감률·역계산 | Percentage Calculator | Discount, change rate, reverse calculation |
+| [부가세 계산기](tools/vat.html) | 공급가액·부가세·합계 역산 | VAT Calculator | Add or reverse 10% VAT |
+| [글자 수 계산기](tools/text-counter.html) | 공백 포함·제외·UTF-8 바이트 | Text Counter | Graphemes, words, lines, UTF-8 bytes |
+| [예금·적금 계산기](tools/savings.html) | 세전·세후 만기금액 예상 | Savings Calculator | Deposit and installment interest |
+| [QR 코드 생성기](tools/qr.html) | URL·텍스트를 PNG QR로 생성 | QR Generator | Local PNG QR generation |
 
 ---
 
@@ -42,7 +48,7 @@ Then open `http://localhost:8080` in your browser.
 테스트 도구·빌드 스텝 없음 — 파일을 직접 수정하고 브라우저를 새로고침하면 됩니다.  
 No tests, no build — edit a file and refresh the browser.
 
-업로드한 이미지·동영상과 도구 입력값은 브라우저에서 처리되며 생활도구 서버로 전송하거나 저장하지 않습니다. Google Fonts 등 일반 페이지 리소스는 별도로 요청될 수 있습니다.
+업로드한 이미지·동영상과 도구 입력값은 브라우저에서 처리되며 생활도구 서버로 전송하거나 저장하지 않습니다. 실행에 필요한 글꼴·스크립트·WASM도 사이트 내부 정적 자산으로 제공합니다.
 
 ---
 
@@ -56,14 +62,24 @@ site/
 │   └── tool.css            # 도구 페이지 레이아웃 (폼, 결과 카드)
 ├── js/
 │   ├── bmi.js
+│   ├── gif-maker.js
 │   ├── image.js
 │   ├── loan.js
-│   └── unit.js
+│   ├── qr.js
+│   ├── savings.js
+│   ├── text-counter.js
+│   ├── unit.js
+│   └── vat.js
 ├── tools/
 │   ├── bmi.html
+│   ├── gif-maker.html
 │   ├── image.html
 │   ├── loan.html
-│   └── unit.html
+│   ├── qr.html
+│   ├── savings.html
+│   ├── text-counter.html
+│   ├── unit.html
+│   └── vat.html
 ├── sitemap.xml
 └── robots.txt
 ```

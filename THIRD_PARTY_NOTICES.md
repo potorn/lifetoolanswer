@@ -5,6 +5,7 @@ This site includes the following browser-side WebAssembly dependencies. They are
 - `@imagemagick/magick-wasm` 0.0.41 — Apache-2.0. The full license and notices are in `vendor/magick/LICENSE` and `vendor/magick/NOTICE`.
 - `@ffmpeg/ffmpeg` 0.12.15 — MIT. `vendor/ffmpeg/814.ffmpeg.js` is a local-only derivative that removes the upstream CDN fallback. Upstream project: https://github.com/ffmpegwasm/ffmpeg.wasm
 - `@ffmpeg/core` 0.12.10 — GPL-2.0-or-later FFmpeg browser core. The GPL-2.0 license text is included at `vendor/ffmpeg/GPL-2.0-or-later.txt`. Corresponding source and release obligations are documented in `GPL_SOURCE_RELEASE.md`.
+- `qrcode-generator` — MIT. The browser-side QR encoder is loaded locally from `vendor/qrcode/qrcode.js`; its license is included at `vendor/qrcode/LICENSE`. Upstream project: https://github.com/kazuhikoarase/qrcode-generator
 
 ## FFmpeg asset hashes
 

@@ -84,7 +84,7 @@ document.addEventListener('DOMContentLoaded', function () {
   function convert() {
     var raw = document.getElementById('valueInput').value.trim();
     var value = parseFloat(raw);
-    if (raw === '' || isNaN(value)) {
+    if (raw === '' || !Number.isFinite(value)) {
       document.getElementById('valueInput').focus();
       document.getElementById('valueInput').style.borderColor = '#dc2626';
       setTimeout(function () {

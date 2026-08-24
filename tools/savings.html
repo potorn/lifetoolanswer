@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>예금·적금 이자 계산기 - 세전·세후 만기금액 | 생활도구</title>
+  <meta name="description" content="예금과 적금의 세전 이자, 이자소득세, 세후 이자와 예상 만기금액을 간편하게 계산하세요.">
+  <meta name="keywords" content="예금 이자 계산기, 적금 이자 계산기, 세후 이자, 만기금액 계산, 이자소득세">
+  <meta property="og:title" content="예금·적금 이자 계산기 | 생활도구">
+  <meta property="og:description" content="예금·적금의 세전·세후 이자와 예상 만기금액을 계산하세요.">
+  <meta property="og:type" content="website">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🔧</text></svg>">
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/tool.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "예금·적금 이자 계산기",
+    "applicationCategory": "FinanceApplication",
+    "operatingSystem": "Web"
+  }
+  </script>
+</head>
+<body>
+
+<header>
+  <div class="container">
+    <div class="header-inner">
+      <a href="../index.html" class="logo">
+        <span class="logo-icon">🔧</span>
+        <span class="logo-name">생활<span>도구</span></span>
+      </a>
+      <span class="header-desc">무료 온라인 도구 모음</span>
+      <nav class="header-nav">
+        <a href="about.html" class="nav-link">사이트 소개</a>
+        <a href="guide.html" class="nav-link">사용방법</a>
+      </nav>
+    </div>
+  </div>
+</header>
+
+<main class="tool-page">
+  <nav class="breadcrumb">
+    <a href="../index.html">홈</a>
+    <span class="breadcrumb-sep">›</span>
+    <span>예금·적금 이자 계산기</span>
+  </nav>
+
+  <div class="tool-header">
+    <span class="tool-header-icon">💵</span>
+    <h1>예금·적금 이자 계산기</h1>
+    <p>세전·세후 이자와 예상 만기금액을 계산하세요.</p>
+  </div>
+
+  <div class="local-only-note">입력한 금융 정보는 브라우저 안에서만 계산되며 서버로 전송되지 않습니다.</div>
+
+  <div class="card">
+    <p class="card-title">상품 종류</p>
+    <div class="mode-tabs" role="group" aria-label="상품 종류">
+      <button type="button" class="radio-option selected" data-mode="deposit" aria-pressed="true">예금</button>
+      <button type="button" class="radio-option" data-mode="installment" aria-pressed="false">적금</button>
+    </div>
+
+    <div class="form-group">
+      <label class="form-label" for="amount" id="amountLabel">예치금액</label>
+      <div class="input-wrap">
+        <input type="number" id="amount" placeholder="예: 1000" min="1" max="1000000" step="0.01" inputmode="decimal" autocomplete="off">
+        <span class="input-unit" id="amountUnit">만원</span>
+      </div>
+      <p class="form-help" id="amountHelp">처음에 한 번 맡기는 금액을 입력하세요.</p>
+    </div>
+
+    <div class="form-row">
+      <div class="form-group">
+        <label class="form-label" for="annualRate">연 이자율</label>
+        <div class="input-wrap">
+          <input type="number" id="annualRate" placeholder="예: 3.5" min="0" max="100" step="0.01" inputmode="decimal" autocomplete="off">
+          <span class="input-unit">%</span>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="form-label" for="months">기간</label>
+        <div class="input-wrap">
+          <input type="number" id="months" placeholder="예: 12" min="1" max="600" step="1" inputmode="numeric" autocomplete="off">
+          <span class="input-unit">개월</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-row">
+      <div class="form-group" id="interestMethodGroup">
+        <label class="form-label" for="interestMethod">이자 방식</label>
+        <select class="styled-select" id="interestMethod">
+          <option value="simple">단리</option>
+          <option value="compound">월복리</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label class="form-label" for="taxType">과세 유형</label>
+        <select class="styled-select" id="taxType">
+          <option value="normal">일반과세 (15.4%)</option>
+          <option value="free">비과세</option>
+        </select>
+      </div>
+    </div>
+
+    <button type="button" class="btn-calc" id="calcBtn">이자 계산하기</button>
+  </div>
+
+  <div class="card result-card" id="resultCard" aria-live="polite">
+    <div class="loan-result-main">
+      <div class="loan-monthly-label">예상 만기금액</div>
+      <div class="loan-monthly-value" id="maturityValue">—</div>
+      <div class="loan-monthly-note" id="resultSummary"></div>
+    </div>
+    <div class="saving-result-grid">
+      <div class="stat-box"><div class="stat-label">납입 원금</div><div class="stat-val" id="principalValue">—</div></div>
+      <div class="stat-box"><div class="stat-label">세전 이자</div><div class="stat-val" id="grossInterest">—</div></div>
+      <div class="stat-box"><div class="stat-label">이자소득세</div><div class="stat-val" id="taxValue">—</div></div>
+      <div class="stat-box result-primary"><div class="stat-label">세후 이자</div><div class="stat-val" id="netInterest">—</div></div>
+    </div>
+    <p class="result-note" id="calculationNote"></p>
+  </div>
+
+  <div class="info-card">
+    <h2>계산 기준</h2>
+    <table class="ref-table">
+      <thead><tr><th>구분</th><th>기준</th></tr></thead>
+      <tbody>
+        <tr><td>예금 단리</td><td>원금 × 연이율 × 기간(월) ÷ 12</td></tr>
+        <tr><td>예금 월복리</td><td>매월 이자가 원금에 더해진다고 가정</td></tr>
+        <tr><td>적금</td><td>매월 초 동일 금액 납입, 단리 기준</td></tr>
+        <tr><td>일반과세</td><td>예상 이자의 15.4%</td></tr>
+      </tbody>
+    </table>
+    <p class="info-footnote">※ 결과는 월 단위 예상값입니다. 실제 금융기관은 가입일·만기일의 정확한 일수, 납입일, 우대금리, 중도해지 조건, 과세구분과 원 단위 절사 방식에 따라 다르게 계산할 수 있습니다.</p>
+  </div>
+</main>
+
+<footer>
+  <div class="container">
+    <div class="footer-inner">
+      <div class="footer-logo">🔧 생활도구</div>
+      <div>자주 쓰는 온라인 도구를 무료로 제공합니다.</div>
+      <div>계산 결과는 참고용이며 실제 금융 상품 조건과 다를 수 있습니다.</div>
+      <div class="footer-links">
+        <a href="privacy.html">개인정보처리방침</a>
+        <a href="disclaimer.html">면책 조항</a>
+      </div>
+      <div style="margin-top:8px;">© 2026 생활도구. All rights reserved.</div>
+    </div>
+  </div>
+</footer>
+
+<script src="../js/savings.js"></script>
+</body>
+</html>
