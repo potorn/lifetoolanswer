@@ -3,12 +3,15 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>생활도구 - 무료 온라인 도구 모음</title>
-  <meta name="description" content="BMI·대출·부가세·예금·적금 계산기, 글자 수·QR 코드·이미지 도구를 무료로 제공합니다. 모든 입력은 브라우저에서 처리됩니다.">
-  <meta name="keywords" content="온라인 도구, BMI 계산기, 대출 계산기, 부가세 계산기, 예금 적금 계산기, 글자 수, QR 코드, 단위 변환">
+  <title>생활도구 - 계산기·인코딩·암호화 무료 온라인 도구</title>
+  <meta name="description" content="BMI·대출·부가세 계산기와 글자 수, QR 코드, Base64·URL 인코딩, SHA 해시, AES 암호화 도구를 무료로 제공합니다.">
+  <meta name="keywords" content="온라인 도구, BMI 계산기, 대출 계산기, 부가세 계산기, Base64 인코딩, SHA 해시, AES 암호화, QR 코드">
+  <meta name="robots" content="index,follow">
+  <link rel="canonical" href="https://lifetoolanswer.com/">
   <meta property="og:title" content="생활도구 - 무료 온라인 도구 모음">
-  <meta property="og:description" content="BMI 계산기, 대출 이자 계산기 등 자주 쓰는 생활 도구를 무료로 제공합니다.">
+  <meta property="og:description" content="계산기부터 인코딩, 해시, 암호화까지 자주 쓰는 온라인 도구를 무료로 제공합니다.">
   <meta property="og:type" content="website">
+  <meta property="og:url" content="https://lifetoolanswer.com/">
   <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🔧</text></svg>">
   <link rel="stylesheet" href="css/style.css">
   <meta name="naver-site-verification" content="1f1afeef6adfac0a49bea97927f5fe9a1c1de108" />
@@ -22,7 +25,7 @@
     "@context": "https://schema.org",
     "@type": "WebSite",
     "name": "생활도구",
-    "description": "무료 온라인 도구 모음",
+    "description": "계산기, 인코딩, 해시, 암호화를 제공하는 무료 온라인 도구 모음",
     "url": "https://lifetoolanswer.com"
   }
   </script>
@@ -153,6 +156,30 @@
         <h3>QR 코드 생성기</h3>
         <p>URL이나 텍스트를 QR 코드로 만들고 PNG로 저장하세요.</p>
         <small class="tool-card-note">입력 내용을 그대로 담을 뿐 URL의 안전성이나 접속 가능 여부는 검사하지 않습니다. 배포·인쇄 전에 직접 스캔해 확인하세요.</small>
+        <span class="tool-badge badge-util">유틸</span>
+      </a>
+
+      <a href="tools/encoder.html" class="tool-card">
+        <div class="tool-card-icon">↔️</div>
+        <h3>인코딩·디코딩</h3>
+        <p>한글과 영문 텍스트를 Base64 또는 URL 형식으로 변환하세요.</p>
+        <small class="tool-card-note">Base64는 암호화가 아닙니다. 모든 변환은 브라우저에서만 처리되며 입력 내용은 서버로 전송하지 않습니다.</small>
+        <span class="tool-badge badge-util">유틸</span>
+      </a>
+
+      <a href="tools/hash.html" class="tool-card">
+        <div class="tool-card-icon">#️⃣</div>
+        <h3>SHA 해시 생성기</h3>
+        <p>텍스트의 SHA-256과 SHA-512 해시값을 한 번에 생성하세요.</p>
+        <small class="tool-card-note">해시는 단방향이라 복호화할 수 없습니다. 단순 SHA 해시는 실제 비밀번호 저장용으로 적합하지 않습니다.</small>
+        <span class="tool-badge badge-util">유틸</span>
+      </a>
+
+      <a href="tools/encryption.html" class="tool-card">
+        <div class="tool-card-icon">🔐</div>
+        <h3>암호화·복호화</h3>
+        <p>AES-GCM과 키워드·사용자 지정 문자 암호를 이용하세요.</p>
+        <small class="tool-card-note">실제 내용 보호에는 AES-GCM을 사용하세요. 키워드와 문자 치환 방식은 학습·놀이용입니다.</small>
         <span class="tool-badge badge-util">유틸</span>
       </a>
 

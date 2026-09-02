@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>사용방법 | 생활도구</title>
-  <meta name="description" content="생활도구 각 기능의 사용방법을 안내합니다. BMI 계산기, 대출 이자 계산기, 연봉 실수령액 계산기, 퍼센트 계산기 사용법을 확인하세요.">
+  <meta name="description" content="생활도구의 계산기와 Base64·URL 인코딩, SHA 해시, AES 암호화·복호화 등 각 기능의 사용방법을 안내합니다.">
   <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🔧</text></svg>">
   <link rel="stylesheet" href="../css/style.css">
   <link rel="stylesheet" href="../css/tool.css">
@@ -157,6 +157,38 @@
       <li>QR 코드를 생성하고 PNG로 저장합니다.</li>
     </ol>
     <p style="margin-top:10px; font-size:0.85rem; color:#6b7280;">※ 입력 내용과 QR 이미지는 브라우저에서 처리되며 생활도구 서버로 전송되지 않습니다.</p>
+  </div>
+
+  <div class="info-card" style="margin-bottom: 16px;">
+    <h2>↔️ 인코딩·디코딩</h2>
+    <ol style="margin-top:10px; padding-left:20px; font-size:0.9rem; line-height:2.2; color:#374151;">
+      <li>Base64 또는 URL 방식을 선택합니다.</li>
+      <li>변환할 내용을 입력하고 인코딩 또는 디코딩 버튼을 누릅니다.</li>
+      <li>변환 결과를 확인하고 필요한 경우 복사합니다.</li>
+    </ol>
+    <p class="tool-inline-link"><a href="encoder.html">Base64·URL 인코딩 디코딩 열기</a></p>
+  </div>
+
+  <div class="info-card" style="margin-bottom: 16px;">
+    <h2>#️⃣ SHA 해시 생성기</h2>
+    <ol style="margin-top:10px; padding-left:20px; font-size:0.9rem; line-height:2.2; color:#374151;">
+      <li>해시값을 만들 텍스트를 입력합니다.</li>
+      <li><strong>SHA 해시 2종 생성</strong>을 누릅니다.</li>
+      <li>SHA-256과 SHA-512 결과를 확인하거나 복사합니다.</li>
+    </ol>
+    <p style="margin-top:10px; font-size:0.85rem; color:#6b7280;">※ 해시는 단방향 함수이므로 결과에서 원문을 복호화할 수 없습니다.</p>
+    <p class="tool-inline-link"><a href="hash.html">SHA-256·SHA-512 해시 생성기 열기</a></p>
+  </div>
+
+  <div class="info-card" style="margin-bottom: 16px;">
+    <h2>🔐 암호화·복호화</h2>
+    <ol style="margin-top:10px; padding-left:20px; font-size:0.9rem; line-height:2.2; color:#374151;">
+      <li>AES-GCM, 키워드 암호 또는 문자 치환 방식을 선택합니다.</li>
+      <li>원문과 비밀번호·키워드·대응표 등 선택한 방식에 필요한 값을 입력합니다.</li>
+      <li>암호화 결과는 같은 방식과 키를 사용해야 다시 복호화할 수 있습니다.</li>
+    </ol>
+    <p style="margin-top:10px; font-size:0.85rem; color:#6b7280;">※ 실제 내용 보호에는 AES-GCM을 사용하세요. 키워드와 문자 치환은 학습·놀이용입니다.</p>
+    <p class="tool-inline-link"><a href="encryption.html">암호화·복호화 도구 열기</a></p>
   </div>
 
 </main>

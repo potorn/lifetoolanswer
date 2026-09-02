@@ -1099,3 +1099,199 @@
   text-decoration: none;
   text-align: center;
 }
+
+/* ═══════════════════════════════
+   Encoding, hashing and encryption tools
+═══════════════════════════════ */
+
+.utility-tabs {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 22px;
+}
+
+.utility-tab {
+  flex: 1;
+  min-height: 44px;
+  padding: 10px 12px;
+  border: 1.5px solid var(--border);
+  border-radius: 8px;
+  background: #fff;
+  color: var(--text-muted);
+  font: inherit;
+  font-size: 0.9rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: border-color 0.18s, background 0.18s, color 0.18s;
+}
+
+.utility-tab:hover {
+  border-color: #93c5fd;
+  background: #f0f9ff;
+  color: var(--primary);
+}
+
+.utility-tab.active {
+  border-color: var(--primary);
+  background: var(--primary-light);
+  color: var(--primary);
+}
+
+.utility-textarea {
+  width: 100%;
+  min-height: 150px;
+  resize: vertical;
+  padding: 13px 14px;
+  border: 1.5px solid var(--border);
+  border-radius: 8px;
+  color: var(--text);
+  background: #fff;
+  font: inherit;
+  font-size: 0.92rem;
+  line-height: 1.65;
+  outline: none;
+  overflow-wrap: anywhere;
+}
+
+.utility-textarea:focus,
+.utility-input:focus {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(37,99,235,0.08);
+}
+
+.utility-textarea.output {
+  min-height: 130px;
+  background: #f8fafc;
+  font-family: Consolas, "Courier New", monospace;
+  font-size: 0.84rem;
+}
+
+.utility-input {
+  width: 100%;
+  min-height: 44px;
+  padding: 11px 14px;
+  border: 1.5px solid var(--border);
+  border-radius: 8px;
+  background: #fff;
+  color: var(--text);
+  font: inherit;
+  outline: none;
+}
+
+.action-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.action-grid .btn-calc,
+.utility-action {
+  min-height: 48px;
+  margin-top: 0;
+}
+
+.utility-action {
+  color: var(--primary);
+  border-color: #bfdbfe;
+  background: var(--primary-light);
+}
+
+.utility-action:hover { background: #dbeafe; }
+
+.utility-output-group { margin-top: 18px; }
+
+.output-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 7px;
+}
+
+.output-heading .form-label { margin-bottom: 0; }
+
+.inline-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.utility-status {
+  min-height: 22px;
+  margin: 10px 0 0;
+  font-size: 0.8rem;
+  line-height: 1.5;
+}
+
+.utility-status.success { color: #166534; }
+.utility-status.error { color: #b91c1c; }
+.utility-status.working { color: var(--primary); }
+
+.hash-result-block + .hash-result-block {
+  padding-top: 20px;
+  margin-top: 20px;
+  border-top: 1px solid var(--border);
+}
+
+.hash-output { min-height: 88px; }
+.hash-output.large { min-height: 112px; }
+.hash-length { margin-left: 4px; color: var(--text-muted); font-size: 0.75rem; font-weight: 500; }
+
+.crypto-warning {
+  margin-bottom: 18px;
+  padding: 12px 14px;
+  border: 1px solid #fcd34d;
+  border-radius: 8px;
+  background: #fffbeb;
+  color: #92400e;
+  font-size: 0.82rem;
+  line-height: 1.6;
+}
+
+.crypto-tabs { margin-bottom: 16px; }
+.crypto-panel { animation: fadeUp 0.2s ease; }
+.crypto-panel[hidden] { display: none; }
+
+.panel-description {
+  margin: -10px 0 18px;
+  color: var(--text-muted);
+  font-size: 0.84rem;
+  line-height: 1.6;
+}
+
+.password-row {
+  display: flex;
+  align-items: stretch;
+  gap: 8px;
+}
+
+.password-row .utility-input { flex: 1; min-width: 0; }
+.password-toggle { flex: 0 0 76px; padding: 8px; }
+.mapping-input { min-height: 130px; }
+
+.check-option {
+  display: flex;
+  align-items: flex-start;
+  gap: 7px;
+  margin-top: 10px;
+  color: #4b5563;
+  font-size: 0.82rem;
+  line-height: 1.5;
+  cursor: pointer;
+}
+
+.check-option input { margin-top: 3px; accent-color: var(--primary); }
+
+.btn-calc:disabled,
+.btn-secondary:disabled {
+  opacity: 0.6;
+  cursor: wait;
+}
+
+@media (max-width: 600px) {
+  .utility-tabs.crypto-tabs { display: grid; grid-template-columns: 1fr; }
+  .action-grid { grid-template-columns: 1fr; }
+  .output-heading { align-items: flex-start; }
+  .inline-actions { gap: 6px; }
+  .utility-textarea { min-height: 135px; }
+}

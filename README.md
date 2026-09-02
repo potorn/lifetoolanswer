@@ -33,6 +33,9 @@ Built with plain HTML + CSS + JS. No framework, package manager, or required bui
 | [글자 수 계산기](tools/text-counter.html) | 공백 포함·제외·UTF-8 바이트 | Text Counter | Graphemes, words, lines, UTF-8 bytes |
 | [예금·적금 계산기](tools/savings.html) | 세전·세후 만기금액 예상 | Savings Calculator | Deposit and installment interest |
 | [QR 코드 생성기](tools/qr.html) | URL·텍스트를 PNG QR로 생성 | QR Generator | Local PNG QR generation |
+| [인코딩·디코딩](tools/encoder.html) | Base64·URL 인코딩과 디코딩 | Encoder / Decoder | UTF-8 Base64 and URL conversion |
+| [SHA 해시 생성기](tools/hash.html) | SHA-256·SHA-512 문자열 해시 | Hash Generator | Local SHA-256 and SHA-512 hashing |
+| [암호화·복호화](tools/encryption.html) | AES-GCM·키워드·문자 치환 | Encryption Tool | AES-GCM and educational ciphers |
 
 ---
 
@@ -62,7 +65,10 @@ site/
 │   └── tool.css            # 도구 페이지 레이아웃 (폼, 결과 카드)
 ├── js/
 │   ├── bmi.js
+│   ├── encoder.js
+│   ├── encryption.js
 │   ├── gif-maker.js
+│   ├── hash.js
 │   ├── image.js
 │   ├── loan.js
 │   ├── qr.js
@@ -72,7 +78,10 @@ site/
 │   └── vat.js
 ├── tools/
 │   ├── bmi.html
+│   ├── encoder.html
+│   ├── encryption.html
 │   ├── gif-maker.html
+│   ├── hash.html
 │   ├── image.html
 │   ├── loan.html
 │   ├── qr.html

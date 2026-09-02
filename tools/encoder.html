@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>인코딩 디코딩 - Base64·URL 변환기 | 생활도구</title>
+  <meta name="description" content="한글과 영문 텍스트를 Base64 또는 URL 형식으로 무료 인코딩·디코딩하세요. 입력 내용은 서버 전송 없이 브라우저에서 처리됩니다.">
+  <meta name="keywords" content="인코딩 디코딩, Base64 인코딩, Base64 디코딩, URL 인코딩, URL 디코딩, UTF-8 변환">
+  <meta name="robots" content="index,follow">
+  <link rel="canonical" href="https://lifetoolanswer.com/tools/encoder.html">
+  <meta property="og:title" content="Base64·URL 인코딩 디코딩 | 생활도구">
+  <meta property="og:description" content="텍스트를 Base64와 URL 형식으로 브라우저에서 안전하게 변환하세요.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://lifetoolanswer.com/tools/encoder.html">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🔧</text></svg>">
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/tool.css">
+  <!-- Google AdSense (승인 후 아래 주석을 해제하고 실제 코드로 교체하세요) -->
+  <!-- <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXXXXXXXXXX" crossorigin="anonymous"></script> -->
+  <script type="application/ld+json">
+  {
+    "@context":"https://schema.org",
+    "@graph":[
+      {"@type":"WebApplication","name":"Base64·URL 인코딩 디코딩","url":"https://lifetoolanswer.com/tools/encoder.html","description":"UTF-8 텍스트를 Base64와 URL 형식으로 인코딩하거나 디코딩하는 무료 브라우저 도구","applicationCategory":"UtilitiesApplication","operatingSystem":"Web","offers":{"@type":"Offer","price":"0","priceCurrency":"KRW"}},
+      {"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"홈","item":"https://lifetoolanswer.com/"},{"@type":"ListItem","position":2,"name":"인코딩·디코딩","item":"https://lifetoolanswer.com/tools/encoder.html"}]},
+      {"@type":"FAQPage","mainEntity":[
+        {"@type":"Question","name":"Base64는 암호화 방식인가요?","acceptedAnswer":{"@type":"Answer","text":"아니요. Base64는 데이터를 전송하기 쉬운 문자열로 바꾸는 인코딩 방식이며 누구나 원문으로 되돌릴 수 있습니다."}},
+        {"@type":"Question","name":"입력한 텍스트가 서버에 저장되나요?","acceptedAnswer":{"@type":"Answer","text":"아니요. 모든 변환은 현재 브라우저에서 처리되며 생활도구 서버로 전송하거나 저장하지 않습니다."}}
+      ]}
+    ]
+  }
+  </script>
+</head>
+<body>
+<header><div class="container"><div class="header-inner">
+  <a href="../index.html" class="logo"><span class="logo-icon">🔧</span><span class="logo-name">생활<span>도구</span></span></a>
+  <span class="header-desc">무료 온라인 도구 모음</span>
+  <nav class="header-nav"><a href="about.html" class="nav-link">사이트 소개</a><a href="guide.html" class="nav-link">사용방법</a></nav>
+</div></div></header>
+
+<main class="tool-page">
+  <nav class="breadcrumb"><a href="../index.html">홈</a><span class="breadcrumb-sep">›</span><span>인코딩·디코딩</span></nav>
+  <div class="tool-header">
+    <span class="tool-header-icon">↔️</span>
+    <h1>Base64·URL 인코딩 디코딩</h1>
+    <p>한글과 영문 텍스트를 Base64 또는 URL 형식으로 간편하게 변환하세요.</p>
+  </div>
+
+  <div class="local-only-note">입력 내용과 변환 결과는 브라우저 안에서만 처리되며 서버로 전송되거나 저장되지 않습니다.</div>
+
+  <div class="card">
+    <div class="utility-tabs" role="tablist" aria-label="인코딩 방식">
+      <button type="button" class="utility-tab active" role="tab" aria-selected="true" data-mode="base64">Base64</button>
+      <button type="button" class="utility-tab" role="tab" aria-selected="false" data-mode="url">URL</button>
+    </div>
+    <div class="form-group">
+      <label class="form-label" for="encoderInput">변환할 내용</label>
+      <textarea id="encoderInput" class="utility-textarea" maxlength="200000" placeholder="인코딩하거나 디코딩할 텍스트를 입력하세요." autocomplete="off" spellcheck="false"></textarea>
+    </div>
+    <div class="action-grid">
+      <button type="button" class="btn-calc" id="encodeBtn">Base64 인코딩</button>
+      <button type="button" class="btn-secondary utility-action" id="decodeBtn">Base64 디코딩</button>
+    </div>
+    <p class="utility-status" id="encoderStatus" aria-live="polite"></p>
+    <div class="form-group utility-output-group">
+      <div class="output-heading">
+        <label class="form-label" for="encoderOutput">변환 결과</label>
+        <button type="button" class="btn-text-clear" id="copyEncoderBtn">결과 복사</button>
+      </div>
+      <textarea id="encoderOutput" class="utility-textarea output" readonly placeholder="변환 결과가 여기에 표시됩니다."></textarea>
+    </div>
+  </div>
+
+  <!-- AdSense 본문 광고 (승인 후 광고 코드로 교체) -->
+  <!-- <div class="ad-slot">광고 영역 (Google AdSense)</div> -->
+
+  <div class="info-card">
+    <h2>Base64와 URL 인코딩의 차이</h2>
+    <table class="ref-table"><thead><tr><th>방식</th><th>주요 용도</th></tr></thead><tbody>
+      <tr><td><strong>Base64</strong></td><td>텍스트나 데이터를 영문·숫자 중심 문자열로 표현합니다. 보안을 위한 암호화 방식은 아닙니다.</td></tr>
+      <tr><td><strong>URL 인코딩</strong></td><td>주소에 바로 쓰기 어려운 한글, 공백, 특수문자를 <code>%EA%B0%80</code> 같은 형태로 바꿉니다.</td></tr>
+    </tbody></table>
+    <p class="tool-inline-link">내용을 실제로 보호하려면 <a href="encryption.html">암호화·복호화 도구</a>의 AES-GCM 방식을 사용하세요.</p>
+  </div>
+  <div class="info-card">
+    <h2>자주 묻는 질문</h2>
+    <h3>Base64는 암호화 방식인가요?</h3>
+    <p>아닙니다. Base64는 누구나 디코딩할 수 있는 데이터 표현 방식이므로 비밀번호나 개인정보를 보호할 수 없습니다.</p>
+    <h3>한글도 변환할 수 있나요?</h3>
+    <p>네. Base64는 UTF-8 기준으로 한글과 이모지를 처리하며, URL 인코딩도 한글과 특수문자를 지원합니다.</p>
+  </div>
+</main>
+
+<footer><div class="container"><div class="footer-inner"><div class="footer-logo">🔧 생활도구</div><div>자주 쓰는 온라인 도구를 무료로 제공합니다.</div><div class="footer-links"><a href="../index.html">홈으로</a><a href="privacy.html">개인정보처리방침</a><a href="disclaimer.html">면책 조항</a></div><div style="margin-top:8px;">© 2026 생활도구. All rights reserved.</div></div></div></footer>
+<script src="../js/encoder.js"></script>
+</body>
+</html>

@@ -71,6 +71,21 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://lifetoolanswer.com/tools/encoder.html</loc>
+    <changefreq>yearly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://lifetoolanswer.com/tools/hash.html</loc>
+    <changefreq>yearly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://lifetoolanswer.com/tools/encryption.html</loc>
+    <changefreq>yearly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://lifetoolanswer.com/tools/about.html</loc>
     <changefreq>yearly</changefreq>
     <priority>0.5</priority>
