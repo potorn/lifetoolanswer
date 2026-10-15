@@ -151,6 +151,7 @@ if (typeof document !== 'undefined') document.addEventListener('DOMContentLoaded
       event.preventDefault(); buttons[next].focus(); selectTab(buttons[next].dataset.tab);
     });
   });
+  $('openExport').addEventListener('click', () => { selectTab('save'); $('exportFormat').focus(); });
 
   const specs = [
     ['brightness', '밝기', -100, 100, 1, 'adjustmentControls'],
@@ -182,6 +183,11 @@ if (typeof document !== 'undefined') document.addEventListener('DOMContentLoaded
   function updateOutput(input) {
     const key = input.dataset.adjust;
     $('value-' + key).textContent = key === 'posterize' && +input.value < 2 ? '끄기' : input.value;
+    updateRangeTrack(input);
+  }
+  function updateRangeTrack(input) {
+    const progress = (Number(input.value) - Number(input.min)) / (Number(input.max) - Number(input.min)) * 100;
+    input.style.setProperty('--range-progress', clamp(progress, 0, 100) + '%');
   }
   document.querySelectorAll('[data-adjust]').forEach(input => {
     input.addEventListener('input', () => {
@@ -267,6 +273,7 @@ if (typeof document !== 'undefined') document.addEventListener('DOMContentLoaded
     let cw = w, ch = h;
     if (r) { cw = Math.min(w, h * r); ch = cw / r; }
     crop = { x: (w - cw) / 2, y: (h - ch) / 2, w: cw, h: ch };
+    document.querySelectorAll('[name="editorCropRatio"]').forEach(input => { input.checked = input.value === $('cropRatio').value; });
     syncCrop();
   }
   function syncCrop() {
@@ -277,6 +284,9 @@ if (typeof document !== 'undefined') document.addEventListener('DOMContentLoaded
   }
   function showOverlay() { overlay.hidden = currentTab !== 'crop' || comparing; }
   $('cropRatio').addEventListener('change', resetCrop);
+  document.querySelectorAll('[name="editorCropRatio"]').forEach(input => {
+    input.addEventListener('change', () => { $('cropRatio').value = input.value; resetCrop(); });
+  });
   $('resetCrop').addEventListener('click', resetCrop);
   ['x', 'y', 'w', 'h'].forEach(key => {
     $('crop' + key.toUpperCase()).addEventListener('change', event => {
@@ -368,6 +378,7 @@ if (typeof document !== 'undefined') document.addEventListener('DOMContentLoaded
     const t = activeText(); $('textFields').disabled = !t;
     if (!t) return;
     $('textContent').value = t.content; $('textFont').value = t.font; $('textSize').value = t.size; $('textColor').value = t.color;
+    $('textColorValue').textContent = t.color.toUpperCase();
     $('textAlign').value = t.align; $('textBold').checked = t.bold; $('textOutline').checked = t.outline;
     syncTextPosition(t);
   }
@@ -391,6 +402,7 @@ if (typeof document !== 'undefined') document.addEventListener('DOMContentLoaded
       if (key === 'size') value = clamp(Number(value) || 8, 8, 600);
       if (key === 'x' || key === 'y') value = clamp(Number(value) || 0, 0, 100) / 100 * (key === 'x' ? state.base.width : state.base.height);
       t[key] = value; requestRender();
+      if (key === 'color') $('textColorValue').textContent = value.toUpperCase();
       leaveComparison();
     });
     input.addEventListener('change', () => { commit(); syncText(); });
@@ -439,6 +451,18 @@ if (typeof document !== 'undefined') document.addEventListener('DOMContentLoaded
     finally { if (url) URL.revokeObjectURL(url); }
   }
   $('editorFile').addEventListener('change', event => { if (event.target.files[0]) loadFile(event.target.files[0]); event.target.value = ''; });
+  $('changeImage').addEventListener('click', () => $('editorFile').click());
+  $('editorDemo').addEventListener('click', async () => {
+    const id = ++loadingId;
+    $('editorDemo').disabled = true; status('샘플 이미지를 불러오는 중입니다…');
+    try {
+      const response = await fetch(new URL('../img/hero-tools.png', import.meta.url));
+      if (!response.ok) throw new Error('샘플 이미지를 불러오지 못했습니다. 기기의 이미지를 선택해 주세요.');
+      const blob = await response.blob();
+      if (id === loadingId) await loadFile(new File([blob], '샘플 이미지.png', { type: 'image/png' }));
+    } catch (error) { if (id === loadingId) status(error.message, true); }
+    finally { $('editorDemo').disabled = false; }
+  });
   $('editorUpload').addEventListener('dragover', event => { event.preventDefault(); $('editorUpload').classList.add('drag-over'); });
   $('editorUpload').addEventListener('dragleave', () => $('editorUpload').classList.remove('drag-over'));
   $('editorUpload').addEventListener('drop', event => { event.preventDefault(); $('editorUpload').classList.remove('drag-over'); if (event.dataTransfer.files[0]) loadFile(event.dataTransfer.files[0]); });
@@ -460,7 +484,8 @@ if (typeof document !== 'undefined') document.addEventListener('DOMContentLoaded
     $('exportQualityGroup').hidden = $('exportFormat').value === 'png';
     $('exportBackgroundGroup').hidden = $('exportFormat').value !== 'jpeg';
   });
-  $('exportQuality').addEventListener('input', () => { $('exportQualityValue').value = $('exportQuality').value + '%'; });
+  updateRangeTrack($('exportQuality'));
+  $('exportQuality').addEventListener('input', () => { $('exportQualityValue').value = $('exportQuality').value + '%'; updateRangeTrack($('exportQuality')); });
   ['Width', 'Height'].forEach(axis => $('export' + axis).addEventListener('input', () => {
     if (!$('exportAspect').checked || !$('export' + axis).value) return;
     const w = state.base.width, h = state.base.height;
