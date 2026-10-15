@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>이미지 편집기 - 크롭·색상 보정·텍스트 삽입 | 생활도구</title>
+  <meta name="description" content="이미지를 서버 전송 없이 브라우저에서 편집하세요. 자유·비율 크롭, 밝기·색조·채도·레벨 보정, 흑백, 텍스트, 회전과 리사이즈를 무료로 제공합니다.">
+  <meta name="robots" content="index,follow">
+  <link rel="canonical" href="https://lifetoolanswer.com/tools/image-editor.html">
+  <meta property="og:title" content="이미지 편집기 - 생활도구">
+  <meta property="og:description" content="자유 크롭부터 색상 보정, 텍스트 삽입까지. 내 브라우저에서 완성하는 이미지 편집.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://lifetoolanswer.com/tools/image-editor.html">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🔧</text></svg>">
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/tool.css">
+  <!-- Google AdSense (승인 후 실제 코드로 교체) -->
+  <!-- <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXXXXXXXXXX" crossorigin="anonymous"></script> -->
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"WebApplication","name":"이미지 편집기","url":"https://lifetoolanswer.com/tools/image-editor.html","description":"서버 전송 없이 이미지 크롭, 색상 보정, 텍스트 삽입과 저장을 지원하는 무료 편집기","applicationCategory":"MultimediaApplication","operatingSystem":"Web","offers":{"@type":"Offer","price":"0","priceCurrency":"KRW"}}
+  </script>
+</head>
+<body>
+<header><div class="container"><div class="header-inner">
+  <a href="../index.html" class="logo"><span class="logo-icon">🔧</span><span class="logo-name">생활<span>도구</span></span></a>
+  <span class="header-desc">무료 온라인 도구 모음</span>
+  <nav class="header-nav"><a href="about.html" class="nav-link">사이트 소개</a><a href="guide.html" class="nav-link">사용방법</a></nav>
+</div></div></header>
+<main class="tool-page editor-page">
+  <nav class="breadcrumb"><a href="../index.html">홈</a><span class="breadcrumb-sep">›</span><span>이미지 편집기</span></nav>
+  <div class="tool-header editor-heading">
+    <div><span class="editor-eyebrow">IMAGE STUDIO</span><h1>이미지 편집기</h1><p>자르고, 보정하고, 한 줄을 더하세요.</p></div>
+    <span class="editor-local-badge">● 브라우저에서만 처리</span>
+  </div>
+  <div class="editor-upload card" id="editorUpload">
+    <label class="editor-file-label" for="editorFile"><span class="editor-upload-icon">＋</span><strong>편집할 이미지 선택</strong><span>또는 이곳에 파일을 놓으세요</span></label>
+    <input type="file" id="editorFile" accept="image/png,image/jpeg,image/webp,image/avif,image/bmp">
+    <p>PNG · JPEG · WebP · AVIF · BMP / 최대 25MB · 4,096px · 1,600만 픽셀</p>
+  </div>
+  <p class="img-status" id="editorStatus" role="status" aria-live="polite" hidden></p>
+  <section class="editor-workbench" id="editorWorkbench" aria-label="이미지 편집 작업 공간" hidden>
+    <div class="editor-toolbar">
+      <div class="editor-file-info"><strong id="editorFilename"></strong><span id="editorDimensions"></span></div>
+      <div class="editor-actions">
+        <button type="button" id="editorUndo" title="실행 취소 (Ctrl/⌘+Z)">↶ 실행 취소</button>
+        <button type="button" id="editorRedo" title="다시 실행 (Ctrl/⌘+Shift+Z)">↷ 다시 실행</button>
+        <button type="button" id="editorCompare" aria-pressed="false">원본 비교</button>
+        <button type="button" id="editorReset">처음으로</button>
+      </div>
+    </div>
+    <div class="editor-layout">
+      <aside class="editor-sidebar">
+        <div class="editor-tabs" role="tablist" aria-label="편집 도구">
+          <button type="button" role="tab" id="tab-crop" aria-controls="panel-crop" aria-selected="true" data-tab="crop">자르기</button>
+          <button type="button" role="tab" id="tab-adjust" aria-controls="panel-adjust" aria-selected="false" tabindex="-1" data-tab="adjust">보정</button>
+          <button type="button" role="tab" id="tab-text" aria-controls="panel-text" aria-selected="false" tabindex="-1" data-tab="text">텍스트</button>
+          <button type="button" role="tab" id="tab-save" aria-controls="panel-save" aria-selected="false" tabindex="-1" data-tab="save">저장</button>
+        </div>
+        <div class="editor-panel" role="tabpanel" id="panel-crop" aria-labelledby="tab-crop">
+          <h2>필요한 만큼만, 딱.</h2>
+          <label for="cropRatio">자르기 비율</label>
+          <select id="cropRatio"><option value="free">자유 비율</option><option value="original">현재 이미지 비율</option><option value="1">1 : 1 정사각형</option><option value="1.3333333333333333">4 : 3 가로</option><option value="0.75">3 : 4 세로</option><option value="1.7777777777777777">16 : 9 가로</option><option value="0.5625">9 : 16 세로</option></select>
+          <p class="editor-help">이미지 위에서 드래그해 영역을 그리세요. 영역 안은 이동, 테두리의 점은 크기 조절입니다. 터치도 지원합니다.</p>
+          <div class="editor-two-col">
+            <label>X (px)<input type="number" id="cropX" min="0" step="1" value="0"></label>
+            <label>Y (px)<input type="number" id="cropY" min="0" step="1" value="0"></label>
+            <label>너비 (px)<input type="number" id="cropW" min="1" step="1"></label>
+            <label>높이 (px)<input type="number" id="cropH" min="1" step="1"></label>
+          </div>
+          <button type="button" class="editor-primary" id="applyCrop">선택 영역 자르기</button>
+          <button type="button" id="resetCrop">영역 다시 선택</button>
+          <div class="editor-divider"></div><h3>방향 바꾸기</h3>
+          <div class="editor-two-col">
+            <button type="button" data-transform="left">↶ 왼쪽 90°</button><button type="button" data-transform="right">↷ 오른쪽 90°</button>
+            <button type="button" data-transform="horizontal">↔ 좌우 뒤집기</button><button type="button" data-transform="vertical">↕ 상하 뒤집기</button>
+          </div>
+          <p class="editor-help">자르기·회전·뒤집기를 적용하면 현재 보정과 텍스트가 이미지에 합쳐집니다. 실행 취소로 되돌릴 수 있습니다.</p>
+        </div>
+        <div class="editor-panel" role="tabpanel" id="panel-adjust" aria-labelledby="tab-adjust" hidden>
+          <h2>사진의 분위기를 바꿔요.</h2>
+          <p class="editor-help">보정은 사진에만 적용됩니다. 텍스트의 색상은 텍스트 탭에서 바꿔 주세요.</p>
+          <div id="adjustmentControls"></div>
+          <details class="editor-details"><summary>레벨 · 감마</summary><p class="editor-help">입력 검정·흰색점을 조절하고 중간톤을 감마로 보정합니다.</p><div id="levelControls"></div></details>
+          <details class="editor-details"><summary>색 균형 · 효과</summary><div id="effectControls"></div>
+            <label class="editor-check"><input type="checkbox" data-adjust="grayscale"> 흑백</label>
+            <label class="editor-check"><input type="checkbox" data-adjust="invert"> 색상 반전</label>
+            <label class="editor-check"><input type="checkbox" data-adjust="sepia"> 세피아 포토 필터</label>
+            <label class="editor-check"><input type="checkbox" data-adjust="thresholdOn"> 임계값 효과 적용</label>
+          </details>
+          <button type="button" id="resetAdjustments">보정값 초기화</button>
+        </div>
+        <div class="editor-panel" role="tabpanel" id="panel-text" aria-labelledby="tab-text" hidden>
+          <h2>이미지에 말을 더해요.</h2>
+          <button type="button" class="editor-primary" id="addText">＋ 텍스트 추가</button>
+          <label for="textLayer">편집할 텍스트</label><select id="textLayer"><option value="">텍스트를 추가하세요</option></select>
+          <fieldset id="textFields" disabled>
+            <label for="textContent">내용 (여러 줄 가능)</label><textarea id="textContent" rows="3" maxlength="500" placeholder="텍스트를 입력하세요"></textarea>
+            <label for="textFont">글꼴</label><select id="textFont"><option value="sans">기본 고딕</option><option value="serif">명조 / 바탕</option><option value="mono">고정폭</option><option value="arial">Arial</option><option value="georgia">Georgia</option></select>
+            <div class="editor-two-col"><label>크기 (px)<input type="number" id="textSize" min="8" max="600" value="48"></label><label>색상<input type="color" id="textColor" value="#ffffff"></label></div>
+            <label for="textAlign">정렬</label><select id="textAlign"><option value="left">왼쪽</option><option value="center">가운데</option><option value="right">오른쪽</option></select>
+            <div class="editor-two-col"><label>X 위치 (%)<input type="number" id="textX" min="0" max="100" step="0.1"></label><label>Y 위치 (%)<input type="number" id="textY" min="0" max="100" step="0.1"></label></div>
+            <label class="editor-check"><input type="checkbox" id="textBold" checked> 굵게</label>
+            <label class="editor-check"><input type="checkbox" id="textOutline" checked> 검정 테두리</label>
+            <button type="button" id="deleteText">선택한 텍스트 삭제</button>
+          </fieldset>
+          <p class="editor-help">미리보기의 텍스트를 드래그해 위치를 옮기세요. 글꼴은 기기에 설치된 글꼴을 사용하며 기기마다 다르게 보일 수 있습니다. 최대 20개까지 추가할 수 있습니다.</p>
+        </div>
+        <div class="editor-panel" role="tabpanel" id="panel-save" aria-labelledby="tab-save" hidden>
+          <h2>완성한 이미지를 내 기기로.</h2>
+          <label for="exportFormat">저장 포맷</label><select id="exportFormat"><option value="png">PNG · 투명 배경 유지</option><option value="jpeg">JPEG · 사진에 적합</option><option value="webp">WebP · 작은 용량</option></select>
+          <div id="exportQualityGroup" hidden><label for="exportQuality">품질 <output id="exportQualityValue">90%</output></label><input type="range" id="exportQuality" min="10" max="100" value="90"></div>
+          <div id="exportBackgroundGroup" hidden><label for="exportBackground">투명 영역 배경색</label><input type="color" id="exportBackground" value="#ffffff"></div>
+          <div class="editor-two-col"><label>너비 (px)<input type="number" id="exportWidth" min="1" max="4096" step="1"></label><label>높이 (px)<input type="number" id="exportHeight" min="1" max="4096" step="1"></label></div>
+          <label class="editor-check"><input type="checkbox" id="exportAspect" checked> 원본 비율 유지</label>
+          <button type="button" class="editor-primary" id="exportImage">이미지 다운로드</button>
+          <p class="editor-help">미리보기는 화면에 맞게 축소됩니다. 저장 시 지정한 픽셀 크기로 보정과 텍스트를 다시 그립니다. 최대 4,096px · 1,600만 픽셀. GIF 제작은 <a href="gif-maker.html">GIF 만들기</a>를 이용하세요.</p>
+        </div>
+      </aside>
+      <div class="editor-preview">
+        <div class="editor-preview-heading"><span id="previewLabel">편집 미리보기</span><span>체크무늬 = 투명 영역</span></div>
+        <div class="editor-stage" id="editorStage">
+          <div class="editor-surface" id="editorSurface">
+            <canvas id="editorCanvas" width="1" height="1" aria-label="이미지 편집 미리보기"></canvas>
+            <div class="editor-crop-overlay" id="cropOverlay" aria-label="크롭 선택 영역 (숫자 입력으로도 조절 가능)">
+              <div class="editor-crop-box" id="cropBox"><span class="editor-crop-grid"></span>
+                <span data-handle="nw"></span><span data-handle="n"></span><span data-handle="ne"></span><span data-handle="e"></span><span data-handle="se"></span><span data-handle="s"></span><span data-handle="sw"></span><span data-handle="w"></span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <p class="editor-preview-note" id="editorHint">드래그하거나 숫자를 입력해 자를 영역을 선택하세요.</p>
+        <p class="editor-preview-note">실행 취소는 최근 최대 20단계이며, 큰 이미지에서는 메모리에 맞춰 줄어듭니다.</p>
+      </div>
+    </div>
+  </section>
+  <div class="ad-slot">광고 영역 (Google AdSense)</div>
+  <div class="editor-info-grid">
+    <div class="info-card"><h2>서버 전송 없이 편집</h2><p>선택한 이미지, 텍스트와 결과는 이 브라우저 안에서만 처리합니다. 페이지를 닫거나 새로고침하면 편집 내용이 사라지므로 다운로드해 보관하세요.</p></div>
+    <div class="info-card"><h2>간단한 편집부터 보정까지</h2><p>자유·고정 비율 크롭, 회전·뒤집기, 밝기·대비·노출·색조·채도·활기, 레벨·감마, 색 균형, 흑백·반전·세피아·포스터화·임계값 효과와 텍스트를 지원합니다.</p><p>정밀 커브, 마스크, PSD 레이어 편집은 지원하지 않습니다. 애니메이션 GIF는 <a href="gif-maker.html">GIF 만들기</a>, 기타 포맷은 <a href="image.html">이미지 포맷 변환기</a>를 이용하세요.</p></div>
+  </div>
+</main>
+<footer><div class="container"><div class="footer-inner"><div class="footer-logo">🔧 생활도구</div><div>자주 쓰는 온라인 도구를 무료로 제공합니다.</div><div class="footer-links"><a href="../index.html">홈으로</a><a href="privacy.html">개인정보처리방침</a><a href="disclaimer.html">면책 조항</a></div><div style="margin-top:8px;">© 2026 생활도구. All rights reserved.</div></div></div></footer>
+<script type="module" src="../js/image-editor.js"></script>
+</body>
+</html>

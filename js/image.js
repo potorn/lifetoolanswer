@@ -25,6 +25,8 @@ document.addEventListener('DOMContentLoaded', function () {
   var worker = new Worker('../js/image-worker.js', { type: 'module' });
   var currentFile = null;
   var currentBlob = null;
+  var currentFilename = '';
+  var pendingFilename = '';
   var currentFmt = 'png';
   var origW = 0;
   var origH = 0;
@@ -54,9 +56,9 @@ document.addEventListener('DOMContentLoaded', function () {
       animationNote.style.display = 'none';
       return;
     }
-    var preservesAnimation = currentFmt === 'gif' || currentFmt === 'webp';
+    var preservesAnimation = currentFmt === 'webp';
     animationNote.textContent = preservesAnimation
-      ? '움짤입니다. GIF와 WebP로 변환하면 모든 프레임과 재생 시간을 유지합니다.'
+      ? '움짤입니다. WebP로 변환하면 모든 프레임과 재생 시간을 유지합니다.'
       : '움짤을 ' + currentFmt.toUpperCase() + '로 변환하면 첫 프레임만 정지 이미지로 저장됩니다.';
     animationNote.className = 'img-animation-note' + (preservesAnimation ? ' success' : '');
     animationNote.style.display = '';
@@ -97,7 +99,8 @@ document.addEventListener('DOMContentLoaded', function () {
     if (data.id !== requestId) return;
     if (!data.ok) {
       setStatus(data.error || '이미지를 처리하지 못했습니다. 다른 파일을 선택해 주세요.', 'error');
-      convertBtn.disabled = false;
+      convertBtn.disabled = !origW || !origH;
+      convertBtn.textContent = '변환 & 다운로드';
       return;
     }
     if (data.action === 'inspect') {
@@ -110,6 +113,8 @@ document.addEventListener('DOMContentLoaded', function () {
       optionsGroup.style.display = '';
       resizeGroup.style.display = '';
       convertBtn.style.display = '';
+      convertBtn.disabled = false;
+      convertBtn.textContent = '변환 & 다운로드';
       resizeW.value = '';
       resizeH.value = '';
       infoBefore.textContent = origW + ' × ' + origH + ' · ' + formatSize(currentFile.size) + (sourceFrames > 1 ? ' · ' + sourceFrames + '프레임' : '');
@@ -120,11 +125,12 @@ document.addEventListener('DOMContentLoaded', function () {
     }
     if (data.action === 'convert') {
       currentBlob = new Blob([data.bytes], { type: data.mime });
+      currentFilename = pendingFilename;
       showResult(data);
       convertBtn.disabled = false;
       convertBtn.textContent = '변환 & 다운로드';
       setStatus('변환이 완료되었습니다.', 'success');
-      triggerDownload(currentBlob, getFilename());
+      triggerDownload(currentBlob, currentFilename);
     }
   });
 
@@ -136,17 +142,23 @@ document.addEventListener('DOMContentLoaded', function () {
     // Reserve the request ID before asynchronously reading the file, so a slow
     // first selection cannot replace a newer one when it eventually completes.
     var selectionRequest = ++requestId;
+    convertBtn.disabled = true;
+    convertBtn.textContent = '변환 & 다운로드';
     setStatus('파일 형식을 확인하는 중입니다.');
     file.arrayBuffer().then(function (buffer) {
       if (selectionRequest !== requestId) return;
       var validation = validateImageBuffer(buffer, file.name);
       if (!validation.ok) {
         setStatus(validation.error, 'error');
+        convertBtn.disabled = !origW || !origH;
         return;
       }
       revokeObjectUrls();
       currentFile = file;
       currentBlob = null;
+      currentFilename = '';
+      origW = 0;
+      origH = 0;
       sourceFrames = 1;
       resultCard.classList.remove('visible');
       optionsGroup.style.display = 'none';
@@ -159,37 +171,51 @@ document.addEventListener('DOMContentLoaded', function () {
       previewBefore.removeAttribute('src');
       previewAfter.removeAttribute('src');
       worker.postMessage({ id: selectionRequest, action: 'inspect', bytes: buffer, fileName: file.name }, [buffer]);
-    }).catch(function () { setStatus('파일을 읽지 못했습니다.', 'error'); });
+    }).catch(function () {
+      if (selectionRequest !== requestId) return;
+      setStatus('파일을 읽지 못했습니다.', 'error');
+      convertBtn.disabled = !origW || !origH;
+    });
   }
 
   convertBtn.addEventListener('click', function () {
-    if (!currentFile) return;
-    var targetW = Number(resizeW.value) || origW;
-    var targetH = Number(resizeH.value) || origH;
-    if (targetW < 1 || targetH < 1 || targetW > MAX_IMAGE_DIMENSION || targetH > MAX_IMAGE_DIMENSION || targetW * targetH > MAX_IMAGE_PIXELS) {
-      setStatus('출력은 최대 4,096px, 1,600만 픽셀까지 지원합니다.', 'error');
+    if (!currentFile || !origW || !origH || convertBtn.disabled) return;
+    var targetW = resizeW.value === '' ? origW : Number(resizeW.value);
+    var targetH = resizeH.value === '' ? origH : Number(resizeH.value);
+    if (!Number.isInteger(targetW) || !Number.isInteger(targetH) || targetW < 1 || targetH < 1 || targetW > MAX_IMAGE_DIMENSION || targetH > MAX_IMAGE_DIMENSION || targetW * targetH > MAX_IMAGE_PIXELS) {
+      setStatus('출력 크기는 1~4,096px 정수, 1,600만 픽셀 이내로 입력해 주세요.', 'error');
       return;
     }
     convertBtn.disabled = true;
     convertBtn.textContent = '변환 중…';
     setStatus('브라우저에서 변환 중입니다. 파일은 서버로 전송되지 않습니다.');
-    requestId += 1;
+    // Capture the complete request before reading; controls and file selection
+    // may change while the browser is reading or the worker is converting.
+    var conversionRequest = ++requestId;
+    var options = {
+      id: conversionRequest,
+      action: 'convert',
+      fileName: currentFile.name,
+      format: currentFmt,
+      width: targetW,
+      height: targetH,
+      quality: Number(qualitySlider.value),
+      preserveAnimation: sourceFrames > 1 && currentFmt === 'webp'
+    };
+    pendingFilename = currentFile.name.replace(/\.[^.]+$/, '') + '.' + (currentFmt === 'jpeg' ? 'jpg' : currentFmt);
     currentFile.arrayBuffer().then(function (buffer) {
-      worker.postMessage({
-        id: requestId,
-        action: 'convert',
-        bytes: buffer,
-        fileName: currentFile.name,
-        format: currentFmt,
-        width: targetW,
-        height: targetH,
-        quality: Number(qualitySlider.value),
-        preserveAnimation: sourceFrames > 1 && (currentFmt === 'gif' || currentFmt === 'webp')
-      }, [buffer]);
-    }).catch(function () { setStatus('파일을 읽지 못했습니다.', 'error'); convertBtn.disabled = false; });
+      if (conversionRequest !== requestId) return;
+      options.bytes = buffer;
+      worker.postMessage(options, [buffer]);
+    }).catch(function () {
+      if (conversionRequest !== requestId) return;
+      setStatus('파일을 읽지 못했습니다.', 'error');
+      convertBtn.disabled = false;
+      convertBtn.textContent = '변환 & 다운로드';
+    });
   });
 
-  downloadBtn.addEventListener('click', function () { if (currentBlob) triggerDownload(currentBlob, getFilename()); });
+  downloadBtn.addEventListener('click', function () { if (currentBlob) triggerDownload(currentBlob, currentFilename); });
   window.addEventListener('beforeunload', function () { revokeObjectUrls(); worker.terminate(); });
 
   function showResult(data) {
@@ -216,11 +242,6 @@ document.addEventListener('DOMContentLoaded', function () {
     anchor.click();
     anchor.remove();
     setTimeout(function () { URL.revokeObjectURL(url); }, 1000);
-  }
-
-  function getFilename() {
-    var base = currentFile ? currentFile.name.replace(/\.[^.]+$/, '') : 'image';
-    return base + '.' + (currentFmt === 'jpeg' ? 'jpg' : currentFmt);
   }
 
   function formatSize(bytes) {

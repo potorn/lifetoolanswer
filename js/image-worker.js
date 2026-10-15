@@ -7,14 +7,13 @@ var formatMap = {
   jpeg: MagickFormat.Jpeg,
   webp: MagickFormat.WebP,
   tga: MagickFormat.Tga,
-  gif: MagickFormat.Gif,
   bmp: MagickFormat.Bmp,
   ico: MagickFormat.Ico,
   avif: MagickFormat.Avif
 };
 var mimeMap = {
   png: 'image/png', jpeg: 'image/jpeg', webp: 'image/webp', tga: 'image/x-tga',
-  gif: 'image/gif', bmp: 'image/bmp', ico: 'image/x-icon', avif: 'image/avif'
+  bmp: 'image/bmp', ico: 'image/x-icon', avif: 'image/avif'
 };
 
 function initialize() {
@@ -77,6 +76,7 @@ self.onmessage = async function (event) {
       return;
     }
     if (message.action === 'convert') {
+      if (!Object.hasOwn(formatMap, message.format)) throw new Error('지원하지 않는 출력 포맷입니다. GIF 출력은 GIF 만들기를 이용해 주세요.');
       var metadata = readMetadata(bytes, message.fileName, null);
       var outputFrames = message.preserveAnimation ? metadata.frames : 1;
       if (!isSafeOutputSize(message.width, message.height, outputFrames)) throw new Error('출력 이미지 크기 또는 프레임 수가 제한을 초과했습니다.');

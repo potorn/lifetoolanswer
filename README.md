@@ -23,7 +23,8 @@ Built with plain HTML + CSS + JS. No framework, package manager, or required bui
 | 도구 | 설명 | Tool | Description |
 |------|------|------|-------------|
 | [BMI 계산기](tools/bmi.html) | 체질량지수 계산 (대한비만학회 기준) | BMI Calculator | Uses Korean Society for the Study of Obesity cutoffs |
-| [이미지 변환기](tools/image.html) | PNG · JPG · WebP · GIF · BMP · ICO · AVIF · TGA 변환 | Image Converter | Convert between supported image formats in the browser |
+| [이미지 포맷 변환기](tools/image.html) | PNG · JPG · WebP · BMP · ICO · AVIF · TGA 출력 (GIF 입력 지원) | Image Format Converter | Convert image formats locally; GIF output belongs to GIF Maker |
+| [이미지 편집기](tools/image-editor.html) | 자유·비율 크롭, 색상·레벨 보정, 텍스트, 회전·뒤집기 | Image Editor | Local canvas editing, undo/redo and PNG/JPEG/WebP export |
 | [GIF 만들기](tools/gif-maker.html) | 사진 여러 장·짧은 동영상으로 GIF 만들기 | GIF Maker | Create GIFs from photos or short videos in the browser |
 | [대출 계산기](tools/loan.html) | 원리금균등 / 원금균등 / 만기일시 상환 | Loan Calculator | Equal payment / Equal principal / Bullet repayment |
 | [단위 변환기](tools/unit.html) | 길이 · 무게 · 온도 · 넓이 · 부피 | Unit Converter | Length, weight, temperature, area, volume |
@@ -48,8 +49,10 @@ python -m http.server 8080 --directory D:\ai_dev\site
 브라우저에서 `http://localhost:8080` 접속  
 Then open `http://localhost:8080` in your browser.
 
-테스트 도구·빌드 스텝 없음 — 파일을 직접 수정하고 브라우저를 새로고침하면 됩니다.  
-No tests, no build — edit a file and refresh the browser.
+필수 빌드 스텝 없음 — 파일을 직접 수정하고 브라우저를 새로고침하면 됩니다.
+No build required — edit a file and refresh the browser.
+
+이미지 도구 회귀 검사는 Node.js 22 이상에서 `node scripts/check-image-tools.mjs`로 실행합니다. 별도 패키지 설치 없이 색상 보정, 비동기 변환 요청, 결과 파일명과 실제 WASM 변환·GIF 제작을 확인합니다.
 
 업로드한 이미지·동영상과 도구 입력값은 브라우저에서 처리되며 생활도구 서버로 전송하거나 저장하지 않습니다. 실행에 필요한 글꼴·스크립트·WASM도 사이트 내부 정적 자산으로 제공합니다.
 
@@ -70,6 +73,7 @@ site/
 │   ├── gif-maker.js
 │   ├── hash.js
 │   ├── image.js
+│   ├── image-editor.js
 │   ├── loan.js
 │   ├── qr.js
 │   ├── savings.js
@@ -83,6 +87,7 @@ site/
 │   ├── gif-maker.html
 │   ├── hash.html
 │   ├── image.html
+│   ├── image-editor.html
 │   ├── loan.html
 │   ├── qr.html
 │   ├── savings.html
@@ -106,13 +111,13 @@ site/
 
 ## 배포 / Deployment
 
-Cloudflare Pages → **Upload assets** 방식으로 `site/` 폴더 전체를 업로드합니다.  
-Upload the entire `site/` directory via Cloudflare Pages → **Upload assets**.
+GitHub의 `main` 브랜치에 푸시하면 Cloudflare Pages가 자동 배포합니다. 로컬 `master` 브랜치에서는 `git push origin master:main`을 실행합니다.
+
+Cloudflare Pages automatically deploys pushes to GitHub `main`. From the local `master` branch, run `git push origin master:main`.
 
 FFmpeg WASM은 Cloudflare 단일 자산 제한을 피하기 위해 `vendor/ffmpeg/ffmpeg-core.wasm.gz`로 배포되며, 브라우저의 로컬 워커에서 압축을 풉니다. 원본 `ffmpeg-core.wasm`은 `.assetsignore`로 배포 대상에서 제외되고 공개 소스 저장소에 보존됩니다. 압축 파일은 `node scripts/compress-ffmpeg-core.mjs`로 재생성할 수 있습니다.
 
-배포 후 `sitemap.xml`과 `robots.txt`의 `your-domain.pages.dev`를 실제 도메인으로 교체하세요.  
-After deploying, replace `your-domain.pages.dev` in `sitemap.xml` and `robots.txt` with the actual domain.
+운영 도메인은 `https://lifetoolanswer.com`이며 사이트맵과 canonical URL도 이 도메인을 사용합니다.
 
 ---
 
