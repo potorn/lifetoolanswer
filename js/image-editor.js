@@ -463,9 +463,20 @@ if (typeof document !== 'undefined') document.addEventListener('DOMContentLoaded
     } catch (error) { if (id === loadingId) status(error.message, true); }
     finally { $('editorDemo').disabled = false; }
   });
-  $('editorUpload').addEventListener('dragover', event => { event.preventDefault(); $('editorUpload').classList.add('drag-over'); });
-  $('editorUpload').addEventListener('dragleave', () => $('editorUpload').classList.remove('drag-over'));
-  $('editorUpload').addEventListener('drop', event => { event.preventDefault(); $('editorUpload').classList.remove('drag-over'); if (event.dataTransfer.files[0]) loadFile(event.dataTransfer.files[0]); });
+  // The upload card collapses after loading; keep file drops available on
+  // the workspace so replacing an image still works without opening a picker.
+  [$('editorUpload'), $('editorWorkbench')].forEach(zone => {
+    zone.addEventListener('dragover', event => {
+      if (!Array.from(event.dataTransfer.types).includes('Files')) return;
+      event.preventDefault(); zone.classList.add('drag-over');
+    });
+    zone.addEventListener('dragleave', event => { if (!zone.contains(event.relatedTarget)) zone.classList.remove('drag-over'); });
+    zone.addEventListener('drop', event => {
+      zone.classList.remove('drag-over');
+      if (!event.dataTransfer.files[0]) return;
+      event.preventDefault(); loadFile(event.dataTransfer.files[0]);
+    });
+  });
   $('editorUndo').addEventListener('click', () => undo()); $('editorRedo').addEventListener('click', () => undo(true));
   document.addEventListener('keydown', event => {
     if (!state || /INPUT|TEXTAREA|SELECT/.test(event.target.tagName) || event.target.isContentEditable) return;

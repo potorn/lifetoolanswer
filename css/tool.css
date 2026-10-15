@@ -1331,6 +1331,7 @@
 .editor-page #editorStatus { padding: 0 3px; border: 0; background: none; color: #78859b; font-size: .71rem; margin: 0 0 14px; line-height: 1.7; }
 .editor-page #editorStatus.error { color: #b53943; padding: 12px 16px; border: 1px solid #f2d5d8; border-radius: 10px; background: #fff2f3; }
 .editor-workbench { overflow: hidden; border: 1px solid #dce3ee; border-radius: 17px; background: white; box-shadow: 0 8px 36px #263f6808, 0 1px 3px #263f6805; }
+.editor-workbench.drag-over { border-color: #6d9df2; box-shadow: 0 0 0 4px #3b7cf518; }
 .editor-toolbar { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px 24px; padding: 16px 20px; border-bottom: 1px solid #e9edf4; }
 .editor-document { display: flex; align-items: center; gap: 11px; min-width: 0; }
 .editor-document-icon { display: grid; place-items: center; width: 35px; height: 40px; background: #f0f5fd; border-radius: 8px; color: #7a99c8; }
