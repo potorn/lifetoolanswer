@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>걷기·달리기 페이스 계산기 - 거리·시간·속도 계산 | 생활도구</title>
+  <meta name="description" content="걷기와 달리기의 거리·시간·페이스를 서로 계산하세요. 분/km, 분/마일, km/h와 5km·10km·하프·마라톤 예상 소요 시간을 확인하는 무료 도구입니다.">
+  <meta name="robots" content="index,follow">
+  <link rel="canonical" href="https://lifetoolanswer.com/tools/pace.html">
+  <meta property="og:title" content="걷기·달리기 페이스 계산기 | 생활도구">
+  <meta property="og:description" content="5km를 30분에 이동했다면? 거리·시간·페이스를 간편하게 계산하세요.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://lifetoolanswer.com/tools/pace.html">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🔧</text></svg>">
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/tool.css">
+  <!-- Google AdSense (승인 후 실제 코드로 교체) -->
+  <!-- <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXXXXXXXXXX" crossorigin="anonymous"></script> -->
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"WebApplication","name":"걷기·달리기 페이스 계산기","url":"https://lifetoolanswer.com/tools/pace.html","description":"거리와 시간, 페이스를 상호 계산하고 km와 마일 단위의 속도와 예상 소요 시간을 제공하는 무료 도구","applicationCategory":"HealthApplication","operatingSystem":"Web","offers":{"@type":"Offer","price":"0","priceCurrency":"KRW"}}
+  </script>
+</head>
+<body>
+<header><div class="container"><div class="header-inner">
+  <a href="../index.html" class="logo"><span class="logo-icon">🔧</span><span class="logo-name">생활<span>도구</span></span></a>
+  <span class="header-desc">무료 온라인 도구 모음</span>
+  <nav class="header-nav"><a href="about.html" class="nav-link">사이트 소개</a><a href="guide.html" class="nav-link">사용방법</a></nav>
+</div></div></header>
+<main class="tool-page health-page">
+  <nav class="breadcrumb"><a href="../index.html">홈</a><span class="breadcrumb-sep">›</span><span>걷기·달리기 페이스 계산기</span></nav>
+  <div class="tool-header health-header"><span class="health-eyebrow">HEALTH TOOLS</span><span class="tool-header-icon" aria-hidden="true">🏃</span><h1>걷기·달리기 페이스 계산기</h1><p>거리와 시간을 알면 내 페이스가 보입니다. 다음 목표 기록도 계산해 보세요.</p></div>
+  <div class="health-workspace">
+    <form class="card health-form" id="paceForm" novalidate>
+      <fieldset class="health-modes"><legend>계산할 항목</legend><label><input type="radio" name="paceMode" value="pace" checked><span>페이스<span>거리 + 시간</span></span></label><label><input type="radio" name="paceMode" value="time"><span>소요 시간<span>거리 + 페이스</span></span></label><label><input type="radio" name="paceMode" value="distance"><span>거리<span>시간 + 페이스</span></span></label></fieldset>
+      <div class="health-form-tools"><label for="paceUnit">거리 단위<select class="styled-select" id="paceUnit"><option value="km">km</option><option value="mi">마일</option></select></label><button type="button" class="health-secondary" id="paceExample">예시로 계산</button></div>
+      <div class="form-group" id="distanceGroup"><label class="form-label" for="paceDistance">이동 거리</label><div class="input-wrap"><input type="number" id="paceDistance" min="0.001" max="1000" step="any" placeholder="예: 5" inputmode="decimal"><span class="input-unit" id="distanceUnitLabel">km</span></div><div class="health-presets" role="group" aria-label="거리 빠른 선택"><button type="button" data-distance="5">5km</button><button type="button" data-distance="10">10km</button><button type="button" data-distance="21.0975">하프</button><button type="button" data-distance="42.195">풀 마라톤</button></div></div>
+      <fieldset class="health-clock" id="durationGroup"><legend>이동 시간</legend><div class="health-clock-three"><label for="durationHours">시간<input type="number" id="durationHours" min="0" max="999" step="1" placeholder="0" inputmode="numeric"></label><label for="durationMinutes">분<input type="number" id="durationMinutes" min="0" max="59" step="1" placeholder="30" inputmode="numeric"></label><label for="durationSeconds">초<input type="number" id="durationSeconds" min="0" max="59" step="1" placeholder="0" inputmode="numeric"></label></div></fieldset>
+      <fieldset class="health-clock" id="targetPaceGroup" hidden><legend>1km당 페이스</legend><div class="health-two-col"><label for="paceMinutes">분<input type="number" id="paceMinutes" min="0" max="999" step="1" placeholder="예: 6" inputmode="numeric"></label><label for="paceSeconds">초<input type="number" id="paceSeconds" min="0" max="59" step="1" placeholder="0" inputmode="numeric"></label></div><p class="health-help">거리 단위가 마일이어도 이 입력은 1km당 페이스입니다. 결과에 1마일당 페이스를 함께 표시합니다.</p></fieldset>
+      <button type="submit" class="btn-calc" id="paceCalculate">페이스 계산하기</button>
+      <p class="health-status" id="paceStatus" role="status" aria-live="polite"></p>
+      <p class="health-help">시간의 빈 칸은 0으로 계산합니다. 분·초 입력에서 60은 사용할 수 없습니다.</p>
+    </form>
+    <section class="card health-result" id="paceResult" aria-label="페이스 계산 결과">
+      <div class="health-placeholder" id="pacePlaceholder"><span aria-hidden="true">↗</span><h2>나만의 페이스 찾기</h2><p>5km를 30분에 이동했다면 1km당 6분.<br>거리·시간·페이스 중 필요한 값을 계산하세요.</p></div>
+      <div id="paceValues" hidden>
+        <div class="health-result-hero"><p class="health-result-label" id="paceResultLabel">1km당 평균 페이스</p><div class="health-result-number health-pace-number" id="paceResultValue">—</div><span class="health-result-unit" id="paceResultUnit">/ km</span></div>
+        <dl class="health-metrics"><div><dt>1km당 페이스</dt><dd id="kmPaceValue">—</dd></div><div><dt>1마일당 페이스</dt><dd id="milePaceValue">—</dd></div><div><dt>평균 속도</dt><dd id="speedValue">—</dd><dd class="health-metric-sub" id="speedMiles">—</dd></div><div><dt>이동 거리</dt><dd id="distanceValue">—</dd><dd class="health-metric-sub" id="distanceMiles">—</dd></div></dl>
+        <p class="health-elapsed">전체 이동 시간 <strong id="elapsedValue">—</strong></p>
+        <h2 class="health-result-title">같은 페이스로 이동한다면</h2><div class="health-table-wrap"><table class="ref-table health-table"><thead><tr><th scope="col">거리</th><th scope="col">예상 시간 · 시:분:초</th></tr></thead><tbody id="raceRows"></tbody></table></div>
+        <p class="health-help">일정한 페이스를 끝까지 유지한다고 가정한 단순 환산입니다. 지형, 날씨, 피로에 따른 실제 기록 차이는 반영하지 않습니다.</p>
+      </div>
+    </section>
+  </div>
+  <div class="ad-slot">광고 영역 (Google AdSense)</div>
+  <div class="info-card health-info"><h2>페이스와 속도, 무엇이 다른가요?</h2><p>페이스는 1km를 이동하는 데 걸리는 시간으로, 숫자가 작을수록 빠릅니다. 속도는 한 시간에 이동하는 거리(km/h)로, 숫자가 클수록 빠릅니다.</p><div class="health-formula">페이스(초/km) = 전체 시간(초) ÷ 거리(km)<br>시간(초) = 페이스(초/km) × 거리(km)<br>거리(km) = 전체 시간(초) ÷ 페이스(초/km)</div><p>1마일은 정확히 1.609344km로 환산합니다. 계산 중에는 반올림하지 않고, 페이스와 시간 표시만 초 단위로 반올림합니다. 반올림하면 0초가 되는 양수는 ‘1초 미만’으로 표시합니다.</p></div>
+  <div class="info-card health-info"><h2>기록을 입력할 때 알아두세요</h2><h3>걷기 기록도 계산할 수 있나요?</h3><p>네. 걷기와 달리기 모두 같은 거리·시간 계산을 사용합니다. 결과는 기록 환산이며 운동 강도나 건강 상태를 판정하지 않습니다.</p><h3>쉬었던 시간도 넣어야 하나요?</h3><p>휴식 시간을 포함하면 전체 경과 시간 기준 평균 페이스가 됩니다. 실제 움직인 시간만 넣으면 이동 시간 기준 페이스가 됩니다. 두 기록을 비교할 때는 같은 기준을 사용하세요.</p><p class="tool-inline-link">에너지 소모 추정은 <a href="bmr.html">기초대사량·칼로리 계산기</a>, 체질량지수는 <a href="bmi.html">BMI 계산기</a>를 이용하세요.</p></div>
+  <div class="ad-slot">광고 영역 (Google AdSense)</div>
+</main>
+<footer><div class="container"><div class="footer-inner"><div class="footer-logo">🔧 생활도구</div><div>자주 쓰는 온라인 도구를 무료로 제공합니다.</div><div class="footer-links"><a href="../index.html">홈으로</a><a href="privacy.html">개인정보처리방침</a><a href="disclaimer.html">면책 조항</a></div><div style="margin-top:8px;">© 2026 생활도구. All rights reserved.</div></div></div></footer>
+<script type="module" src="../js/pace.js"></script>
+</body>
+</html>

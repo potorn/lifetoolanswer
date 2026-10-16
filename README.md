@@ -23,6 +23,8 @@ Built with plain HTML + CSS + JS. No framework, package manager, or required bui
 | 도구 | 설명 | Tool | Description |
 |------|------|------|-------------|
 | [BMI 계산기](tools/bmi.html) | 체질량지수 계산 (대한비만학회 기준) | BMI Calculator | Uses Korean Society for the Study of Obesity cutoffs |
+| [기초대사량·칼로리 계산기](tools/bmr.html) | 휴식 시·활동량별 하루 소모 열량 추정 | Energy Calculator | Adult REE estimates and illustrative activity factors |
+| [걷기·달리기 페이스 계산기](tools/pace.html) | 거리·시간·페이스 상호 계산, km·마일 지원 | Pace Calculator | Pace, time, distance and speed conversions |
 | [이미지 포맷 변환기](tools/image.html) | PNG · JPG · WebP · BMP · ICO · AVIF · TGA 출력 (GIF 입력 지원) | Image Format Converter | Convert image formats locally; GIF output belongs to GIF Maker |
 | [이미지 편집기](tools/image-editor.html) | 자유·비율 크롭, 색상·레벨 보정, 텍스트, 회전·뒤집기 | Image Editor | Local canvas editing, undo/redo and PNG/JPEG/WebP export |
 | [GIF 만들기](tools/gif-maker.html) | 사진 여러 장·짧은 동영상으로 GIF 만들기 | GIF Maker | Create GIFs from photos or short videos in the browser |
@@ -54,6 +56,8 @@ No build required — edit a file and refresh the browser.
 
 이미지 도구 회귀 검사는 Node.js 22 이상에서 `node scripts/check-image-tools.mjs`로 실행합니다. 별도 패키지 설치 없이 색상 보정, 비동기 변환 요청, 결과 파일명과 실제 WASM 변환·GIF 제작을 확인합니다.
 
+건강 도구 회귀 검사는 `node scripts/check-health-tools.mjs`로 실행합니다. 대사량 식, 성인 입력 범위, 페이스·시간·거리 역산, 마일 환산, 초 단위 반올림을 확인합니다. 칼로리는 Mifflin–St Jeor 간략식과 고정 예시 활동계수 1.4·1.6·1.8·2.0을 사용하며, 두 도구 모두 외부 API나 주기적으로 갱신하는 요율·음식 데이터가 필요하지 않습니다.
+
 업로드한 이미지·동영상과 도구 입력값은 브라우저에서 처리되며 생활도구 서버로 전송하거나 저장하지 않습니다. 실행에 필요한 글꼴·스크립트·WASM도 사이트 내부 정적 자산으로 제공합니다.
 
 ---
@@ -68,6 +72,8 @@ site/
 │   └── tool.css            # 도구 페이지 레이아웃 (폼, 결과 카드)
 ├── js/
 │   ├── bmi.js
+│   ├── bmr.js
+│   ├── pace.js
 │   ├── encoder.js
 │   ├── encryption.js
 │   ├── gif-maker.js
@@ -82,6 +88,8 @@ site/
 │   └── vat.js
 ├── tools/
 │   ├── bmi.html
+│   ├── bmr.html
+│   ├── pace.html
 │   ├── encoder.html
 │   ├── encryption.html
 │   ├── gif-maker.html
