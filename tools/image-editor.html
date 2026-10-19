@@ -2,6 +2,7 @@
 <html lang="ko">
 <head>
   <meta charset="UTF-8">
+  <script src="../js/theme.js?v=20261019-theme1"></script>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>이미지 편집기 - 크롭·색상 보정·텍스트 삽입 | 생활도구</title>
   <meta name="description" content="이미지를 서버 전송 없이 브라우저에서 편집하세요. 자유·비율 크롭, 밝기·색조·채도·레벨 보정, 흑백, 텍스트, 회전과 리사이즈를 무료로 제공합니다.">
@@ -19,12 +20,16 @@
   <script type="application/ld+json">
   {"@context":"https://schema.org","@type":"WebApplication","name":"이미지 편집기","url":"https://lifetoolanswer.com/tools/image-editor.html","description":"서버 전송 없이 이미지 크롭, 색상 보정, 텍스트 삽입과 저장을 지원하는 무료 편집기","applicationCategory":"MultimediaApplication","operatingSystem":"Web","offers":{"@type":"Offer","price":"0","priceCurrency":"KRW"}}
   </script>
+
+<meta name="color-scheme" content="light dark">
+<link rel="stylesheet" href="../css/theme.css?v=20261019-theme2">
 </head>
 <body class="image-editor-body">
 <header><div class="container"><div class="header-inner">
   <a href="../index.html" class="logo"><span class="logo-icon">🔧</span><span class="logo-name">생활<span>도구</span></span></a>
   <span class="header-desc">무료 온라인 도구 모음</span>
   <nav class="header-nav"><a href="about.html" class="nav-link">사이트 소개</a><a href="guide.html" class="nav-link">사용방법</a></nav>
+<div class="theme-switch" role="radiogroup" aria-label="화면 모드" hidden><button type="button" role="radio" data-theme-choice="system" aria-checked="true" tabindex="0"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="13" rx="2"/><path d="M8 21h8M12 16v5"/></svg><span>시스템</span></button><button type="button" role="radio" data-theme-choice="light" aria-checked="false" tabindex="-1"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M2 12h2m16 0h2M5 5l1.4 1.4m11.2 11.2L19 19M5 19l1.4-1.4M17.6 6.4 19 5"/></svg><span>라이트</span></button><button type="button" role="radio" data-theme-choice="dark" aria-checked="false" tabindex="-1"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.8 13A9 9 0 0 1 11 3.2 9 9 0 1 0 20.8 13Z"/></svg><span>다크</span></button></div><span id="themeStatus" class="theme-sr-only" role="status" aria-live="polite"></span>
 </div></div></header>
 <main class="tool-page editor-page">
   <nav class="breadcrumb"><a href="../index.html">홈</a><span class="breadcrumb-sep">›</span><span>이미지 편집기</span></nav>

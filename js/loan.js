@@ -171,6 +171,15 @@ document.addEventListener('DOMContentLoaded', function () {
     document.getElementById('legendInterest').textContent = '이자 ' + interestRatio.toFixed(1) + '%';
 
     renderSchedule(schedule, months);
+    window.dispatchEvent(new CustomEvent('tool-result', { detail: {
+      tool: 'loan',
+      conditions: fmt(principal) + '원 · 연 ' + annualRate + '% · ' + months + '개월 · ' + document.getElementById('method').selectedOptions[0].textContent + ' · 거치 ' + graceMonths + '개월',
+      metrics: [
+        { label: '기준 월 납입금', value: monthlyPayment, compare: true },
+        { label: '총이자', value: totalInterest, compare: true },
+        { label: '총상환액', value: totalPayment, compare: true }
+      ]
+    }}));
 
     var card = document.getElementById('resultCard');
     card.classList.add('visible');

@@ -45,7 +45,7 @@ document.addEventListener('DOMContentLoaded', function () {
       { name: '건강보험', rate: '3.595%', amount: health },
       { name: '장기요양보험', rate: '건보료×13.14%', amount: ltc },
       { name: '고용보험', rate: '0.90%', amount: employ },
-      { name: '소득세', rate: '간이세액표', amount: incomeTax },
+      { name: '소득세', rate: '간소화 추정', amount: incomeTax },
       { name: '지방소득세', rate: '소득세×10%', amount: localTax },
     ];
 
@@ -63,6 +63,10 @@ document.addEventListener('DOMContentLoaded', function () {
     totTr.innerHTML = '<td>합계</td><td>—</td><td>' + fmt(totalDeduct) + '</td>';
     tbody.appendChild(totTr);
 
+    window.dispatchEvent(new CustomEvent('tool-result', { detail: {
+      tool: 'salary', conditions: salaryMan.toLocaleString('ko-KR') + '만원 · 부양가족 ' + dependents + '명 (본인 포함) · 2026년 간소화 계산',
+      metrics: [{ label: '세전 연봉', value: annual, compare: true }, { label: '월 실수령액', value: monthlyNet, compare: true }, { label: '월 공제액', value: totalDeduct, compare: true }, { label: '세후 연봉', value: annualNet, compare: true }]
+    }}));
     var card = document.getElementById('resultCard');
     card.classList.add('visible');
     setTimeout(function () { card.scrollIntoView({ behavior: 'smooth', block: 'nearest' }); }, 50);

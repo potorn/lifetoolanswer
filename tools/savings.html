@@ -2,25 +2,27 @@
 <html lang="ko">
 <head>
   <meta charset="UTF-8">
+  <script src="../js/theme.js?v=20261019-theme1"></script>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>예금·적금 이자 계산기 - 세전·세후 만기금액 | 생활도구</title>
-  <meta name="description" content="예금과 적금의 세전 이자, 이자소득세, 세후 이자와 예상 만기금액을 간편하게 계산하세요.">
+  <title>예금·적금 계산기 - 상품 비교·월별 이자 그래프 | 생활도구</title>
+  <meta name="description" content="예금 단리·월복리와 적금의 세전·세후 이자, 만기금액을 계산하세요. 최대 3개 상품 조건 비교, 월별 원금·이자 그래프와 CSV·PNG 저장을 지원합니다.">
   <meta name="keywords" content="예금 이자 계산기, 적금 이자 계산기, 세후 이자, 만기금액 계산, 이자소득세">
-  <meta property="og:title" content="예금·적금 이자 계산기 | 생활도구">
-  <meta property="og:description" content="예금·적금의 세전·세후 이자와 예상 만기금액을 계산하세요.">
+  <meta property="og:title" content="예금·적금 계산기 - 상품 비교·월별 이자 그래프 | 생활도구">
+  <meta property="og:description" content="예금 단리·월복리와 적금의 세전·세후 이자, 만기금액을 계산하세요. 최대 3개 상품 조건 비교, 월별 원금·이자 그래프와 CSV·PNG 저장을 지원합니다.">
   <meta property="og:type" content="website">
   <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🔧</text></svg>">
   <link rel="stylesheet" href="../css/style.css">
-  <link rel="stylesheet" href="../css/tool.css">
+  <link rel="stylesheet" href="../css/tool.css?v=20261019">
   <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "WebApplication",
-    "name": "예금·적금 이자 계산기",
-    "applicationCategory": "FinanceApplication",
-    "operatingSystem": "Web"
-  }
-  </script>
+{"@context":"https://schema.org","@type":"WebApplication","name":"예금·적금 계산기","applicationCategory":"FinanceApplication","operatingSystem":"Web","description":"예금 단리·월복리와 적금의 세전·세후 이자, 만기금액을 계산하세요. 최대 3개 상품 조건 비교, 월별 원금·이자 그래프와 CSV·PNG 저장을 지원합니다.","url":"https://lifetoolanswer.com/tools/savings.html","offers":{"@type":"Offer","price":"0","priceCurrency":"KRW"}}
+</script>
+  <link rel="canonical" href="https://lifetoolanswer.com/tools/savings.html">
+  <meta property="og:url" content="https://lifetoolanswer.com/tools/savings.html">
+  <meta name="robots" content="index,follow">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"생활도구","item":"https://lifetoolanswer.com/"},{"@type":"ListItem","position":2,"name":"예금·적금 계산기","item":"https://lifetoolanswer.com/tools/savings.html"}]}</script>
+
+<meta name="color-scheme" content="light dark">
+<link rel="stylesheet" href="../css/theme.css?v=20261019-theme2">
 </head>
 <body>
 
@@ -36,6 +38,7 @@
         <a href="about.html" class="nav-link">사이트 소개</a>
         <a href="guide.html" class="nav-link">사용방법</a>
       </nav>
+<div class="theme-switch" role="radiogroup" aria-label="화면 모드" hidden><button type="button" role="radio" data-theme-choice="system" aria-checked="true" tabindex="0"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="13" rx="2"/><path d="M8 21h8M12 16v5"/></svg><span>시스템</span></button><button type="button" role="radio" data-theme-choice="light" aria-checked="false" tabindex="-1"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M2 12h2m16 0h2M5 5l1.4 1.4m11.2 11.2L19 19M5 19l1.4-1.4M17.6 6.4 19 5"/></svg><span>라이트</span></button><button type="button" role="radio" data-theme-choice="dark" aria-checked="false" tabindex="-1"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.8 13A9 9 0 0 1 11 3.2 9 9 0 1 0 20.8 13Z"/></svg><span>다크</span></button></div><span id="themeStatus" class="theme-sr-only" role="status" aria-live="polite"></span>
     </div>
   </div>
 </header>
@@ -136,6 +139,7 @@
     </table>
     <p class="info-footnote">※ 결과는 월 단위 예상값입니다. 실제 금융기관은 가입일·만기일의 정확한 일수, 납입일, 우대금리, 중도해지 조건, 과세구분과 원 단위 절사 방식에 따라 다르게 계산할 수 있습니다.</p>
   </div>
+<section class="info-card upgrade-info" aria-labelledby="upgradeFaq"><h2 id="upgradeFaq">예금·적금 계산기 사용법과 자주 묻는 질문</h2><h3>예금과 적금 조건은 어떻게 비교하나요?</h3><p>금액·금리·기간·과세 구분을 입력하고 계산한 조건을 비교에 추가하세요. 예금과 적금 조건을 최대 3개까지 볼 수 있으며 원금·세후 이자·만기금액을 함께 표시합니다.</p><h3>월별 그래프는 중도해지 예상금액인가요?</h3><p>아닙니다. 선택한 금리와 방식으로 납입 원금과 세전 발생 이자를 추정한 그래프입니다. 만기 과세는 결과의 세후 만기금액에 반영하며, 그래프는 중도해지 금리나 수수료를 반영하지 않습니다.</p><h3>이자 계산과 저장 기준은 무엇인가요?</h3><p>예금은 단리 또는 월복리, 적금은 매월 초 동일 금액 납입 단리로 계산합니다. 비교표와 월별 기록은 CSV로, 그래프는 PNG로 저장합니다. 실제 상품의 납입일·세금 절사·우대조건에 따라 차이가 납니다.</p><p>비교표는 현재 페이지에서만 유지됩니다. 입력값을 바꾸면 다시 계산한 후 비교에 추가하세요. CSV는 UTF-8 형식으로 저장합니다.</p><p class="upgrade-related">함께 쓰는 도구: <a href="loan.html">대출 이자 비교</a> · <a href="salary.html">연봉 실수령액 비교</a></p><p class="upgrade-help">기능·안내 업데이트: 2026년 10월 19일</p></section>
 </main>
 
 <footer>
@@ -153,6 +157,7 @@
   </div>
 </footer>
 
-<script src="../js/savings.js"></script>
+<script src="../js/savings.js?v=20261019"></script>
+<script type="module" src="../js/finance-compare.js?v=20261019-theme1"></script>
 </body>
 </html>

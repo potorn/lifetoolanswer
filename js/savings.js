@@ -91,6 +91,19 @@ document.addEventListener('DOMContentLoaded', function () {
     document.getElementById('taxValue').textContent = formatWon(tax);
     document.getElementById('netInterest').textContent = formatWon(netInterest);
     document.getElementById('calculationNote').textContent = note;
+    var growth = [];
+    for (var month = 0; month <= months; month++) {
+      var paid = currentMode === 'deposit' ? amount : amount * month;
+      var accrued = currentMode === 'deposit'
+        ? (document.getElementById('interestMethod').value === 'compound' ? amount * (Math.pow(1 + monthlyRate, month) - 1) : amount * monthlyRate * month)
+        : amount * monthlyRate * month * (month + 1) / 2;
+      growth.push({ month: month, principal: paid, interest: accrued });
+    }
+    window.dispatchEvent(new CustomEvent('tool-result', { detail: {
+      tool: 'savings', growth: growth,
+      conditions: (currentMode === 'deposit' ? '예금 ' : '적금 월 ') + formatWon(amount) + ' · 연 ' + annualRate + '% · ' + months + '개월 · ' + (currentMode === 'deposit' ? document.getElementById('interestMethod').selectedOptions[0].textContent + ' · ' : '') + (taxRate ? '일반과세' : '비과세'),
+      metrics: [{ label: '납입 원금', value: principal }, { label: '세후 이자', value: netInterest, compare: true }, { label: '세후 만기금액', value: maturity, compare: true }]
+    }}));
     resultCard.classList.add('visible');
     setTimeout(function () {
       resultCard.scrollIntoView({ behavior: 'smooth', block: 'nearest' });

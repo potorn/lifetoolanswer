@@ -1,3 +1,38 @@
+/* ── Calculator upgrades: comparisons, records and export ── */
+.upgrade-panel { min-width:0; margin-top:20px; }
+.upgrade-panel h2 { font-size:1.12rem; color:#294462; margin:0 0 14px; }
+.upgrade-panel h3 { font-size:.94rem; color:#385674; margin:22px 0 12px; }
+.upgrade-help, .upgrade-info p { color:#6d819a; font-size:.79rem; line-height:1.9; margin:10px 0; }
+.upgrade-actions { display:flex; flex-wrap:wrap; align-items:center; gap:9px; margin:18px 0; }
+.upgrade-panel label { font-size:.77rem; font-weight:600; color:#536d88; }
+.upgrade-panel :is(input:not([type=file]), select) { min-width:0; max-width:100%; box-sizing:border-box; border:1px solid #d5dfed; border-radius:8px; background:#fff; color:#304b69; padding:10px; font:inherit; font-size:.85rem; }
+.upgrade-panel button { border:1px solid #cfdef1; border-radius:8px; padding:10px 12px; background:#f3f7ff; color:#36649c; font:inherit; font-size:.78rem; cursor:pointer; }
+.upgrade-panel button:disabled { opacity:.45; cursor:default; }
+.upgrade-panel :is(input,select,button,summary):focus-visible { outline:3px solid #9bbffa; outline-offset:3px; }
+.upgrade-status { color:#426b79; font-size:.79rem; line-height:1.8; }
+.upgrade-status:not(:empty) { padding:10px 12px; margin:12px 0; background:#f0f6fb; border-radius:8px; }
+.upgrade-table-wrap { max-width:100%; overflow:auto; max-height:450px; margin:16px 0; }
+.upgrade-table { min-width:560px; font-size:.77rem; font-variant-numeric:tabular-nums; }
+.upgrade-table td { vertical-align:top; }
+.upgrade-table th { position:sticky; top:0; background:#f1f6fc; z-index:1; }
+.upgrade-table td:first-child { font-weight:600; }
+#comparePanel .upgrade-table-wrap { max-height:none; }
+#comparePanel .upgrade-table { min-width:700px; table-layout:fixed; }
+#comparePanel .upgrade-table th:first-child { width:140px; }
+.upgrade-table button { padding:6px 10px; }
+.upgrade-panel canvas { display:block; width:100%; height:auto; margin:16px 0; }
+.upgrade-panel details { margin:16px 0; }
+.upgrade-panel summary { cursor:pointer; color:#557292; font-size:.8rem; font-weight:600; padding:8px 0; }
+.upgrade-summary { color:#345e8e; font-weight:700; font-size:.95rem; }
+.upgrade-empty { padding:35px 10px; text-align:center; color:#8393a9; font-size:.85rem; }
+.upgrade-link { display:block; margin-top:18px; color:#3269bd; font-size:.85rem; text-align:center; text-underline-offset:3px; }
+.upgrade-info { margin-top:20px; }
+.upgrade-info h2 { color:#385674; font-size:1.1rem; }
+.upgrade-info h3 { margin:22px 0 8px; font-size:.9rem; color:#476482; }
+.upgrade-info a { color:#3269bd; text-underline-offset:3px; }
+.upgrade-related { padding-top:12px; border-top:1px solid #e2e8f0; }
+@media(max-width:540px) { .upgrade-panel { padding:20px; } .upgrade-actions { align-items:stretch; } .upgrade-actions label { flex-basis:100%; } .upgrade-actions button { min-height:42px; flex:1 1 40%; } .upgrade-actions input { flex:1; } .upgrade-panel select { font-size:16px; } }
+
 /* ── Tool page layout ── */
 .tool-page {
   max-width: 720px;

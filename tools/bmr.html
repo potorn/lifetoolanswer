@@ -1,30 +1,36 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
+
   <meta charset="UTF-8">
+  <script src="../js/theme.js?v=20261019-theme1"></script>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>기초대사량·칼로리 계산기 - 하루 소모 열량 추정 | 생활도구</title>
-  <meta name="description" content="성별, 나이, 키, 몸무게로 기초대사량을 추정하고 활동량별 하루 소모 칼로리를 확인하세요. 성인 참고용 무료 온라인 계산기입니다.">
+  <title>기초대사량·칼로리 계산기 - 활동량 비교·결과 저장 | 생활도구</title>
+  <meta name="description" content="BMI 정보로 기초대사량과 활동량별 하루 소모 칼로리를 추정하세요. 활동량 비교와 결과 이미지 저장을 지원하는 성인용 무료 계산기입니다.">
   <meta name="robots" content="index,follow">
   <link rel="canonical" href="https://lifetoolanswer.com/tools/bmr.html">
-  <meta property="og:title" content="기초대사량·칼로리 계산기 | 생활도구">
-  <meta property="og:description" content="휴식 시 소모 열량부터 활동량별 하루 소모 칼로리까지 간편하게 확인하세요.">
+  <meta property="og:title" content="기초대사량·칼로리 계산기 - 활동량 비교·결과 저장 | 생활도구">
+  <meta property="og:description" content="BMI 정보로 기초대사량과 활동량별 하루 소모 칼로리를 추정하세요. 활동량 비교와 결과 이미지 저장을 지원하는 성인용 무료 계산기입니다.">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://lifetoolanswer.com/tools/bmr.html">
   <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🔧</text></svg>">
   <link rel="stylesheet" href="../css/style.css">
-  <link rel="stylesheet" href="../css/tool.css">
+  <link rel="stylesheet" href="../css/tool.css?v=20261019">
   <!-- Google AdSense (승인 후 실제 코드로 교체) -->
   <!-- <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXXXXXXXXXX" crossorigin="anonymous"></script> -->
   <script type="application/ld+json">
-  {"@context":"https://schema.org","@type":"WebApplication","name":"기초대사량·칼로리 계산기","url":"https://lifetoolanswer.com/tools/bmr.html","description":"성인용 대사량 추정식과 활동계수로 휴식 시 및 하루 전체 소모 열량을 계산하는 무료 도구","applicationCategory":"HealthApplication","operatingSystem":"Web","offers":{"@type":"Offer","price":"0","priceCurrency":"KRW"}}
-  </script>
+{"@context":"https://schema.org","@type":"WebApplication","name":"기초대사량·칼로리 계산기","url":"https://lifetoolanswer.com/tools/bmr.html","description":"BMI 정보로 기초대사량과 활동량별 하루 소모 칼로리를 추정하세요. 활동량 비교와 결과 이미지 저장을 지원하는 성인용 무료 계산기입니다.","applicationCategory":"HealthApplication","operatingSystem":"Web","offers":{"@type":"Offer","price":"0","priceCurrency":"KRW"}}
+</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"생활도구","item":"https://lifetoolanswer.com/"},{"@type":"ListItem","position":2,"name":"기초대사량·칼로리 계산기","item":"https://lifetoolanswer.com/tools/bmr.html"}]}</script>
+<meta name="color-scheme" content="light dark">
+<link rel="stylesheet" href="../css/theme.css?v=20261019-theme2">
 </head>
 <body>
 <header><div class="container"><div class="header-inner">
   <a href="../index.html" class="logo"><span class="logo-icon">🔧</span><span class="logo-name">생활<span>도구</span></span></a>
   <span class="header-desc">무료 온라인 도구 모음</span>
   <nav class="header-nav"><a href="about.html" class="nav-link">사이트 소개</a><a href="guide.html" class="nav-link">사용방법</a></nav>
+<div class="theme-switch" role="radiogroup" aria-label="화면 모드" hidden><button type="button" role="radio" data-theme-choice="system" aria-checked="true" tabindex="0"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="13" rx="2"/><path d="M8 21h8M12 16v5"/></svg><span>시스템</span></button><button type="button" role="radio" data-theme-choice="light" aria-checked="false" tabindex="-1"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M2 12h2m16 0h2M5 5l1.4 1.4m11.2 11.2L19 19M5 19l1.4-1.4M17.6 6.4 19 5"/></svg><span>라이트</span></button><button type="button" role="radio" data-theme-choice="dark" aria-checked="false" tabindex="-1"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.8 13A9 9 0 0 1 11 3.2 9 9 0 1 0 20.8 13Z"/></svg><span>다크</span></button></div><span id="themeStatus" class="theme-sr-only" role="status" aria-live="polite"></span>
 </div></div></header>
 <main class="tool-page health-page">
   <nav class="breadcrumb"><a href="../index.html">홈</a><span class="breadcrumb-sep">›</span><span>기초대사량·칼로리 계산기</span></nav>
@@ -41,7 +47,7 @@
       <div class="form-group"><label class="form-label" for="bmrActivity">하루 전체 활동량</label><select class="styled-select" id="bmrActivity"><option value="1.4">대부분 앉아서 생활 · 1.4</option><option value="1.6">가벼운 움직임이 있는 생활 · 1.6</option><option value="1.8">서 있거나 걷는 활동이 많은 생활 · 1.8</option><option value="2">신체활동이 매우 많은 생활 · 2.0</option></select><p class="health-help">운동 시간뿐 아니라 출퇴근, 일, 집안일을 포함한 하루 전체 움직임으로 선택하세요. 계수는 간이 추정용입니다.</p></div>
       <button type="submit" class="btn-calc">소모 칼로리 계산하기</button>
       <p class="health-status" id="bmrStatus" role="status" aria-live="polite"></p>
-      <p class="health-help">18~100세 성인 참고용입니다. 입력값은 이 브라우저에서만 처리되며 저장되지 않습니다.</p>
+      <p class="health-help">18~100세 성인 참고용입니다. 입력값은 이 브라우저에서만 처리됩니다. BMI에서 전달한 키·몸무게는 같은 탭의 임시 저장소에서 가져온 뒤 삭제합니다.</p>
     </form>
     <section class="card health-result" id="bmrResult" aria-label="소모 칼로리 계산 결과">
       <div class="health-placeholder" id="bmrPlaceholder"><span aria-hidden="true">↗</span><h2>하루 에너지를 숫자로</h2><p>신체 정보를 입력하면 휴식 시 소모 열량과<br>활동량별 하루 예상 소모 열량이 표시됩니다.</p></div>
@@ -58,8 +64,10 @@
   <div class="info-card health-info"><h2>어떤 계산식을 사용하나요?</h2><p>Mifflin–St Jeor 식으로 휴식 시 에너지 소비량(REE)을 추정합니다. 흔히 기초대사량 계산에 쓰이지만, 엄밀한 기초대사량(BMR)을 직접 측정한 값은 아닙니다.</p><div class="health-formula">남성: 10 × 몸무게(kg) + 6.25 × 키(cm) − 5 × 나이 + 5<br>여성: 10 × 몸무게(kg) + 6.25 × 키(cm) − 5 × 나이 − 161</div><p>하루 소모 열량은 위 결과에 선택한 활동계수를 곱한 간이 추정값입니다. 중간 계산은 반올림하지 않고, 최종 표시에서 정수 kcal로 반올림합니다.</p><p class="health-source">계산식: <a href="https://pubmed.ncbi.nlm.nih.gov/2305711/" target="_blank" rel="noopener noreferrer">Mifflin 등, 1990 원논문</a> · 활동계수 배경: <a href="https://www.ncbi.nlm.nih.gov/books/NBK591020/" target="_blank" rel="noopener noreferrer">NASEM, Dietary Reference Intakes for Energy 7장</a></p></div>
   <div class="info-card health-info"><h2>계산 결과를 읽는 방법</h2><h3>기초대사량과 하루 소모 칼로리는 어떻게 다른가요?</h3><p>휴식 시 추정치는 몸이 쉬는 동안 사용하는 에너지입니다. 하루 소모 칼로리는 여기에 생활과 운동 등 활동을 간이 반영한 값입니다. 활동계수에 운동이 포함되므로 운동 소모량을 다시 더하면 중복될 수 있습니다.</p><h3>누구에게나 정확한가요?</h3><p>개인별 근육량, 체성분, 건강 상태를 반영하지 못합니다. 원연구는 19~78세 건강한 성인을 대상으로 했으므로 다른 집단에서는 오차가 더 클 수 있습니다. 성장기, 임신·수유 중, 질환·회복기에는 개인 상황에 맞는 평가가 필요합니다. 결과는 의료 진단이나 식단 처방을 대신하지 않습니다.</p><p class="tool-inline-link">체질량지수는 <a href="bmi.html">BMI 계산기</a>, 운동 기록은 <a href="pace.html">걷기·달리기 페이스 계산기</a>에서 확인하세요.</p></div>
   <div class="ad-slot">광고 영역 (Google AdSense)</div>
+<section class="info-card upgrade-info" aria-labelledby="upgradeFaq"><h2 id="upgradeFaq">기초대사량·칼로리 계산기 사용법과 자주 묻는 질문</h2><h3>BMI에서 입력한 정보를 가져올 수 있나요?</h3><p>BMI 결과의 칼로리 계산 링크를 누르면 키·몸무게를 같은 탭의 임시 저장소로 전달합니다. 주소에는 신체 정보를 넣지 않습니다. 성별 계수와 나이는 이 페이지에서 입력하세요.</p><h3>활동량을 바꾸면 어떤 값이 달라지나요?</h3><p>한 번 계산한 뒤 활동량을 바꾸면 하루 소모 칼로리를 다시 계산합니다. 키·몸무게·나이에 따른 휴식 시 추정치는 같으며 선택한 활동계수만 달라집니다.</p><h3>이미지 저장 결과는 식단 처방인가요?</h3><p>아닙니다. PNG에는 입력 조건과 휴식 시·하루 소모 열량 추정치를 담습니다. 실제 섭취량이나 감량 목표를 정해주는 처방은 아닙니다.</p><p class="upgrade-related">함께 쓰는 도구: <a href="bmi.html">BMI·체중 기록</a> · <a href="pace.html">걷기·달리기 페이스</a></p><p class="upgrade-help">기능·안내 업데이트: 2026년 10월 19일</p></section>
 </main>
 <footer><div class="container"><div class="footer-inner"><div class="footer-logo">🔧 생활도구</div><div>계산 결과는 참고용이며 전문가 상담을 대체하지 않습니다.</div><div class="footer-links"><a href="../index.html">홈으로</a><a href="privacy.html">개인정보처리방침</a><a href="disclaimer.html">면책 조항</a></div><div style="margin-top:8px;">© 2026 생활도구. All rights reserved.</div></div></div></footer>
 <script type="module" src="../js/bmr.js"></script>
+<script type="module" src="../js/bmr-upgrade.js?v=20261019-theme1"></script>
 </body>
 </html>

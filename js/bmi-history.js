@@ -107,6 +107,8 @@ document.addEventListener('DOMContentLoaded', function () {
   }
   function drawChart(canvas, list) {
     var ctx = canvas.getContext('2d'), width = canvas.width, height = canvas.height;
+    var dark = canvas.isConnected && document.documentElement.dataset.theme === 'dark';
+    var ink = dark ? '#a9b8cd' : '#64748b';
     var metric = el('chartMetric').value, isWeight = metric === 'weight';
     var values = list.map(function (record) { return isWeight ? record.weight : bmi(record); });
     var low = Math.min.apply(null, values), high = Math.max.apply(null, values);
@@ -117,13 +119,13 @@ document.addEventListener('DOMContentLoaded', function () {
     var lastTime = Date.parse(list[list.length - 1].date + 'T00:00:00Z');
     function x(record) { return lastTime === firstTime ? (left + right) / 2 : left + (Date.parse(record.date + 'T00:00:00Z') - firstTime) / (lastTime - firstTime) * (right - left); }
     function y(value) { return bottom - (value - low) / (high - low) * (bottom - top); }
-    ctx.fillStyle = '#ffffff'; ctx.fillRect(0, 0, width, height);
-    ctx.font = '22px sans-serif'; ctx.fillStyle = '#64748b'; ctx.textAlign = 'left';
+    ctx.fillStyle = dark ? '#182234' : '#ffffff'; ctx.fillRect(0, 0, width, height);
+    ctx.font = '22px sans-serif'; ctx.fillStyle = ink; ctx.textAlign = 'left';
     ctx.fillText(isWeight ? '체중 (kg)' : 'BMI', left, 33);
     for (var i = 0; i <= 4; i++) {
       var value = low + (high - low) * i / 4, lineY = y(value);
-      ctx.strokeStyle = '#e2e8f0'; ctx.lineWidth = 1; ctx.beginPath(); ctx.moveTo(left, lineY); ctx.lineTo(right, lineY); ctx.stroke();
-      ctx.textAlign = 'right'; ctx.fillStyle = '#64748b'; ctx.fillText(value.toFixed(1), left - 16, lineY + 7);
+      ctx.strokeStyle = dark ? '#34435c' : '#e2e8f0'; ctx.lineWidth = 1; ctx.beginPath(); ctx.moveTo(left, lineY); ctx.lineTo(right, lineY); ctx.stroke();
+      ctx.textAlign = 'right'; ctx.fillStyle = ink; ctx.fillText(value.toFixed(1), left - 16, lineY + 7);
     }
     ctx.strokeStyle = '#3678cf'; ctx.lineWidth = 4; ctx.beginPath();
     list.forEach(function (record, index) { if (index === 0) ctx.moveTo(x(record), y(values[index])); else ctx.lineTo(x(record), y(values[index])); });
@@ -133,7 +135,7 @@ document.addEventListener('DOMContentLoaded', function () {
       if (list.length > 100 && index !== 0 && index !== list.length - 1) return;
       ctx.fillStyle = '#3678cf'; ctx.beginPath(); ctx.arc(x(record), y(values[index]), 5, 0, Math.PI * 2); ctx.fill();
     });
-    ctx.font = '21px sans-serif'; ctx.fillStyle = '#64748b'; ctx.textAlign = 'left'; ctx.fillText(list[0].date, left, bottom + 40);
+    ctx.font = '21px sans-serif'; ctx.fillStyle = ink; ctx.textAlign = 'left'; ctx.fillText(list[0].date, left, bottom + 40);
     if (list.length > 1) { ctx.textAlign = 'right'; ctx.fillText(list[list.length - 1].date, right, bottom + 40); }
     canvas.setAttribute('aria-label', periodLabel() + ', ' + (isWeight ? '체중' : 'BMI') + ' 변화 그래프. ' + list.length + '건. 상세 수치는 아래 기록표에서 확인할 수 있습니다.');
   }
@@ -150,6 +152,9 @@ document.addEventListener('DOMContentLoaded', function () {
   });
   el('historyPeriod').addEventListener('change', render);
   el('chartMetric').addEventListener('change', render);
+  document.addEventListener('themechange', function () {
+    var list = selected(); if (list.length) drawChart(el('historyChart'), list);
+  });
   function download(blob, filename) {
     var url = URL.createObjectURL(blob), link = document.createElement('a');
     link.href = url; link.download = filename; document.body.append(link); link.click(); link.remove();
@@ -169,7 +174,9 @@ document.addEventListener('DOMContentLoaded', function () {
       ctx.fillStyle = '#64748b'; ctx.font = '22px sans-serif'; ctx.fillText(titles[index], x + 20, 203);
       ctx.fillStyle = '#294462'; ctx.font = 'bold 28px sans-serif'; ctx.fillText(value, x + 20, 247);
     });
-    ctx.drawImage(el('historyChart'), 60, 305, 1280, 576);
+    var exportChart = document.createElement('canvas'); exportChart.width = 1200; exportChart.height = 540;
+    drawChart(exportChart, list);
+    ctx.drawImage(exportChart, 60, 305, 1280, 576);
     ctx.fillStyle = '#64748b'; ctx.font = '19px sans-serif'; ctx.fillText('lifetoolanswer.com · 성인 참고용 기록 / 모든 측정값은 PDF 또는 JSON 백업으로 저장하세요.', 70, 900);
     canvas.toBlob(function (blob) { if (blob) download(blob, filename('png')); else status('이미지를 만들지 못했습니다. 다시 시도하세요.'); }, 'image/png');
   });
