@@ -1,4 +1,5 @@
 import { MAX_IMAGE_INPUT_BYTES, MAX_IMAGE_DIMENSION, MAX_IMAGE_PIXELS, validateImageBuffer } from './file-validation.js';
+import { sizePresets, validEditorSettings } from './editor-settings.js?v=20261019-media1';
 
 export const adjustmentDefaults = {
   brightness: 0, contrast: 0, exposure: 0, hue: 0, saturation: 0, vibrance: 0,
@@ -367,6 +368,13 @@ if (typeof document !== 'undefined') document.addEventListener('DOMContentLoaded
     } catch { status('이미지 처리에 실패했습니다. 더 작은 이미지로 다시 시도해 주세요.', true); }
   }
   $('applyCrop').addEventListener('click', () => geometry('crop'));
+  $('applySizePreset').addEventListener('click', () => {
+    const preset = sizePresets[$('sizePreset').value]; if (!state || !preset) return;
+    $('cropRatio').value = String(preset.width / preset.height); resetCrop();
+    geometry('crop'); $('exportAspect').checked = true;
+    $('exportWidth').value = preset.width; $('exportHeight').value = preset.height;
+    status(`${preset.label}: 가운데 영역을 잘라 ${preset.width} × ${preset.height}px 저장 크기를 설정했습니다. 위치를 바꾸려면 실행 취소 후 직접 잘라 주세요.`);
+  });
   document.querySelectorAll('[data-transform]').forEach(b => b.addEventListener('click', () => geometry(b.dataset.transform)));
 
   function activeText() { return state?.texts.find(t => t.id === selectedText); }
@@ -503,6 +511,35 @@ if (typeof document !== 'undefined') document.addEventListener('DOMContentLoaded
     $('export' + (axis === 'Width' ? 'Height' : 'Width')).value = Math.max(1, Math.round(Number($('export' + axis).value) * (axis === 'Width' ? h / w : w / h)));
   }));
   $('exportAspect').addEventListener('change', () => { if ($('exportAspect').checked) $('exportHeight').value = Math.max(1, Math.round(Number($('exportWidth').value) * state.base.height / state.base.width)); });
+  const settingsKey = 'lifetoolanswer.editor.settings.v1';
+  function settingsMessage(text) { $('savedSettingsStatus').textContent = text; }
+  function captureSettings() {
+    return { version: 1, adjustments: { ...state.adjustments }, output: { format: $('exportFormat').value, quality: Number($('exportQuality').value), background: $('exportBackground').value, width: Number($('exportWidth').value), height: Number($('exportHeight').value), aspect: $('exportAspect').checked } };
+  }
+  $('saveEditorSettings').addEventListener('click', () => {
+    const value = captureSettings();
+    if (!validEditorSettings(value, adjustmentDefaults, specs)) return settingsMessage('출력 크기와 보정값을 확인해 주세요.');
+    try { localStorage.setItem(settingsKey, JSON.stringify(value)); settingsMessage('보정·출력 설정을 이 브라우저에 저장했습니다. 다음 사진에서 불러오세요.'); }
+    catch { settingsMessage('브라우저 저장소를 사용할 수 없어 설정을 저장하지 못했습니다.'); }
+  });
+  $('loadEditorSettings').addEventListener('click', () => {
+    try {
+      const raw = localStorage.getItem(settingsKey); if (!raw) return settingsMessage('저장한 설정이 없습니다.');
+      const value = JSON.parse(raw); if (!validEditorSettings(value, adjustmentDefaults, specs)) return settingsMessage('저장된 설정을 읽을 수 없습니다. 설정을 다시 저장해 주세요.');
+      commit(); leaveComparison(); state.adjustments = Object.fromEntries(Object.keys(adjustmentDefaults).map(key => [key, value.adjustments[key]]));
+      commit(); syncAll(); requestRender();
+      const o = value.output; $('exportFormat').value = o.format; $('exportFormat').dispatchEvent(new Event('change'));
+      $('exportQuality').value = o.quality; $('exportQuality').dispatchEvent(new Event('input')); $('exportBackground').value = o.background; $('exportAspect').checked = o.aspect;
+      const scale = Math.min(o.width / state.base.width, o.height / state.base.height);
+      $('exportWidth').value = o.aspect ? Math.max(1, Math.round(state.base.width * scale)) : o.width;
+      $('exportHeight').value = o.aspect ? Math.max(1, Math.round(state.base.height * scale)) : o.height;
+      settingsMessage('설정을 적용했습니다. 비율 유지는 현재 사진을 저장 크기 안에 맞춥니다. 자르기 위치·텍스트는 포함하지 않습니다.');
+    } catch { settingsMessage('설정을 불러오지 못했습니다. 브라우저 저장소 설정을 확인해 주세요.'); }
+  });
+  $('deleteEditorSettings').addEventListener('click', () => {
+    try { localStorage.removeItem(settingsKey); settingsMessage('저장한 설정을 삭제했습니다. 현재 편집은 유지됩니다.'); }
+    catch { settingsMessage('저장된 설정을 삭제하지 못했습니다.'); }
+  });
   $('exportImage').addEventListener('click', async () => {
     const w = Number($('exportWidth').value), h = Number($('exportHeight').value), format = $('exportFormat').value;
     if (![w, h].every(n => Number.isInteger(n) && n > 0 && n <= MAX_IMAGE_DIMENSION) || w * h > MAX_IMAGE_PIXELS) return status('저장 크기는 가로·세로 1~4,096px, 1,600만 픽셀 이내의 정수로 입력해 주세요.', true);

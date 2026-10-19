@@ -1705,3 +1705,27 @@
   body.bmi-printing .bmi-history-summary { break-inside:avoid; }
   @page { size:A4; margin:15mm; }
 }
+/* Image batch conversion, editor presets and GIF comparison */
+.media-upgrade h2, .media-target label { display:block; font-size:1.1rem; font-weight:700; margin-bottom:12px; }
+.media-upgrade p, .media-target p { font-size:.85rem; line-height:1.7; color:var(--text-muted); margin:12px 0; overflow-wrap:anywhere; }
+.media-upgrade label { display:block; font-size:.86rem; margin-bottom:8px; }
+.media-upgrade fieldset { margin:18px 0; padding:16px; border:1px solid var(--border); border-radius:12px; min-width:0; }
+.media-upgrade legend { padding:0 8px; }
+.media-fields { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:12px; }
+.media-fields input, .media-fields select, .media-target select { width:100%; max-width:100%; padding:10px; border:1px solid var(--border); border-radius:8px; background:var(--white); color:var(--text); font:inherit; }
+.media-actions { display:flex; flex-wrap:wrap; gap:10px; }
+.media-actions .btn-calc { width:auto; flex:1 1 180px; }
+.media-actions button, .media-variant button { padding:12px 16px; cursor:pointer; }
+.media-actions button[hidden] { display:none; }
+.media-upgrade button:disabled { opacity:.5; cursor:not-allowed; }
+.media-upgrade input[type=file] { width:100%; max-width:100%; font-size:.85rem; }
+.media-table-wrap { overflow-x:auto; }
+.media-table-wrap table { min-width:440px; }
+.media-table-wrap td { max-width:200px; overflow-wrap:anywhere; }
+.media-target { padding:16px; border:1px solid var(--border); border-radius:12px; margin:16px 0; background:var(--bg); }
+.media-variants { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:12px; margin:16px 0; }
+.media-variant { border:1px solid var(--border); padding:12px; border-radius:12px; min-width:0; }
+.media-variant p { font-size:.82rem; line-height:1.6; overflow-wrap:anywhere; margin-bottom:10px; }
+.media-variant img { display:block; width:100%; max-height:200px; object-fit:contain; margin-bottom:10px; }
+.editor-preset-controls { border-bottom:1px solid var(--border); padding-bottom:12px; margin-bottom:16px; }
+@media(max-width:480px) { .media-fields, .media-variants { grid-template-columns:1fr; } }

@@ -4,30 +4,20 @@
   <meta charset="UTF-8">
   <script src="../js/theme.js?v=20261019-theme1"></script>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>이미지 포맷 변환기 - PNG·WebP·AVIF·ICO 변환 | 생활도구</title>
-  <meta name="description" content="이미지를 PNG, JPG, WebP, BMP, ICO, AVIF, TGA 포맷으로 무료 변환하고 리사이즈하세요. GIF 출력은 GIF 만들기에서 지원합니다.">
+  <title>이미지 일괄 변환 - 리사이즈·ZIP 저장 | 생활도구</title>
+  <meta name="description" content="여러 이미지를 PNG·JPG·WebP·AVIF 등으로 일괄 변환하고 리사이즈하세요. 변환 전후 용량 비교와 ZIP 저장을 서버 전송 없이 제공합니다.">
   <meta name="keywords" content="이미지 포맷 변환기, WebP 변환, AVIF 변환, ICO 변환, PNG 변환, 이미지 리사이즈">
   <meta name="robots" content="index,follow">
   <link rel="canonical" href="https://lifetoolanswer.com/tools/image.html">
-  <meta property="og:title" content="이미지 포맷 변환기 - PNG·WebP·AVIF·ICO 변환">
-  <meta property="og:description" content="PNG·JPEG·WebP·BMP·ICO·AVIF·TGA 포맷 변환과 리사이즈를 브라우저에서 무료로 이용하세요.">
+  <meta property="og:title" content="이미지 일괄 변환 - 리사이즈·ZIP 저장">
+  <meta property="og:description" content="여러 이미지 포맷 변환·리사이즈·용량 비교·ZIP 저장을 브라우저에서 이용하세요.">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://lifetoolanswer.com/tools/image.html">
   <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🔧</text></svg>">
   <link rel="stylesheet" href="../css/style.css">
-  <link rel="stylesheet" href="../css/tool.css">
+  <link rel="stylesheet" href="../css/tool.css?v=20261019-media1">
   <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@graph": [
-      {"@type":"WebApplication","name":"이미지 포맷 변환기","url":"https://lifetoolanswer.com/tools/image.html","description":"이미지를 PNG, JPEG, WebP, BMP, ICO, AVIF, TGA로 브라우저에서 변환하며 업로드 파일을 서버로 전송하지 않는 무료 도구","applicationCategory":"UtilitiesApplication","operatingSystem":"Web","offers":{"@type":"Offer","price":"0","priceCurrency":"KRW"}},
-      {"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"홈","item":"https://lifetoolanswer.com/"},{"@type":"ListItem","position":2,"name":"이미지 포맷 변환기","item":"https://lifetoolanswer.com/tools/image.html"}]},
-      {"@type":"FAQPage","mainEntity":[
-        {"@type":"Question","name":"GIF 출력과 애니메이션은 어떻게 이용하나요?","acceptedAnswer":{"@type":"Answer","text":"GIF 출력은 별도 GIF 만들기를 이용하세요. 이 변환기는 GIF 입력을 지원하며, 애니메이션 GIF와 WebP를 WebP로 변환할 때 움직임을 유지합니다. 다른 출력 포맷은 첫 프레임만 저장합니다."}},
-        {"@type":"Question","name":"파일이 서버로 전송되나요?","acceptedAnswer":{"@type":"Answer","text":"아니요. 업로드한 이미지는 사용자의 브라우저에서 변환되며 생활도구 서버로 전송하거나 저장하지 않습니다."}}
-      ]}
-    ]
-  }
+{"@context": "https://schema.org", "@graph": [{"@type": "WebApplication", "name": "이미지 포맷 변환기", "url": "https://lifetoolanswer.com/tools/image.html", "description": "여러 이미지를 PNG·JPG·WebP·AVIF 등으로 일괄 변환하고 리사이즈하세요. 변환 전후 용량 비교와 ZIP 저장을 서버 전송 없이 제공합니다.", "applicationCategory": "UtilitiesApplication", "operatingSystem": "Web", "offers": {"@type": "Offer", "price": "0", "priceCurrency": "KRW"}}, {"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "홈", "item": "https://lifetoolanswer.com/"}, {"@type": "ListItem", "position": 2, "name": "이미지 포맷 변환기", "item": "https://lifetoolanswer.com/tools/image.html"}]}, {"@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "GIF 출력과 애니메이션은 어떻게 이용하나요?", "acceptedAnswer": {"@type": "Answer", "text": "GIF 출력은 별도 GIF 만들기를 이용하세요. 이 변환기는 GIF 입력을 지원하며, 애니메이션 GIF와 WebP를 WebP로 변환할 때 움직임을 유지합니다. 다른 출력 포맷은 첫 프레임만 저장합니다."}}, {"@type": "Question", "name": "파일이 서버로 전송되나요?", "acceptedAnswer": {"@type": "Answer", "text": "아니요. 업로드한 이미지는 사용자의 브라우저에서 변환되며 생활도구 서버로 전송하거나 저장하지 않습니다."}}]}]}
   </script>
 
 <meta name="color-scheme" content="light dark">
@@ -46,7 +36,7 @@
   <div class="tool-header">
     <span class="tool-header-icon">🖼️</span>
     <h1>이미지 포맷 변환기</h1>
-    <p>PNG·JPG·WebP·BMP·ICO·AVIF·TGA 출력과 리사이즈. 파일은 브라우저에서 변환되며 서버로 전송되지 않습니다.</p>
+    <p>PNG·JPG·WebP·BMP·ICO·AVIF·TGA 변환, 일괄 리사이즈와 ZIP 저장. 파일은 브라우저에서 변환되며 서버로 전송되지 않습니다.</p>
   </div>
 
   <div class="card">
@@ -86,6 +76,22 @@
     <button class="btn-calc" id="convertBtn" style="display:none;">변환 &amp; 다운로드</button>
   </div>
 
+  <section class="card media-upgrade" aria-labelledby="batchHeading">
+    <h2 id="batchHeading">여러 이미지 일괄 변환 · ZIP 저장</h2>
+    <p>최대 20장 · 파일당 25MB · 전체 100MB. 같은 포맷과 크기 설정으로 순서대로 변환합니다.</p>
+    <label for="batchFiles">이미지 여러 장 선택</label><input type="file" id="batchFiles" accept="image/png,image/jpeg,image/webp,image/gif,image/bmp,image/avif,.ico,.tga" multiple>
+    <fieldset id="batchSettings"><legend>공통 출력 설정</legend><div class="media-fields">
+      <label>포맷<select id="batchFormat"><option value="png">PNG</option><option value="jpeg">JPEG</option><option value="webp">WebP</option><option value="avif">AVIF</option><option value="bmp">BMP</option><option value="ico">ICO</option><option value="tga">TGA</option></select></label>
+      <label>품질 (JPEG·WebP·AVIF)<input type="number" id="batchQuality" min="1" max="100" value="85"></label>
+      <label>최대 너비 (px)<input type="number" id="batchWidth" min="1" max="4096" placeholder="원본"></label>
+      <label>최대 높이 (px)<input type="number" id="batchHeight" min="1" max="4096" placeholder="원본"></label></div>
+      <label class="img-aspect-label"><input type="checkbox" id="batchAspect" checked>비율 유지 · 지정한 크기 안에 맞추기</label>
+    </fieldset>
+    <p>비율 유지를 끄면 지정한 가로·세로 크기로 늘리거나 줄입니다. WebP는 움직임을 유지하고, 다른 포맷은 첫 프레임만 저장합니다. 결과 합계는 100MB까지 지원합니다.</p>
+    <div class="media-actions"><button type="button" class="btn-calc" id="batchConvert" disabled>일괄 변환</button><button type="button" class="btn-secondary" id="batchCancel" hidden>처리 취소</button><button type="button" class="btn-secondary" id="batchZip" disabled>성공한 파일 ZIP 저장</button></div>
+    <p id="batchStatus" role="status" aria-live="polite">파일을 선택하면 공통 변환을 시작할 수 있습니다.</p>
+    <p id="batchSummary"></p><div class="media-table-wrap"><table class="ref-table"><thead><tr><th>파일</th><th>원본 용량</th><th>변환 결과</th><th>저장</th></tr></thead><tbody id="batchRows"></tbody></table></div>
+  </section>
   <div class="ad-slot">광고 영역 (Google AdSense)</div>
   <div class="card result-card" id="resultCard">
     <p class="card-title">변환 결과</p>
@@ -100,7 +106,7 @@
 
   <div class="ad-slot">광고 영역 (Google AdSense)</div>
   <div class="info-card">
-    <h2>이미지 포맷별 특징</h2>
+    <h2>이미지 일괄 변환 사용법</h2><ol class="tool-steps"><li>일괄 변환 영역에서 파일을 여러 장 선택합니다.</li><li>출력 포맷과 최대 크기를 정하고 일괄 변환을 누릅니다.</li><li>각 파일의 용량을 비교하고 성공한 결과를 ZIP 또는 개별 파일로 저장합니다.</li></ol><p>ZIP은 이미 압축된 이미지들을 묶는 용도입니다. ZIP 자체가 이미지 용량을 더 줄이지는 않습니다. 이름이 같아도 순번을 붙여 덮어쓰기를 피합니다.</p><h2>이미지 포맷별 특징</h2>
     <table class="ref-table"><thead><tr><th>포맷</th><th>특징</th></tr></thead><tbody>
       <tr><td><strong>PNG</strong></td><td>무손실·투명도 지원. 그래픽과 캡처 이미지에 적합합니다.</td></tr>
       <tr><td><strong>JPEG</strong></td><td>사진에 적합한 손실 압축 형식입니다. 투명도는 지원하지 않습니다.</td></tr>
@@ -112,7 +118,7 @@
   </div>
   <div class="info-card">
     <h2>자주 묻는 질문</h2>
-    <h3>GIF 출력과 애니메이션은 어떻게 이용하나요?</h3>
+    <h3>일괄 변환에서 일부 파일이 실패하면 어떻게 되나요?</h3><p>나머지 파일은 계속 처리합니다. 오류 사유를 확인한 뒤 성공한 파일만 ZIP으로 저장할 수 있습니다. 변환 결과가 원본보다 커질 수 있으므로 전후 용량을 확인하세요.</p><h3>GIF 출력과 애니메이션은 어떻게 이용하나요?</h3>
     <p>GIF 출력은 별도 <a href="gif-maker.html">GIF 만들기</a>를 이용하세요. 이 변환기는 GIF 입력을 지원하며 애니메이션 GIF와 WebP를 WebP로 저장하면 움직임을 유지합니다. PNG·JPEG·BMP·ICO·TGA·AVIF로 저장하면 첫 프레임만 저장됩니다.</p>
     <h3>이미지 파일은 어디로 전송되나요?</h3>
     <p>업로드한 파일은 생활도구 서버로 전송하거나 저장하지 않습니다. 이 페이지에서 실행되는 이미지 처리 엔진이 브라우저에서 변환합니다.</p>
@@ -121,5 +127,6 @@
 
 <footer><div class="container"><div class="footer-inner"><div class="footer-logo">🔧 생활도구</div><div>자주 쓰는 온라인 도구를 무료로 제공합니다.</div><div class="footer-links"><a href="../index.html">홈으로</a><a href="privacy.html">개인정보처리방침</a><a href="disclaimer.html">면책 조항</a></div><div style="margin-top:8px;">© 2026 생활도구. All rights reserved.</div></div></div></footer>
 <script type="module" src="../js/image.js"></script>
+<script type="module" src="../js/image-batch.js?v=20261019-media1"></script>
 </body>
 </html>

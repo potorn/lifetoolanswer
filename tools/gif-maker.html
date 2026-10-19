@@ -4,27 +4,20 @@
   <meta charset="UTF-8">
   <script src="../js/theme.js?v=20261019-theme1"></script>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>GIF 만들기 - 사진·짧은 동영상으로 움짤 만들기 | 생활도구</title>
-  <meta name="description" content="여러 장의 사진 또는 최대 15초의 짧은 동영상으로 움직이는 GIF를 만드세요. 업로드 파일은 서버 전송 없이 브라우저에서 변환됩니다.">
+  <title>GIF 만들기 - 목표 용량 조절·화질 비교 | 생활도구</title>
+  <meta name="description" content="사진과 짧은 동영상으로 GIF를 만들고 목표 용량에 맞춰 크기·프레임을 자동 조절하세요. 저장 전 실제 용량과 화질을 비교할 수 있습니다.">
   <meta name="keywords" content="GIF 만들기, 움짤 만들기, 사진 GIF 만들기, 동영상 GIF 변환, 짧은 동영상 움짤">
   <meta name="robots" content="index,follow">
   <link rel="canonical" href="https://lifetoolanswer.com/tools/gif-maker.html">
-  <meta property="og:title" content="GIF 만들기 - 사진·짧은 동영상으로 움짤 만들기">
-  <meta property="og:description" content="사진 여러 장과 짧은 동영상을 브라우저에서 바로 GIF로 만드세요.">
+  <meta property="og:title" content="GIF 만들기 - 목표 용량 조절·화질 비교">
+  <meta property="og:description" content="사진·동영상 GIF 만들기, 목표 용량 자동 조절과 실제 용량·화질 비교를 브라우저에서 제공합니다.">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://lifetoolanswer.com/tools/gif-maker.html">
   <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🔧</text></svg>">
   <link rel="stylesheet" href="../css/style.css">
-  <link rel="stylesheet" href="../css/tool.css">
+  <link rel="stylesheet" href="../css/tool.css?v=20261019-media1">
   <script type="application/ld+json">
-  {"@context":"https://schema.org","@graph":[
-    {"@type":"WebApplication","name":"GIF 만들기","url":"https://lifetoolanswer.com/tools/gif-maker.html","description":"사진 여러 장 또는 짧은 동영상을 브라우저에서 GIF로 만들며 업로드 파일을 서버로 전송하지 않는 무료 도구","applicationCategory":"UtilitiesApplication","operatingSystem":"Web","offers":{"@type":"Offer","price":"0","priceCurrency":"KRW"}},
-    {"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"홈","item":"https://lifetoolanswer.com/"},{"@type":"ListItem","position":2,"name":"GIF 만들기","item":"https://lifetoolanswer.com/tools/gif-maker.html"}]},
-    {"@type":"FAQPage","mainEntity":[
-      {"@type":"Question","name":"동영상 파일이 서버로 업로드되나요?","acceptedAnswer":{"@type":"Answer","text":"아니요. 업로드한 동영상과 사진은 브라우저에서 처리되며 생활도구 서버로 전송하거나 저장하지 않습니다."}},
-      {"@type":"Question","name":"동영상 GIF는 얼마나 길게 만들 수 있나요?","acceptedAnswer":{"@type":"Answer","text":"최대 100MB, 원본 길이 5분 이하의 동영상에서 최대 15초 구간을 GIF로 만들 수 있습니다."}}
-    ]}
-  ]}
+{"@context": "https://schema.org", "@graph": [{"@type": "WebApplication", "name": "GIF 만들기", "url": "https://lifetoolanswer.com/tools/gif-maker.html", "description": "사진과 짧은 동영상으로 GIF를 만들고 목표 용량에 맞춰 크기·프레임을 자동 조절하세요. 저장 전 실제 용량과 화질을 비교할 수 있습니다.", "applicationCategory": "UtilitiesApplication", "operatingSystem": "Web", "offers": {"@type": "Offer", "price": "0", "priceCurrency": "KRW"}}, {"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "홈", "item": "https://lifetoolanswer.com/"}, {"@type": "ListItem", "position": 2, "name": "GIF 만들기", "item": "https://lifetoolanswer.com/tools/gif-maker.html"}]}, {"@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "동영상 파일이 서버로 업로드되나요?", "acceptedAnswer": {"@type": "Answer", "text": "아니요. 업로드한 동영상과 사진은 브라우저에서 처리되며 생활도구 서버로 전송하거나 저장하지 않습니다."}}, {"@type": "Question", "name": "동영상 GIF는 얼마나 길게 만들 수 있나요?", "acceptedAnswer": {"@type": "Answer", "text": "최대 100MB, 원본 길이 5분 이하의 동영상에서 최대 15초 구간을 GIF로 만들 수 있습니다."}}]}]}
   </script>
 
 <meta name="color-scheme" content="light dark">
@@ -46,7 +39,7 @@
       <button type="button" class="gif-mode-tab active" data-mode="images" role="tab" aria-selected="true">🖼️ 사진 여러 장</button>
       <button type="button" class="gif-mode-tab" data-mode="video" role="tab" aria-selected="false">🎬 짧은 동영상</button>
     </div>
-    <p class="img-status" id="gifStatus" aria-live="polite" style="display:none;"></p>
+    <div class="media-target"><label for="gifTarget">목표 용량 · 자동 크기/프레임 조절</label><select id="gifTarget"><option value="0">자동 조절 안 함</option><option value="524288">512KB 이하</option><option value="1048576">1MB 이하</option><option value="3145728">3MB 이하</option><option value="5242880">5MB 이하</option></select><p>최대 4단계로 실제 생성 용량을 확인합니다. 사진은 크기·프레임 수, 동영상은 크기·초당 프레임을 줄이며 전체 재생 길이는 유지합니다. 목표를 충족하지 못할 수도 있습니다.</p></div><p class="img-status" id="gifStatus" aria-live="polite" style="display:none;"></p>
 
     <section id="imagesMode">
       <div class="img-drop-zone gif-drop-zone" id="framesDropZone">
@@ -85,13 +78,14 @@
     <p class="card-title">GIF 결과</p>
     <img class="gif-result-preview" id="gifPreview" alt="생성된 GIF 미리보기">
     <div class="img-size-info" id="gifResultInfo"></div>
+    <h2>생성 결과별 용량·화질 비교</h2><p>실제로 만든 GIF를 비교하고 원하는 결과를 선택하세요. 위 미리보기가 저장할 결과입니다.</p><div id="gifVariants" class="media-variants"></div>
     <button class="btn-calc" id="gifDownloadBtn" style="margin-top:12px;">GIF 다운로드</button>
   </div>
 
-  <div class="info-card"><h2>사진과 동영상으로 GIF 만드는 방법</h2><ol class="tool-steps"><li><strong>사진 여러 장</strong> 또는 <strong>짧은 동영상</strong>을 선택합니다.</li><li>사진은 순서를 드래그해 바꾸고, 동영상은 시작 지점과 길이를 정합니다.</li><li>GIF 만들기를 누르면 브라우저에서 파일이 변환되고 바로 다운로드할 수 있습니다.</li></ol><p class="tool-inline-link">단일 이미지를 다른 형식으로 바꾸려면 <a href="image.html">이미지 변환기</a>를 이용하세요.</p></div>
-  <div class="info-card"><h2>자주 묻는 질문</h2><h3>사진 파일과 동영상은 서버로 전송되나요?</h3><p>아니요. 업로드 파일은 브라우저에서 처리되며 생활도구 서버로 전송하거나 저장하지 않습니다. 변환 중 페이지를 닫으면 작업도 함께 종료됩니다.</p><h3>동영상 GIF가 너무 큰 경우 어떻게 하나요?</h3><p>GIF 길이를 줄이거나 480px 출력을 선택해 보세요. 결과가 15MB를 넘으면 더 작은 설정으로 다시 만들어야 합니다.</p></div>
+  <div class="info-card"><h2>사진과 동영상으로 GIF 만드는 방법</h2><ol class="tool-steps"><li><strong>사진 여러 장</strong> 또는 <strong>짧은 동영상</strong>을 선택합니다.</li><li>사진은 순서를 드래그해 바꾸고, 동영상은 시작 지점과 길이를 정합니다.</li><li>목표 용량을 선택하고 GIF 만들기를 누릅니다. 자동 조절을 끄면 원래 설정으로만 생성합니다.</li><li>실제 생성된 크기·프레임·용량과 움직임을 비교한 뒤 원하는 결과를 선택해 다운로드합니다.</li></ol><p class="tool-inline-link">단일 이미지를 다른 형식으로 바꾸려면 <a href="image.html">이미지 변환기</a>를 이용하세요.</p></div>
+  <div class="info-card"><h2>자주 묻는 질문</h2><h3>사진 파일과 동영상은 서버로 전송되나요?</h3><p>아니요. 업로드 파일은 브라우저에서 처리되며 생활도구 서버로 전송하거나 저장하지 않습니다. 변환 중 페이지를 닫으면 작업도 함께 종료됩니다.</p><h3>목표 용량이 보장되나요?</h3><p>아니요. 이미지 내용과 움직임에 따라 용량이 달라집니다. 처리 전 확정 용량 대신 생성 후 실제 용량을 표시하며, 목표를 충족하지 못하면 초과 상태를 안내합니다. 크기·프레임을 줄이면 선명도와 움직임이 달라집니다.</p><h3>동영상 GIF가 너무 큰 경우 어떻게 하나요?</h3><p>목표 용량을 선택하면 최대 4단계로 크기·프레임을 줄여 실제 생성 용량을 비교합니다. 목표 초과가 표시되면 사진 수나 GIF 길이를 줄여 다시 만들어 주세요. 저장 가능한 결과는 15MB 이하입니다.</p></div>
 </main>
 <footer><div class="container"><div class="footer-inner"><div class="footer-logo">🔧 생활도구</div><div>자주 쓰는 온라인 도구를 무료로 제공합니다.</div><div class="footer-links"><a href="../index.html">홈으로</a><a href="privacy.html">개인정보처리방침</a><a href="disclaimer.html">면책 조항</a></div><div style="margin-top:8px;">© 2026 생활도구. All rights reserved.</div></div></div></footer>
-<script type="module" src="../js/gif-maker.js"></script>
+<script type="module" src="../js/gif-maker.js?v=20261019-media1"></script>
 </body>
 </html>

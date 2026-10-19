@@ -121,14 +121,14 @@ self.onmessage = async function (event) {
       if (!isSafeOutputSize(message.width, targetHeight, frames.length)) throw new Error('GIF 출력 크기 또는 프레임 수가 제한을 초과했습니다.');
       var collection = MagickImageCollection.create();
       try {
-        frames.forEach(function (frame) {
+        frames.forEach(function (frame, index) {
           var image = MagickImage.create(frame);
           var scale = Math.min(message.width / image.width, targetHeight / image.height);
           image.resize(Math.max(1, Math.round(image.width * scale)), Math.max(1, Math.round(image.height * scale)));
           image.backgroundColor = MagickColors.Transparent;
           image.extent(message.width, targetHeight, Gravity.Center);
           image.animationTicksPerSecond = 100;
-          image.animationDelay = Math.max(1, Math.round(message.delay / 10));
+          image.animationDelay = Math.max(1, Math.round(((message.delays || [])[index] || message.delay) / 10));
           image.animationIterations = message.loop ? 0 : 1;
           collection.push(image);
         });
