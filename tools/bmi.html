@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>BMI 계산기 - 체질량지수 계산 | 생활도구</title>
+  <title>BMI 계산기·체중 기록 - 그래프와 월별 저장 | 생활도구</title>
   <meta name="description" content="키와 몸무게를 입력하면 BMI(체질량지수)를 즉시 계산합니다. 대한비만학회 기준으로 저체중/정상/과체중/비만을 판정합니다.">
   <meta name="keywords" content="BMI 계산기, 체질량지수, 비만도 계산, 정상 체중, 비만 판정">
   <meta property="og:title" content="BMI 계산기 - 체질량지수 계산">
@@ -123,6 +123,29 @@
     <div class="advice-box" id="adviceText"></div>
   </div>
 
+  <section class="card bmi-history" id="bmiHistory" aria-labelledby="historyTitle">
+    <div class="bmi-history-heading"><div><span class="bmi-history-eyebrow">MY HEALTH LOG</span><h2 id="historyTitle">나의 체중 기록</h2></div><span class="bmi-local-badge">이 브라우저에 저장</span></div>
+    <p class="bmi-history-intro">체중의 변화를 기록하고, 한 달의 흐름을 모아보세요.</p>
+    <div class="bmi-record-form">
+      <div><label for="recordDate">측정 날짜</label><input type="date" id="recordDate" required></div>
+      <button type="button" id="saveRecord">입력한 키·몸무게 기록하기</button>
+    </div>
+    <p class="bmi-history-help">위에 입력한 키·몸무게를 저장합니다. 하루 한 건이며, 같은 날짜는 확인 후 수정합니다.</p>
+    <p id="historyStatus" class="bmi-history-status" role="status" aria-live="polite"></p>
+    <div class="bmi-history-filter"><label for="historyPeriod">조회·내보내기 기간</label><select id="historyPeriod"><option value="all">전체 기록</option></select><label for="chartMetric">그래프</label><select id="chartMetric"><option value="weight">체중 (kg)</option><option value="bmi">BMI</option></select></div>
+    <div id="historyReport">
+      <h3 id="historyReportTitle">전체 기록</h3>
+      <div class="bmi-history-summary" id="historySummary"></div>
+      <p id="historyEmpty" class="bmi-history-empty">아직 기록이 없어요.<br>키와 몸무게를 입력하고 첫 기록을 남겨보세요.</p>
+      <canvas id="historyChart" width="1200" height="540" role="img" aria-label="체중 변화 그래프. 상세 수치는 아래 기록표에서 확인할 수 있습니다." hidden></canvas>
+      <p class="bmi-history-help" id="historyChartNote" hidden>측정한 날짜 사이를 선으로 연결합니다. 선 사이의 체중을 추정한 값은 아닙니다.</p>
+      <div class="bmi-history-table-wrap"><table class="ref-table bmi-history-table" id="historyTable" hidden><caption>선택한 기간의 측정 기록</caption><thead><tr><th scope="col">날짜</th><th scope="col">키 (cm)</th><th scope="col">체중 (kg)</th><th scope="col">BMI</th><th scope="col" class="bmi-no-print">관리</th></tr></thead><tbody id="historyRows"></tbody></table></div>
+    </div>
+    <div class="bmi-history-actions"><button type="button" id="exportPng" disabled>그래프 PNG 저장</button><button type="button" id="exportPdf" disabled>기록 전체 PDF / 인쇄</button><button type="button" id="exportBackup" disabled>선택 기간 백업</button><button type="button" id="importBackup">백업 불러오기</button><input type="file" id="backupFile" accept=".json,application/json" hidden></div>
+    <p class="bmi-history-help">선택한 기간을 기준으로 PNG는 그래프·요약을, PDF는 그래프·모든 기록표를 저장합니다. PDF 버튼을 누른 뒤 인쇄 창에서 ‘PDF로 저장’을 선택하세요.</p>
+    <details class="bmi-history-storage"><summary>기록 보관과 백업 안내</summary><p>기록은 서버로 전송하지 않고 이 기기의 현재 브라우저에만 저장합니다. 사이트 데이터 삭제·시크릿 모드 종료 시 사라질 수 있고, 다른 기기나 브라우저와 동기화되지 않습니다. 공용 기기에서는 이용에 주의하세요.</p><p>PNG·PDF는 보관용입니다. 기록을 복원하려면 ‘전체 기록’을 선택해 JSON 백업을 저장하세요. 백업 불러오기는 기존 기록과 합쳐지며 날짜가 겹치면 확인 후 백업 값으로 바꿉니다.</p></details>
+  </section>
+
   <!-- 두 번째 광고 (AdSense 승인 후 교체) -->
   <div class="ad-slot">광고 영역 (Google AdSense)</div>
 
@@ -182,5 +205,6 @@
 </footer>
 
 <script src="../js/bmi.js"></script>
+<script src="../js/bmi-history.js"></script>
 </body>
 </html>

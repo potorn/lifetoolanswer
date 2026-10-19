@@ -1609,3 +1609,64 @@
   .health-header p { font-size: .82rem; }
   .health-result-number.health-pace-number { font-size: clamp(1.8rem, 7vw, 2.5rem); }
 }
+
+/* ── BMI history, chart and printable report ── */
+.bmi-history [hidden] { display: none !important; }
+.bmi-history-heading { display:flex; justify-content:space-between; align-items:center; gap:12px; }
+.bmi-history-heading h2 { font-size:1.2rem; color:#294462; margin:5px 0; }
+.bmi-history-eyebrow { color:#6285ae; font-size:.65rem; letter-spacing:.12em; font-weight:700; }
+.bmi-local-badge { color:#557c71; background:#edf7f2; border:1px solid #d5e9df; padding:6px 9px; border-radius:20px; font-size:.67rem; white-space:nowrap; }
+.bmi-history-intro { color:var(--text-muted); font-size:.85rem; margin:10px 0 22px; }
+.bmi-record-form { display:flex; gap:12px; align-items:end; }
+.bmi-record-form > div { flex:1; min-width:0; }
+.bmi-history label { display:block; font-size:.78rem; font-weight:600; color:#536d88; margin-bottom:7px; }
+.bmi-history input[type="date"], .bmi-history select { min-width:0; max-width:100%; padding:10px; border:1px solid var(--border); border-radius:8px; background:white; color:#304b69; font:inherit; font-size:.85rem; }
+.bmi-history input[type="date"] { width:100%; box-sizing:border-box; }
+.bmi-history button { padding:10px 12px; border:1px solid #cfdef1; border-radius:8px; color:#36649c; background:#f4f8ff; font:inherit; font-size:.78rem; cursor:pointer; }
+.bmi-history #saveRecord { color:white; background:var(--primary); border-color:var(--primary); min-height:43px; }
+.bmi-history button:disabled { opacity:.45; cursor:default; }
+.bmi-history :is(button, input, select, summary):focus-visible { outline:3px solid #9bbffa; outline-offset:3px; }
+.bmi-history-help { font-size:.73rem; line-height:1.85; color:#71829a; margin:10px 0; }
+.bmi-history-status { color:#326b65; font-size:.8rem; line-height:1.7; }
+.bmi-history-status:not(:empty) { padding:10px 12px; background:#f1f7fa; border-radius:8px; margin:12px 0; }
+.bmi-history-filter { display:grid; grid-template-columns:auto 1fr auto 1fr; align-items:center; gap:10px; margin:24px 0 20px; padding-top:20px; border-top:1px solid var(--border); }
+.bmi-history-filter label { margin:0; }
+#historyReportTitle { font-size:.95rem; color:#385674; margin:12px 0; }
+.bmi-history-summary { display:grid; grid-template-columns:repeat(3,1fr); gap:10px; }
+.bmi-history-summary > div { padding:13px 10px; border:1px solid #e0e9f5; border-radius:9px; background:#f7faff; }
+.bmi-history-summary span { display:block; font-size:.7rem; color:#748aa5; margin-bottom:6px; }
+.bmi-history-summary strong { font-size:1rem; color:#345e8e; }
+.bmi-history-empty { padding:40px 12px; text-align:center; line-height:2; color:#7b8ea5; font-size:.85rem; }
+#historyChart { display:block; width:100%; height:auto; margin-top:15px; }
+.bmi-history-table-wrap { overflow-x:auto; max-height:420px; margin-top:15px; }
+.bmi-history-table { white-space:nowrap; font-variant-numeric:tabular-nums; }
+.bmi-history-table caption { text-align:left; font-size:.75rem; color:#6b8199; padding:8px 0; }
+.bmi-history-table th { position:sticky; top:0; background:#f2f6fc; }
+.bmi-history-table button { padding:5px 8px; font-size:.7rem; }
+.bmi-history-actions { display:flex; flex-wrap:wrap; gap:8px; margin:20px 0 12px; }
+.bmi-history-storage { color:#6f8299; font-size:.75rem; line-height:1.9; border-top:1px solid var(--border); padding-top:15px; margin-top:15px; }
+.bmi-history-storage summary { cursor:pointer; font-weight:600; }
+.bmi-history-storage p { margin-top:10px; }
+@media (max-width:540px) {
+  .bmi-record-form { flex-direction:column; align-items:stretch; }
+  .bmi-history-filter { grid-template-columns:1fr 1fr; }
+  .bmi-history-filter label { grid-column:1; }
+  .bmi-history-summary { gap:6px; }
+  .bmi-history-summary strong { font-size:.85rem; }
+  .bmi-history-actions button { flex:1 1 40%; min-height:42px; }
+}
+@media print {
+  body.bmi-printing > header, body.bmi-printing > footer,
+  body.bmi-printing main > :not(#bmiHistory),
+  body.bmi-printing #bmiHistory > :not(#historyReport) { display:none !important; }
+  body.bmi-printing, body.bmi-printing main, body.bmi-printing #bmiHistory { background:white; margin:0; padding:0; max-width:none; border:0; box-shadow:none; }
+  body.bmi-printing .bmi-no-print { display:none !important; }
+  body.bmi-printing .bmi-history-table-wrap { max-height:none; overflow:visible; }
+  body.bmi-printing .bmi-history-table { font-size:10pt; }
+  body.bmi-printing .bmi-history-table th { position:static; }
+  body.bmi-printing tr { break-inside:avoid; }
+  body.bmi-printing thead { display:table-header-group; }
+  body.bmi-printing canvas { max-height:85mm; object-fit:contain; break-inside:avoid; }
+  body.bmi-printing .bmi-history-summary { break-inside:avoid; }
+  @page { size:A4; margin:15mm; }
+}
