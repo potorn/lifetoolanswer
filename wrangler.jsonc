@@ -1,0 +1,18 @@
+{
+  // Assets-only Worker. Name matches the existing script so Workers Builds
+  // updates lifetoolanswer instead of creating a second Worker.
+  // No "main" script: requests are served by static assets, as they are today.
+  // Custom domains and routes stay in the Cloudflare dashboard.
+  "name": "lifetoolanswer",
+  "compatibility_date": "2026-11-23",
+  "assets": {
+    // Repository root, so _headers and .assetsignore keep applying.
+    "directory": "./",
+    // Current pretty URLs: /tools/percent.html and /tools/percent/ 307 to /tools/percent.
+    // This is the Workers default; set it explicitly so it is not left to autoconfig.
+    "html_handling": "auto-trailing-slash",
+    // Missing paths serve the nearest 404.html (the root file) with HTTP 404.
+    // The default "none" returns an empty 404 body.
+    "not_found_handling": "404-page"
+  }
+}
