@@ -29,7 +29,6 @@
   }
   :root[data-theme="dark"] .hero { background:linear-gradient(135deg,#162c55,#1d437d,#24518f); }
   :root[data-theme="dark"] footer { background:#0a111e; }
-  :root[data-theme="dark"] .ad-slot { background:#162133; border-color:#40516d; color:var(--text-muted); }
   :root[data-theme="dark"] .tool-card-note { border-color:var(--border); color:var(--text-muted); }
   :root[data-theme="dark"] .tool-card:hover { border-color:#7196cc; }
   :root[data-theme="dark"] .tool-page :is(h1,h2,h3,h4,strong,legend,.card-title,.stat-val,.utility-label,.health-form-toolbar h2,.editor-file-info strong) { color:var(--text); }

@@ -7,12 +7,16 @@
   <script src="../js/theme.js?v=20261019-theme1"></script>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>부가세 계산기 - 공급가액·합계금액 역산 | 생활도구</title>
-  <meta name="description" content="공급가액에서 부가세와 합계금액을 계산하거나 부가세 포함 합계금액에서 공급가액과 세액을 역산하세요.">
+  <meta name="description" content="공급가액·부가세·합계를 10% 기준으로 계산하고 세금계산서 금액을 읽는 법을 안내합니다. 일반과세와 간이과세의 차이는 참고용입니다.">
+  <link rel="canonical" href="https://lifetoolanswer.com/tools/vat">
+  <meta property="og:url" content="https://lifetoolanswer.com/tools/vat">
+  
   <meta name="keywords" content="부가세 계산기, 부가가치세 계산, 공급가액 계산, 부가세 역산, VAT 계산기">
   <meta property="og:title" content="부가세 계산기 | 생활도구">
-  <meta property="og:description" content="공급가액·부가세·합계금액을 간편하게 계산하세요.">
+  <meta property="og:description" content="공급가액·부가세·합계를 10% 기준으로 계산하고 세금계산서 금액을 읽는 법을 안내합니다. 일반과세와 간이과세의 차이는 참고용입니다.">
   <meta property="og:type" content="website">
   <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🔧</text></svg>">
+  <link rel="icon" href="/favicon.ico" sizes="32x32">
   <link rel="stylesheet" href="../css/style.css">
   <link rel="stylesheet" href="../css/tool.css">
   <script type="application/ld+json">
@@ -33,14 +37,14 @@
 <header>
   <div class="container">
     <div class="header-inner">
-      <a href="../index.html" class="logo">
+      <a href="/" class="logo">
         <span class="logo-icon">🔧</span>
         <span class="logo-name">생활<span>도구</span></span>
       </a>
       <span class="header-desc">무료 온라인 도구 모음</span>
       <nav class="header-nav">
-        <a href="about.html" class="nav-link">사이트 소개</a>
-        <a href="guide.html" class="nav-link">사용방법</a>
+        <a href="/tools/about" class="nav-link">사이트 소개</a>
+        <a href="/tools/guide" class="nav-link">사용방법</a>
       </nav>
 <div class="theme-switch" role="radiogroup" aria-label="화면 모드" hidden><button type="button" role="radio" data-theme-choice="system" aria-checked="true" tabindex="0"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="13" rx="2"/><path d="M8 21h8M12 16v5"/></svg><span>시스템</span></button><button type="button" role="radio" data-theme-choice="light" aria-checked="false" tabindex="-1"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M2 12h2m16 0h2M5 5l1.4 1.4m11.2 11.2L19 19M5 19l1.4-1.4M17.6 6.4 19 5"/></svg><span>라이트</span></button><button type="button" role="radio" data-theme-choice="dark" aria-checked="false" tabindex="-1"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.8 13A9 9 0 0 1 11 3.2 9 9 0 1 0 20.8 13Z"/></svg><span>다크</span></button></div><span id="themeStatus" class="theme-sr-only" role="status" aria-live="polite"></span>
     </div>
@@ -49,7 +53,7 @@
 
 <main class="tool-page">
   <nav class="breadcrumb">
-    <a href="../index.html">홈</a>
+    <a href="/">홈</a>
     <span class="breadcrumb-sep">›</span>
     <span>부가세 계산기</span>
   </nav>
@@ -110,6 +114,26 @@
     </table>
     <p class="info-footnote">※ 일반적인 10% 과세 거래의 간편 계산입니다. 신고·계약에 사용할 때는 국세청 또는 세무 전문가에게 확인하세요.</p>
   </div>
+
+  <section class="info-card upgrade-info" aria-labelledby="vatGuide">
+    <h2 id="vatGuide">공급가액, 부가세, 합계</h2>
+    <p>부가가치세 일반 세율은 공급가액의 10%입니다. 공급가액 100만 원이면 부가세는 10만 원, 합계는 110만 원입니다. 반대로 합계만 있으면 공급가액은 합계를 1.1로 나눈 값입니다. 110만 원을 역산하면 공급가액 100만 원, 부가세 10만 원입니다. 이 계산기는 원 단위로 반올림한 뒤, 공급가액·부가세·합계가 서로 맞도록 나머지를 조정합니다. 1원이 중요한 세금계산서는 발행 화면의 금액과 다시 대조하세요.</p>
+    <h3>일반과세자와 간이과세자</h3>
+    <p>일반과세자는 매출할 때 받은 부가세(매출세액)에서 매입할 때 부담한 부가세(매입세액)를 빼고 차액을 납부하는 것이 원칙이며, 세금계산서를 발급할 수 있습니다. 간이과세자는 직전 연도 공급대가가 법령의 기준 미만인 개인사업자에게 적용되는 제도이고, 개업 첫해는 판단 기준이 다를 수 있습니다. 업종별 부가가치율을 반영해 납부세액을 계산하므로, 공급가액의 10%를 그대로 내는 구조가 아닙니다. 매입세액 공제와 세금계산서 발급 범위도 일반과세자와 다릅니다. 기준 금액과 부가가치율은 개정되므로 이 페이지는 특정 매출 한도를 적지 않습니다. 위 10% 계산은 일반 과세 거래를 가정한 참고값이며, 간이과세자의 신고 세액으로 쓰면 안 됩니다.</p>
+    <h3>세금계산서에서 보는 칸</h3>
+    <p>세금계산서에는 작성일, 공급자와 공급받는 자의 등록번호, 공급가액, 세액, 합계금액이 나뉩니다. 합계금액은 공급가액과 세액을 더한 값이어야 하고, 품목별 공급가액의 합은 하단 공급가액과 같아야 합니다. 면세 거래는 세금계산서 대신 계산서를 쓰고 세액이 없는 경우가 많습니다. 영세율은 세율이 0%라 세액이 0일 수 있지만, 면세와는 다른 제도입니다.</p>
+    <h3>프리랜서 견적에 부가세가 들어 있는지</h3>
+    <p>「부가세 별도」는 적힌 금액이 공급가액이라는 뜻입니다. 일반과세 사업자라면 청구할 때 10%를 더합니다. 「부가세 포함」은 합계가 이미 10%를 품은 금액이니, 공급가액이 필요하면 역산을 씁니다. 일부 인적용역은 면세라 부가세 자체가 없습니다. 견적에 포함 여부가 없으면, 발행하는 사람이 일반과세·간이과세·면세 중 어디인지 먼저 확인하세요. 지급액에서 흔히 말하는 3.3%는 부가세가 아니라 소득세와 지방소득세 원천징수이며, 이 계산기는 그 금액을 다루지 않습니다.</p>
+    <p class="info-footnote">계산 결과는 일반적인 10% 과세 거래를 이해하기 위한 참고용입니다. 신고와 세금계산서 발행 전에는 국세청 자료나 세무 전문가에게 확인하세요.</p>
+  </section>
+  <section class="info-card upgrade-info" aria-labelledby="vatFaq">
+    <h2 id="vatFaq">자주 묻는 질문</h2>
+    <h3>카드 영수증의 부가세도 이렇게 나누나요?</h3>
+    <p>과세 결제라면 보통 합계 안에 10%가 포함되어 있어 역산과 비슷합니다. 면세·봉사료·할인·복합과세가 섞이면 영수증에 적힌 공급가액과 부가세 칸을 그대로 보세요.</p>
+    <h3>이 결과로 신고해도 되나요?</h3>
+    <p>아닙니다. 절사 방식, 대손세액, 의제매입세액, 영세율·면세 안분은 반영하지 않습니다. 신고 서류에는 세금계산서와 신고 도움말의 금액을 쓰세요.</p>
+  </section>
+
 </main>
 
 <footer>
@@ -119,8 +143,8 @@
       <div>자주 쓰는 온라인 도구를 무료로 제공합니다.</div>
       <div>계산 결과는 참고용이며 전문가 상담을 대체하지 않습니다.</div>
       <div class="footer-links">
-        <a href="privacy.html">개인정보처리방침</a>
-        <a href="disclaimer.html">면책 조항</a>
+        <a href="/tools/privacy">개인정보처리방침</a>
+        <a href="/tools/disclaimer">면책 조항</a>
       </div>
       <div style="margin-top:8px;">© 2026 생활도구. All rights reserved.</div>
     </div>

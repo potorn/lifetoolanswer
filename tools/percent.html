@@ -7,11 +7,15 @@
   <script src="../js/theme.js?v=20261019-theme1"></script>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>퍼센트 계산기 - 할인가·증감률·역계산 | 생활도구</title>
-  <meta name="description" content="할인가 계산, 증감률 계산, 역계산(원래 가격 찾기)을 간편하게 계산하세요. 쇼핑 할인율, 성장률 분석에 활용하세요.">
+  <meta name="description" content="할인 두 번과 합산 할인의 차이, 증감률과 퍼센트포인트, 세일가·연봉 인상률을 예시로 계산하세요. 원래 가격 역계산도 지원합니다.">
+  <link rel="canonical" href="https://lifetoolanswer.com/tools/percent">
+  <meta property="og:url" content="https://lifetoolanswer.com/tools/percent">
+  
   <meta property="og:title" content="퍼센트 계산기 | 생활도구">
-  <meta property="og:description" content="할인가 계산, 증감률, 역계산을 간편하게 계산하세요.">
+  <meta property="og:description" content="할인 두 번과 합산 할인의 차이, 증감률과 퍼센트포인트, 세일가·연봉 인상률을 예시로 계산하세요. 원래 가격 역계산도 지원합니다.">
   <meta property="og:type" content="website">
   <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🔧</text></svg>">
+  <link rel="icon" href="/favicon.ico" sizes="32x32">
   <link rel="stylesheet" href="../css/style.css">
   <link rel="stylesheet" href="../css/tool.css">
   <script type="application/ld+json">
@@ -32,14 +36,14 @@
 <header>
   <div class="container">
     <div class="header-inner">
-      <a href="../index.html" class="logo">
+      <a href="/" class="logo">
         <span class="logo-icon">🔧</span>
         <span class="logo-name">생활<span>도구</span></span>
       </a>
       <span class="header-desc">무료 온라인 도구 모음</span>
       <nav class="header-nav">
-        <a href="about.html" class="nav-link">사이트 소개</a>
-        <a href="guide.html" class="nav-link">사용방법</a>
+        <a href="/tools/about" class="nav-link">사이트 소개</a>
+        <a href="/tools/guide" class="nav-link">사용방법</a>
       </nav>
 <div class="theme-switch" role="radiogroup" aria-label="화면 모드" hidden><button type="button" role="radio" data-theme-choice="system" aria-checked="true" tabindex="0"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="13" rx="2"/><path d="M8 21h8M12 16v5"/></svg><span>시스템</span></button><button type="button" role="radio" data-theme-choice="light" aria-checked="false" tabindex="-1"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M2 12h2m16 0h2M5 5l1.4 1.4m11.2 11.2L19 19M5 19l1.4-1.4M17.6 6.4 19 5"/></svg><span>라이트</span></button><button type="button" role="radio" data-theme-choice="dark" aria-checked="false" tabindex="-1"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.8 13A9 9 0 0 1 11 3.2 9 9 0 1 0 20.8 13Z"/></svg><span>다크</span></button></div><span id="themeStatus" class="theme-sr-only" role="status" aria-live="polite"></span>
     </div>
@@ -49,7 +53,7 @@
 <main class="tool-page">
 
   <nav class="breadcrumb">
-    <a href="../index.html">홈</a>
+    <a href="/">홈</a>
     <span class="breadcrumb-sep">›</span>
     <span>퍼센트 계산기</span>
   </nav>
@@ -59,8 +63,6 @@
     <h1>퍼센트 계산기</h1>
     <p>할인가 계산, 증감률, 역계산을 간편하게 계산하세요.</p>
   </div>
-
-  <div class="ad-slot">광고 영역 (Google AdSense)</div>
 
   <div class="card">
     <p class="card-title">계산 방식 선택</p>
@@ -138,6 +140,27 @@
     <div class="bmi-stats" id="resultBoxes"></div>
   </div>
 
+
+  <section class="info-card upgrade-info" aria-labelledby="percentGuide">
+    <h2 id="percentGuide">할인과 증감률을 읽는 법</h2>
+    <p>퍼센트는 기준이 되는 양을 100으로 본 비율입니다. 같은 30%라도 어디에 곱하느냐에 따라 빠지는 금액이 달라지므로, 세일 가격을 비교할 때는 할인율 문구보다 최종 결제 금액을 보는 편이 안전합니다.</p>
+    <h3>할인을 두 번 적용하면 합산 할인과 다릅니다</h3>
+    <p>5만 원짜리 옷에 30% 할인을 하면 3만 5천 원입니다. 여기에 추가 20% 쿠폰을 쓰면 3만 5천 원의 20%인 7천 원이 더 빠져 2만 8천 원이 됩니다. 30%와 20%를 더한 50% 할인이라면 2만 5천 원이니, 차례로 적용한 할인이 덜 깎입니다. 두 번째 할인은 이미 내려간 가격을 기준으로 계산되기 때문입니다. 매장 안내의 「최대 50%」와 「30%+20%」가 같은 조건인지 볼 때 이 차이를 쓰면 됩니다. 두 번 적용한 실제 할인율은 (5만−2만 8천)÷5만으로 44%입니다.</p>
+    <h3>증감률과 퍼센트포인트</h3>
+    <p>점유율이나 금리가 10%에서 15%로 바뀌면 숫자 자체의 차이는 5퍼센트포인트입니다. 증감률은 처음 값 대비 얼마나 늘었는지라 (15−10)÷10으로 50%입니다. 「5% 올랐다」와 「5%포인트 올랐다」는 다른 말이니, 금리·비중 기사를 읽을 때 기준이 처음 숫자인지 차이인지를 구분하세요. 이 계산기의 증감률은 변경 전 값의 절댓값을 기준으로 하고, 변경 전 값이 0이면 나눌 수 없어 계산하지 않습니다.</p>
+    <h3>세일가와 연봉 인상률</h3>
+    <p>8만 원 상품이 20% 세일이면 결제액은 6만 4천 원, 할인액은 1만 6천 원입니다. 결제액만 알고 원래 가격이 궁금하면 역계산을 씁니다. 6만 4천 원이 20% 할인된 가격이라면 원래 가격은 6만 4천 원÷0.8로 8만 원입니다. 연봉도 같은 비율입니다. 연봉 4,000만 원이 5% 오르면 인상액은 200만 원이고 새 연봉은 4,200만 원입니다. 실수령액은 세금과 보험료 때문에 연봉과 같은 비율로 오르지 않습니다. 통장에 들어오는 금액은 <a href="/tools/salary">연봉 실수령액 계산기</a>에서 따로 비교하세요.</p>
+  </section>
+  <section class="info-card upgrade-info" aria-labelledby="percentFaq">
+    <h2 id="percentFaq">자주 묻는 질문</h2>
+    <h3>부가세가 포함된 가격에도 할인율을 그대로 곱하나요?</h3>
+    <p>표시된 판매가에 할인율을 적용하는 방식이 일반적입니다. 부가세 별도 견적이라면 공급가액에 할인을 먼저 적용한 뒤 부가세를 더해야 청구액이 맞습니다. 어느 금액이 기준인지는 견적서에서 확인하세요.</p>
+    <h3>100%를 넘는 증감률도 나오나요?</h3>
+    <p>나옵니다. 값이 두 배가 되면 증감률은 100%, 세 배가 되면 200%입니다. 할인율 입력은 0~100%이고, 역계산은 100% 할인이면 원래 가격을 나눌 수 없어 0~99%만 받습니다.</p>
+    <h3>결과는 어디까지 반올림하나요?</h3>
+    <p>금액과 비율은 읽기 쉽게 소수 둘째 자리까지 표시할 수 있습니다. 계약서에 옮길 금액은 거래처가 정한 원 단위 처리를 따르세요.</p>
+  </section>
+
 </main>
 
 <footer>
@@ -147,8 +170,8 @@
       <div>자주 쓰는 온라인 도구를 무료로 제공합니다.</div>
       <div>계산 결과는 참고용이며 전문가 상담을 대체하지 않습니다.</div>
       <div class="footer-links">
-        <a href="privacy.html">개인정보처리방침</a>
-        <a href="disclaimer.html">면책 조항</a>
+        <a href="/tools/privacy">개인정보처리방침</a>
+        <a href="/tools/disclaimer">면책 조항</a>
       </div>
       <div style="margin-top:8px;">© 2026 생활도구. All rights reserved.</div>
     </div>

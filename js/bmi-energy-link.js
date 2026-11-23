@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
-  const link = document.createElement('a'); link.href = 'bmr.html'; link.className = 'upgrade-link'; link.textContent = '이 키·몸무게로 하루 소모 칼로리 계산하기';
+  const link = document.createElement('a'); link.href = '/tools/bmr'; link.className = 'upgrade-link'; link.textContent = '이 키·몸무게로 하루 소모 칼로리 계산하기';
   const status = document.createElement('p'); status.className = 'upgrade-status'; status.setAttribute('role', 'status'); document.getElementById('resultCard').append(link, status);
   link.onclick = event => {
     const height = Number(document.getElementById('height').value), weight = Number(document.getElementById('weight').value);

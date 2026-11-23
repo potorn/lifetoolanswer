@@ -7,12 +7,16 @@
   <script src="../js/theme.js?v=20261019-theme1"></script>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>QR 코드 생성기 - URL·텍스트 PNG 만들기 | 생활도구</title>
-  <meta name="description" content="URL이나 텍스트를 QR 코드로 만들고 PNG로 저장하세요. 입력 내용은 서버로 전송하지 않고 브라우저에서만 처리합니다.">
+  <meta name="description" content="명함·메뉴·와이파이용 QR 코드를 브라우저에서 만들고 PNG로 저장하세요. 오류 복원 L·M·Q·H를 고르는 기준과 큐싱 주의사항을 안내합니다.">
+  <link rel="canonical" href="https://lifetoolanswer.com/tools/qr">
+  <meta property="og:url" content="https://lifetoolanswer.com/tools/qr">
+  
   <meta name="keywords" content="QR 코드 생성기, QR 만들기, URL QR 코드, 텍스트 QR, QR PNG 저장">
   <meta property="og:title" content="QR 코드 생성기 | 생활도구">
-  <meta property="og:description" content="URL과 텍스트를 브라우저에서 QR 코드로 만들어 PNG로 저장하세요.">
+  <meta property="og:description" content="명함·메뉴·와이파이용 QR 코드를 브라우저에서 만들고 PNG로 저장하세요. 오류 복원 L·M·Q·H를 고르는 기준과 큐싱 주의사항을 안내합니다.">
   <meta property="og:type" content="website">
   <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🔧</text></svg>">
+  <link rel="icon" href="/favicon.ico" sizes="32x32">
   <link rel="stylesheet" href="../css/style.css">
   <link rel="stylesheet" href="../css/tool.css">
   <script type="application/ld+json">
@@ -33,14 +37,14 @@
 <header>
   <div class="container">
     <div class="header-inner">
-      <a href="../index.html" class="logo">
+      <a href="/" class="logo">
         <span class="logo-icon">🔧</span>
         <span class="logo-name">생활<span>도구</span></span>
       </a>
       <span class="header-desc">무료 온라인 도구 모음</span>
       <nav class="header-nav">
-        <a href="about.html" class="nav-link">사이트 소개</a>
-        <a href="guide.html" class="nav-link">사용방법</a>
+        <a href="/tools/about" class="nav-link">사이트 소개</a>
+        <a href="/tools/guide" class="nav-link">사용방법</a>
       </nav>
 <div class="theme-switch" role="radiogroup" aria-label="화면 모드" hidden><button type="button" role="radio" data-theme-choice="system" aria-checked="true" tabindex="0"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="13" rx="2"/><path d="M8 21h8M12 16v5"/></svg><span>시스템</span></button><button type="button" role="radio" data-theme-choice="light" aria-checked="false" tabindex="-1"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M2 12h2m16 0h2M5 5l1.4 1.4m11.2 11.2L19 19M5 19l1.4-1.4M17.6 6.4 19 5"/></svg><span>라이트</span></button><button type="button" role="radio" data-theme-choice="dark" aria-checked="false" tabindex="-1"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.8 13A9 9 0 0 1 11 3.2 9 9 0 1 0 20.8 13Z"/></svg><span>다크</span></button></div><span id="themeStatus" class="theme-sr-only" role="status" aria-live="polite"></span>
     </div>
@@ -49,7 +53,7 @@
 
 <main class="tool-page">
   <nav class="breadcrumb">
-    <a href="../index.html">홈</a>
+    <a href="/">홈</a>
     <span class="breadcrumb-sep">›</span>
     <span>QR 코드 생성기</span>
   </nav>
@@ -107,6 +111,23 @@
       <li>입력한 URL의 안전성이나 접속 가능 여부는 검사하지 않으므로 공유 전에 주소와 인식 결과를 직접 확인하세요.</li>
     </ul>
   </div>
+
+  <section class="info-card upgrade-info" aria-labelledby="qrGuide">
+    <h2 id="qrGuide">명함, 메뉴판, 와이파이에 쓰는 QR</h2>
+    <p>QR 코드는 입력한 글을 무늬로 담아, 카메라가 다시 글로 읽게 합니다. 명함에는 홈페이지 주소나 짧은 소개를, 메뉴판에는 재료 안내나 주문 페이지 주소를 넣으면 인쇄물을 길게 쓰지 않아도 됩니다. 와이파이 연결로 인식시키려면 WIFI:로 시작하는 정해진 문장 형식이 필요합니다. 이 생성기는 그 형식으로 바꿔 주지 않고 입력한 내용을 그대로 넣습니다. 비밀번호가 무늬 안에 남으므로, 가게처럼 공개할 네트워크와 집 공유기를 구분하세요. 붙이기 전에 본인 휴대폰으로 원하는 항목이 열리는지 확인하는 편이 안전합니다.</p>
+    <h3>오류 복원 수준은 망가짐을 어디까지 견딜지입니다</h3>
+    <p>QR은 일부가 가려지거나 번져도 내용을 복구할 수 있게 여분을 넣습니다. 규격에서 흔히 설명하는 복원 여력은 L 약 7%, M 약 15%, Q 약 25%, H 약 30%입니다. 높일수록 무늬가 촘촘해지고 담을 수 있는 글은 줄어듭니다. 화면 속 짧은 주소처럼 깨끗하게 보일 코드는 M으로 충분한 경우가 많습니다. 손때 묻는 메뉴판, 접히는 포스터, 작은 명함처럼 인쇄 뒤에 상할 수 있으면 Q나 H가 낫습니다. 내용이 길면 높은 수준에서는 만들기가 거절될 수 있으니, 그때는 주소를 줄이거나 수준을 낮추세요. 이 페이지의 기본값은 M입니다.</p>
+    <h3>큐싱, 가짜 QR을 스캔하게 하는 수법</h3>
+    <p>큐싱은 QR 코드로 가짜 결제·로그인 페이지에 들여보내는 수법입니다. 공식 안내문 위에 다른 코드가 덧붙어 있거나, 문자로 온 코드가 갑자기 결제를 요구하면 카메라가 보여 주는 주소를 확인하기 전에 열지 마세요. 이 페이지는 입력한 주소가 안전한지, 실제로 열리는지 검사하지 않습니다. 비밀번호, 주민등록번호, 인증번호처럼 남에게 보이면 안 되는 값은 넣지 마세요. 만든 PNG를 공유하기 전에 다른 기기에서 한 번 스캔해 주소와 내용을 확인하세요.</p>
+  </section>
+  <section class="info-card upgrade-info" aria-labelledby="qrFaq">
+    <h2 id="qrFaq">자주 묻는 질문</h2>
+    <h3>인쇄했는데 인식이 안 됩니다</h3>
+    <p>여백이 잘리거나 대비가 낮으면 실패하는 경우가 많습니다. 이 생성기는 무늬 주변에 하얀 여백을 넣습니다. 그 여백을 잘라 내지 말고, 너무 작게 인쇄하지 마세요. 광택지나 곡면은 H처럼 높은 복원 수준이 읽기에 유리할 수 있습니다.</p>
+    <h3>색을 바꾸거나 로고를 얹어도 되나요?</h3>
+    <p>지금은 어두운 무늬와 흰 배경만 만듭니다. 로고를 가운데 덮으면 복원 수준을 높여도 읽히지 않을 수 있으니, 덮은 뒤 휴대폰으로 다시 스캔하세요.</p>
+  </section>
+
 </main>
 
 <footer>
@@ -115,8 +136,8 @@
       <div class="footer-logo">🔧 생활도구</div>
       <div>자주 쓰는 온라인 도구를 무료로 제공합니다.</div>
       <div class="footer-links">
-        <a href="privacy.html">개인정보처리방침</a>
-        <a href="disclaimer.html">면책 조항</a>
+        <a href="/tools/privacy">개인정보처리방침</a>
+        <a href="/tools/disclaimer">면책 조항</a>
       </div>
       <div style="margin-top:8px;">© 2026 생활도구. All rights reserved.</div>
     </div>

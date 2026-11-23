@@ -2,124 +2,134 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://lifetoolanswer.com/</loc>
-    <lastmod>2026-10-19</lastmod>
+    <lastmod>2026-11-23</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>https://lifetoolanswer.com/tools/bmi.html</loc>
-    <lastmod>2026-10-19</lastmod>
+    <loc>https://lifetoolanswer.com/tools/bmi</loc>
+    <lastmod>2026-11-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://lifetoolanswer.com/tools/bmr.html</loc>
-    <lastmod>2026-10-19</lastmod>
+    <loc>https://lifetoolanswer.com/tools/bmr</loc>
+    <lastmod>2026-11-23</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://lifetoolanswer.com/tools/pace.html</loc>
-    <lastmod>2026-10-19</lastmod>
+    <loc>https://lifetoolanswer.com/tools/pace</loc>
+    <lastmod>2026-11-23</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://lifetoolanswer.com/tools/loan.html</loc>
-    <lastmod>2026-10-19</lastmod>
+    <loc>https://lifetoolanswer.com/tools/loan</loc>
+    <lastmod>2026-11-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://lifetoolanswer.com/tools/unit.html</loc>
+    <loc>https://lifetoolanswer.com/tools/unit</loc>
+    <lastmod>2026-11-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://lifetoolanswer.com/tools/image.html</loc>
-    <lastmod>2026-10-19</lastmod>
+    <loc>https://lifetoolanswer.com/tools/image</loc>
+    <lastmod>2026-11-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://lifetoolanswer.com/tools/image-editor.html</loc>
-    <lastmod>2026-10-19</lastmod>
+    <loc>https://lifetoolanswer.com/tools/image-editor</loc>
+    <lastmod>2026-11-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://lifetoolanswer.com/tools/gif-maker.html</loc>
-    <lastmod>2026-10-19</lastmod>
+    <loc>https://lifetoolanswer.com/tools/gif-maker</loc>
+    <lastmod>2026-11-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://lifetoolanswer.com/tools/privacy.html</loc>
-    <lastmod>2026-10-19</lastmod>
-    <changefreq>yearly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://lifetoolanswer.com/tools/disclaimer.html</loc>
-    <changefreq>yearly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://lifetoolanswer.com/tools/salary.html</loc>
-    <lastmod>2026-10-19</lastmod>
+    <loc>https://lifetoolanswer.com/tools/percent</loc>
+    <lastmod>2026-11-23</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://lifetoolanswer.com/tools/percent.html</loc>
+    <loc>https://lifetoolanswer.com/tools/salary</loc>
+    <lastmod>2026-11-23</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://lifetoolanswer.com/tools/vat.html</loc>
+    <loc>https://lifetoolanswer.com/tools/vat</loc>
+    <lastmod>2026-11-23</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://lifetoolanswer.com/tools/text-counter.html</loc>
+    <loc>https://lifetoolanswer.com/tools/savings</loc>
+    <lastmod>2026-11-23</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://lifetoolanswer.com/tools/savings.html</loc>
-    <lastmod>2026-10-19</lastmod>
+    <loc>https://lifetoolanswer.com/tools/text-counter</loc>
+    <lastmod>2026-11-23</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://lifetoolanswer.com/tools/qr.html</loc>
+    <loc>https://lifetoolanswer.com/tools/qr</loc>
+    <lastmod>2026-11-23</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://lifetoolanswer.com/tools/encoder.html</loc>
+    <loc>https://lifetoolanswer.com/tools/encoder</loc>
+    <lastmod>2026-11-23</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://lifetoolanswer.com/tools/hash.html</loc>
+    <loc>https://lifetoolanswer.com/tools/hash</loc>
+    <lastmod>2026-11-23</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://lifetoolanswer.com/tools/encryption.html</loc>
+    <loc>https://lifetoolanswer.com/tools/encryption</loc>
+    <lastmod>2026-11-23</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://lifetoolanswer.com/tools/about.html</loc>
+    <loc>https://lifetoolanswer.com/tools/about</loc>
+    <lastmod>2026-11-23</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
-    <loc>https://lifetoolanswer.com/tools/guide.html</loc>
-    <lastmod>2026-10-19</lastmod>
+    <loc>https://lifetoolanswer.com/tools/guide</loc>
+    <lastmod>2026-11-23</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://lifetoolanswer.com/tools/privacy</loc>
+    <lastmod>2026-11-23</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://lifetoolanswer.com/tools/disclaimer</loc>
+    <lastmod>2026-11-23</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.6</priority>
   </url>
 </urlset>
