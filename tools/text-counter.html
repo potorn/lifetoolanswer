@@ -7,12 +7,16 @@
   <script src="../js/theme.js?v=20261019-theme1"></script>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>글자 수 계산기 - 공백 제외·바이트·단어 수 | 생활도구</title>
-  <meta name="description" content="텍스트의 공백 포함·제외 글자 수, UTF-8 바이트, 단어 수와 줄 수를 입력 즉시 확인하세요.">
+  <meta name="description" content="공백 포함·제외 글자 수, UTF-8 바이트, 단어·줄 수를 바로 확인하세요. 자소서·SNS 글자 제한과 한글이 3바이트인 이유를 함께 설명합니다.">
+  <link rel="canonical" href="https://lifetoolanswer.com/tools/text-counter">
+  <meta property="og:url" content="https://lifetoolanswer.com/tools/text-counter">
+  
   <meta name="keywords" content="글자 수 계산기, 글자수 세기, 바이트 계산기, 단어 수 세기, 자소서 글자수">
   <meta property="og:title" content="글자 수 계산기 | 생활도구">
-  <meta property="og:description" content="글자 수·바이트·단어 수·줄 수를 입력 즉시 확인하세요.">
+  <meta property="og:description" content="공백 포함·제외 글자 수, UTF-8 바이트, 단어·줄 수를 바로 확인하세요. 자소서·SNS 글자 제한과 한글이 3바이트인 이유를 함께 설명합니다.">
   <meta property="og:type" content="website">
   <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🔧</text></svg>">
+  <link rel="icon" href="/favicon.ico" sizes="32x32">
   <link rel="stylesheet" href="../css/style.css">
   <link rel="stylesheet" href="../css/tool.css">
   <script type="application/ld+json">
@@ -33,14 +37,14 @@
 <header>
   <div class="container">
     <div class="header-inner">
-      <a href="../index.html" class="logo">
+      <a href="/" class="logo">
         <span class="logo-icon">🔧</span>
         <span class="logo-name">생활<span>도구</span></span>
       </a>
       <span class="header-desc">무료 온라인 도구 모음</span>
       <nav class="header-nav">
-        <a href="about.html" class="nav-link">사이트 소개</a>
-        <a href="guide.html" class="nav-link">사용방법</a>
+        <a href="/tools/about" class="nav-link">사이트 소개</a>
+        <a href="/tools/guide" class="nav-link">사용방법</a>
       </nav>
 <div class="theme-switch" role="radiogroup" aria-label="화면 모드" hidden><button type="button" role="radio" data-theme-choice="system" aria-checked="true" tabindex="0"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="13" rx="2"/><path d="M8 21h8M12 16v5"/></svg><span>시스템</span></button><button type="button" role="radio" data-theme-choice="light" aria-checked="false" tabindex="-1"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M2 12h2m16 0h2M5 5l1.4 1.4m11.2 11.2L19 19M5 19l1.4-1.4M17.6 6.4 19 5"/></svg><span>라이트</span></button><button type="button" role="radio" data-theme-choice="dark" aria-checked="false" tabindex="-1"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.8 13A9 9 0 0 1 11 3.2 9 9 0 1 0 20.8 13Z"/></svg><span>다크</span></button></div><span id="themeStatus" class="theme-sr-only" role="status" aria-live="polite"></span>
     </div>
@@ -49,7 +53,7 @@
 
 <main class="tool-page">
   <nav class="breadcrumb">
-    <a href="../index.html">홈</a>
+    <a href="/">홈</a>
     <span class="breadcrumb-sep">›</span>
     <span>글자 수 계산기</span>
   </nav>
@@ -111,6 +115,25 @@
     </table>
     <p class="info-footnote">※ 채용·원고 제출 사이트는 줄바꿈, 한글, 이모지를 서로 다른 방식으로 셀 수 있으므로 최종 제출처의 기준을 함께 확인하세요.</p>
   </div>
+
+  <section class="info-card upgrade-info" aria-labelledby="textGuide">
+    <h2 id="textGuide">공백을 넣을지부터 정합니다</h2>
+    <p>공백 포함은 띄어쓰기, 탭, 줄바꿈까지 화면에서 한 글자로 센 수입니다. 공백 제외는 그 공백 문자를 뺀 수입니다. 채용 공고는 둘 중 하나를 지정하는 경우가 많아서, 제한 문구를 보기 전에 숫자를 맞추면 제출 화면에서 잘립니다. 이모지와 결합 문자는 화면에 보이는 한 글자를 기준으로 셉니다. 단어 수는 공백으로 나눈 덩어리이고, 줄 수는 줄바꿈 기준입니다.</p>
+    <h3>자소서와 짧은 글의 제한은 제각각입니다</h3>
+    <p>자기소개서는 문항마다 글자 제한을 둡니다. 대표적인 예로 한 칸에 500자, 1,000자처럼 적힌 공고가 있지만 회사와 접수 시스템마다 다르고, 같은 500자라도 공백·줄바꿈을 세는 기준이 같다고 보기는 어렵습니다. 짧은 글 서비스도 수백 자 안팎에서 입력을 막는 경우가 많고, 그 한도는 자주 바뀝니다. 이 페이지의 숫자는 초안을 다듬는 참고이고, 최종 확인은 제출 화면이나 해당 서비스가 보여 주는 글자 수로 하세요.</p>
+    <h3>한글이 UTF-8에서 3바이트인 이유</h3>
+    <p>UTF-8은 글자의 코드 번호가 커질수록 바이트를 더 씁니다. 영문·숫자·기본 기호는 1바이트, U+0080부터 U+07FF까지는 2바이트, U+0800부터 U+FFFF까지는 3바이트입니다. 완성형 한글 음절(가–힣)은 U+AC00–U+D7A3에 있어 이 3바이트 구간에 들어갑니다. 그래서 한글 100자는 대략 300바이트입니다. 이모지 상당수는 4바이트 이상이라 화면의 한 글자와 바이트는 같이 움직이지 않습니다. 바이트 칸만 UTF-8이고, 글자 수 칸은 바이트가 아닙니다.</p>
+  </section>
+  <section class="info-card upgrade-info" aria-labelledby="textFaq">
+    <h2 id="textFaq">자주 묻는 질문</h2>
+    <h3>띄어쓰기를 지우면 공백 제외와 같나요?</h3>
+    <p>공백 제외는 띄어쓰기뿐 아니라 탭과 줄바꿈도 뺍니다. 문장 사이의 빈 줄도 빠지므로 공백 포함과 차이가 커질 수 있습니다.</p>
+    <h3>한글 자모만 있어도 3바이트인가요?</h3>
+    <p>호환 자모(ㄱ, ㅏ처럼 따로 떨어진 자모)도 3바이트 구간의 문자입니다. 접수 사이트가 완성형만 한 글자로 세고 자모를 따로 세면 결과가 달라질 수 있습니다.</p>
+    <h3>입력한 글이 저장되나요?</h3>
+    <p>아닙니다. 브라우저 안에서만 세고 서버로 보내지 않습니다. 페이지를 떠나면 입력도 사라집니다.</p>
+  </section>
+
 </main>
 
 <footer>
@@ -119,8 +142,8 @@
       <div class="footer-logo">🔧 생활도구</div>
       <div>자주 쓰는 온라인 도구를 무료로 제공합니다.</div>
       <div class="footer-links">
-        <a href="privacy.html">개인정보처리방침</a>
-        <a href="disclaimer.html">면책 조항</a>
+        <a href="/tools/privacy">개인정보처리방침</a>
+        <a href="/tools/disclaimer">면책 조항</a>
       </div>
       <div style="margin-top:8px;">© 2026 생활도구. All rights reserved.</div>
     </div>
