@@ -1,5 +1,6 @@
 import { MAX_IMAGE_INPUT_BYTES, MAX_IMAGE_DIMENSION, MAX_IMAGE_PIXELS, validateImageBuffer } from './file-validation.js';
 import { sizePresets, validEditorSettings } from './editor-settings.js?v=20261019-media1';
+import { removeBackground } from './background-removal.js?v=20261124-cutout1';
 
 export const adjustmentDefaults = {
   brightness: 0, contrast: 0, exposure: 0, hue: 0, saturation: 0, vibrance: 0,
@@ -69,12 +70,42 @@ if (typeof document !== 'undefined') document.addEventListener('DOMContentLoaded
     serif: 'Batang, "AppleMyungjo", serif', mono: 'Consolas, monospace',
     arial: 'Arial, sans-serif', georgia: 'Georgia, serif'
   };
+  const watermarkAnchors = {
+    tl: { x: 0.06, y: 0.08, ax: 0, ay: 0 },
+    tc: { x: 0.5, y: 0.08, ax: 0.5, ay: 0 },
+    tr: { x: 0.94, y: 0.08, ax: 1, ay: 0 },
+    ml: { x: 0.06, y: 0.5, ax: 0, ay: 0.5 },
+    center: { x: 0.5, y: 0.5, ax: 0.5, ay: 0.5 },
+    mr: { x: 0.94, y: 0.5, ax: 1, ay: 0.5 },
+    bl: { x: 0.06, y: 0.92, ax: 0, ay: 1 },
+    bc: { x: 0.5, y: 0.92, ax: 0.5, ay: 1 },
+    br: { x: 0.94, y: 0.92, ax: 1, ay: 1 }
+  };
   let state = null, original = null, committed = null, past = [], future = [];
   let currentTab = 'crop', selectedText = '', crop = null, comparing = false;
-  let sourceName = '', loadingId = 0, frame = 0, drag = null, nextTextId = 1;
+  let sourceName = '', loadingId = 0, frame = 0, drag = null, nextTextId = 1, cutoutGen = 0, busy = false;
   const downloadUrls = new Set();
-  const snapshot = s => ({ base: s.base, adjustments: { ...s.adjustments }, texts: s.texts.map(t => ({ ...t })) });
-  const same = (a, b) => a.base === b.base && JSON.stringify(a.adjustments) === JSON.stringify(b.adjustments) && JSON.stringify(a.texts) === JSON.stringify(b.texts);
+  function defaultWatermark(width = 1000) {
+    return {
+      text: { content: '', size: clamp(Math.round(width * 0.06), 18, 280), color: '#ffffff', opacity: 0.45, rotation: -24, position: 'center' },
+      logo: { canvas: null, name: '', scale: 0.2, opacity: 0.55, position: 'br' }
+    };
+  }
+  function cloneWatermark(watermark) {
+    return { text: { ...watermark.text }, logo: { ...watermark.logo } };
+  }
+  function watermarkSame(a, b) {
+    return JSON.stringify(a.text) === JSON.stringify(b.text) && a.logo.canvas === b.logo.canvas && a.logo.scale === b.logo.scale && a.logo.opacity === b.logo.opacity && a.logo.position === b.logo.position;
+  }
+  const snapshot = s => ({ base: s.base, adjustments: { ...s.adjustments }, texts: s.texts.map(t => ({ ...t })), watermark: cloneWatermark(s.watermark) });
+  const same = (a, b) => a.base === b.base && JSON.stringify(a.adjustments) === JSON.stringify(b.adjustments) && JSON.stringify(a.texts) === JSON.stringify(b.texts) && watermarkSame(a.watermark, b.watermark);
+  function setBusy(next) {
+    busy = next;
+    $('editorWorkbench').classList.toggle('is-busy', next);
+    $('editorWorkbench').setAttribute('aria-busy', String(next));
+    $('editorToolbar').inert = next;
+    $('editorSidebar').inert = next;
+  }
 
   function status(message, error = false) {
     $('editorStatus').textContent = message;
@@ -119,7 +150,7 @@ if (typeof document !== 'undefined') document.addEventListener('DOMContentLoaded
     $('editorDimensions').textContent = `${state.base.width.toLocaleString()} × ${state.base.height.toLocaleString()} px`;
     $('exportWidth').value = state.base.width; $('exportHeight').value = state.base.height;
     $('editorCompare').setAttribute('aria-pressed', String(comparing));
-    syncText(); updateHistory(); showOverlay();
+    syncText(); syncWatermark(); updateHistory(); showOverlay();
   }
   function selectTab(tab) {
     commit(); currentTab = tab; comparing = false;
@@ -132,6 +163,8 @@ if (typeof document !== 'undefined') document.addEventListener('DOMContentLoaded
       crop: '드래그하거나 숫자를 입력해 자를 영역을 선택하세요.',
       adjust: '슬라이더를 움직이면 보정 결과를 바로 확인할 수 있습니다.',
       text: '텍스트를 선택하고 이미지 위에서 드래그해 위치를 옮기세요.',
+      cutout: '배경 제거를 누르면 모델을 받은 뒤 이 브라우저에서 배경을 투명하게 만듭니다.',
+      watermark: '글자나 로고를 올리면 미리보기와 저장 파일에 함께 들어갑니다.',
       save: '크기와 품질을 정하고 다운로드하세요. 원본 파일은 바뀌지 않습니다.'
     }[tab];
     $('editorCompare').setAttribute('aria-pressed', 'false');
@@ -209,6 +242,69 @@ if (typeof document !== 'undefined') document.addEventListener('DOMContentLoaded
     state.adjustments = { ...adjustmentDefaults }; commit(); syncAll(); requestRender();
   });
 
+  function paintLines(ctx, lines, size, anchor, x = 0, y = 0) {
+    const lineHeight = size * 1.25;
+    const block = lineHeight * lines.length;
+    const offset = anchor.ay === 0 ? 0 : anchor.ay === 1 ? -block : -block / 2;
+    ctx.textBaseline = 'top';
+    lines.forEach((line, index) => ctx.fillText(line, x, y + offset + index * lineHeight));
+  }
+  function paintTextWatermark(ctx, text, width, height, scale) {
+    const content = (text?.content || '').replace(/\s+$/g, '');
+    if (!content.trim()) return;
+    const size = Math.max(8, text.size * scale);
+    const lines = content.split('\n').slice(0, 4);
+    ctx.save();
+    ctx.globalAlpha = clamp(Number(text.opacity) || 0, 0, 1);
+    ctx.fillStyle = text.color || '#ffffff';
+    ctx.font = `600 ${size}px ${fonts.sans}`;
+    ctx.lineJoin = 'round';
+    if (text.position === 'tile') {
+      const widest = Math.max(size, ...lines.map(line => ctx.measureText(line).width));
+      const blockH = size * 1.25 * lines.length;
+      let stepX = Math.max(size * 2.4, widest + size * 1.4);
+      let stepY = Math.max(size * 2.2, blockH + size);
+      const span = Math.hypot(width, height);
+      while (span > 0 && (span * 2 / stepX) * (span * 2 / stepY) > 480) { stepX *= 1.25; stepY *= 1.25; }
+      ctx.translate(width / 2, height / 2);
+      ctx.rotate((Number(text.rotation) || 0) * Math.PI / 180);
+      ctx.textAlign = 'center';
+      for (let y = -span; y <= span; y += stepY) {
+        const shift = Math.round(y / stepY) % 2 ? stepX / 2 : 0;
+        for (let x = -span; x <= span; x += stepX) paintLines(ctx, lines, size, { ay: 0.5 }, x + shift, y);
+      }
+    } else {
+      const anchor = watermarkAnchors[text.position] || watermarkAnchors.center;
+      ctx.translate(anchor.x * width, anchor.y * height);
+      ctx.rotate((Number(text.rotation) || 0) * Math.PI / 180);
+      ctx.textAlign = anchor.ax === 0 ? 'left' : anchor.ax === 1 ? 'right' : 'center';
+      paintLines(ctx, lines, size, anchor);
+    }
+    ctx.restore();
+  }
+  function paintLogoWatermark(ctx, logo, width, height) {
+    if (!logo?.canvas) return;
+    const dw = Math.max(1, width * clamp(Number(logo.scale) || 0.2, 0.05, 0.8));
+    const dh = dw * (logo.canvas.height / logo.canvas.width);
+    ctx.save();
+    ctx.globalAlpha = clamp(Number(logo.opacity) || 0, 0, 1);
+    if (logo.position === 'tile') {
+      let gapX = dw * 0.45, gapY = dh * 0.45;
+      while (width / (dw + gapX) * height / (dh + gapY) > 480) { gapX *= 1.25; gapY *= 1.25; }
+      for (let y = 0; y < height; y += dh + gapY) {
+        for (let x = 0; x < width; x += dw + gapX) ctx.drawImage(logo.canvas, x, y, dw, dh);
+      }
+    } else {
+      const anchor = watermarkAnchors[logo.position] || watermarkAnchors.br;
+      ctx.drawImage(logo.canvas, anchor.x * width - anchor.ax * dw, anchor.y * height - anchor.ay * dh, dw, dh);
+    }
+    ctx.restore();
+  }
+  function paintWatermark(ctx, watermark, width, height, scale) {
+    if (!watermark) return;
+    paintTextWatermark(ctx, watermark.text, width, height, scale);
+    paintLogoWatermark(ctx, watermark.logo, width, height);
+  }
   function paintText(ctx, t, scale) {
     ctx.font = `${t.bold ? '700' : '400'} ${t.size * scale}px ${fonts[t.font] || fonts.sans}`;
     ctx.textAlign = t.align; ctx.textBaseline = 'top'; ctx.lineJoin = 'round';
@@ -230,6 +326,7 @@ if (typeof document !== 'undefined') document.addEventListener('DOMContentLoaded
       adjustPixels(image.data, sourceState.adjustments); ctx.putImageData(image, 0, 0);
     }
     sourceState.texts.forEach(t => paintText(ctx, t, scale));
+    if (sourceState.watermark) paintWatermark(ctx, sourceState.watermark, target.width, target.height, scale);
     return target;
   }
   function textBounds(t) {
@@ -347,6 +444,7 @@ if (typeof document !== 'undefined') document.addEventListener('DOMContentLoaded
   });
 
   function geometry(transform) {
+    if (busy) return;
     commit(); comparing = false;
     try {
       const flat = renderImage(makeCanvas(1, 1), state);
@@ -363,8 +461,8 @@ if (typeof document !== 'undefined') document.addEventListener('DOMContentLoaded
         else ctx.scale(transform === 'horizontal' ? -1 : 1, transform === 'vertical' ? -1 : 1);
         ctx.drawImage(flat, -flat.width / 2, -flat.height / 2);
       }
-      state = { base: next, adjustments: { ...adjustmentDefaults }, texts: [] }; selectedText = '';
-      commit(); resetCrop(); syncAll(); requestRender(); status('적용했습니다. 보정과 텍스트를 이미지에 합쳤습니다. 실행 취소로 되돌릴 수 있습니다.');
+      state = { base: next, adjustments: { ...adjustmentDefaults }, texts: [], watermark: defaultWatermark(next.width) }; selectedText = '';
+      commit(); resetCrop(); syncAll(); requestRender(); status('적용했습니다. 보정, 텍스트, 워터마크를 이미지에 합쳤습니다. 실행 취소로 되돌릴 수 있습니다.');
     } catch { status('이미지 처리에 실패했습니다. 더 작은 이미지로 다시 시도해 주세요.', true); }
   }
   $('applyCrop').addEventListener('click', () => geometry('crop'));
@@ -438,6 +536,7 @@ if (typeof document !== 'undefined') document.addEventListener('DOMContentLoaded
 
   async function loadFile(file) {
     const id = ++loadingId;
+    cutoutGen++;
     if (file.size > MAX_IMAGE_INPUT_BYTES) return status('이미지 파일은 최대 25MB까지 지원합니다.', true);
     status('이미지를 브라우저에서 여는 중입니다…');
     let url;
@@ -449,7 +548,7 @@ if (typeof document !== 'undefined') document.addEventListener('DOMContentLoaded
       const img = new Image(); img.src = url; await img.decode(); if (id !== loadingId) return;
       if (img.naturalWidth > MAX_IMAGE_DIMENSION || img.naturalHeight > MAX_IMAGE_DIMENSION || img.naturalWidth * img.naturalHeight > MAX_IMAGE_PIXELS) throw new Error('이미지는 가로·세로 최대 4,096px, 1,600만 픽셀까지 지원합니다. 포맷 변환기에서 먼저 줄여 주세요.');
       original = makeCanvas(img.naturalWidth, img.naturalHeight); original.getContext('2d').drawImage(img, 0, 0);
-      state = { base: original, adjustments: { ...adjustmentDefaults }, texts: [] };
+      state = { base: original, adjustments: { ...adjustmentDefaults }, texts: [], watermark: defaultWatermark(img.naturalWidth) };
       committed = snapshot(state); past = []; future = []; selectedText = ''; comparing = false; drag = null;
       sourceName = file.name; $('editorFilename').textContent = file.name;
       $('editorUpload').classList.add('has-file');
@@ -485,25 +584,237 @@ if (typeof document !== 'undefined') document.addEventListener('DOMContentLoaded
       event.preventDefault(); loadFile(event.dataTransfer.files[0]);
     });
   });
-  $('editorUndo').addEventListener('click', () => undo()); $('editorRedo').addEventListener('click', () => undo(true));
+  $('editorUndo').addEventListener('click', () => { if (!busy) undo(); }); $('editorRedo').addEventListener('click', () => { if (!busy) undo(true); });
   document.addEventListener('keydown', event => {
     if (!state || /INPUT|TEXTAREA|SELECT/.test(event.target.tagName) || event.target.isContentEditable) return;
-    if ((event.ctrlKey || event.metaKey) && event.key.toLowerCase() === 'z') { event.preventDefault(); undo(event.shiftKey); }
+    if ((event.ctrlKey || event.metaKey) && event.key.toLowerCase() === 'z') { event.preventDefault(); if (!busy) undo(event.shiftKey); }
   });
   $('editorCompare').addEventListener('click', () => {
     commit(); comparing = !comparing; $('editorCompare').setAttribute('aria-pressed', String(comparing));
     showOverlay(); requestRender();
   });
   $('editorReset').addEventListener('click', () => {
-    commit(); state = { base: original, adjustments: { ...adjustmentDefaults }, texts: [] }; selectedText = ''; comparing = false;
+    if (busy) return;
+    commit(); state = { base: original, adjustments: { ...adjustmentDefaults }, texts: [], watermark: defaultWatermark(original.width) }; selectedText = ''; comparing = false;
     commit(); resetCrop(); syncAll(); requestRender(); status('처음 이미지로 돌아왔습니다. 실행 취소로 이전 편집을 복원할 수 있습니다.');
   });
 
+  function syncWatermark() {
+    const watermark = state.watermark;
+    $('wmText').value = watermark.text.content;
+    $('wmSize').value = watermark.text.size;
+    $('wmSizeValue').textContent = watermark.text.size + 'px';
+    $('wmColor').value = watermark.text.color;
+    $('wmColorValue').textContent = watermark.text.color.toUpperCase();
+    $('wmOpacity').value = Math.round(watermark.text.opacity * 100);
+    $('wmOpacityValue').textContent = $('wmOpacity').value + '%';
+    $('wmRotation').value = watermark.text.rotation;
+    $('wmRotationValue').textContent = watermark.text.rotation + '°';
+    $('wmPosition').value = watermark.text.position;
+    const hasLogo = !!watermark.logo.canvas;
+    $('wmLogoScale').value = Math.round(watermark.logo.scale * 100);
+    $('wmLogoScaleValue').textContent = $('wmLogoScale').value + '%';
+    $('wmLogoOpacity').value = Math.round(watermark.logo.opacity * 100);
+    $('wmLogoOpacityValue').textContent = $('wmLogoOpacity').value + '%';
+    $('wmLogoPosition').value = watermark.logo.position;
+    $('wmLogoName').textContent = hasLogo ? watermark.logo.name || '로고 이미지' : '선택한 로고가 없습니다.';
+    $('wmLogoControls').classList.toggle('is-disabled', !hasLogo);
+    $('wmLogoScale').disabled = !hasLogo;
+    $('wmLogoOpacity').disabled = !hasLogo;
+    $('wmLogoPosition').disabled = !hasLogo;
+    $('wmLogoClear').disabled = !hasLogo;
+    ['wmSize', 'wmOpacity', 'wmRotation', 'wmLogoScale', 'wmLogoOpacity'].forEach(id => updateRangeTrack($(id)));
+  }
+  function readTextWatermark() {
+    const text = state.watermark.text;
+    text.content = $('wmText').value.slice(0, 80);
+    text.size = clamp(Number($('wmSize').value) || 18, 12, 280);
+    text.color = $('wmColor').value;
+    text.opacity = clamp(Number($('wmOpacity').value) || 0, 0, 100) / 100;
+    text.rotation = clamp(Number($('wmRotation').value) || 0, -180, 180);
+    text.position = $('wmPosition').value;
+  }
+  $('wmText').addEventListener('input', () => {
+    if (!state || busy) return;
+    readTextWatermark(); leaveComparison(); requestRender();
+  });
+  ['wmSize', 'wmOpacity', 'wmRotation'].forEach(id => {
+    $(id).addEventListener('input', () => {
+      if (!state || busy) return;
+      readTextWatermark();
+      $('wmSizeValue').textContent = state.watermark.text.size + 'px';
+      $('wmOpacityValue').textContent = Math.round(state.watermark.text.opacity * 100) + '%';
+      $('wmRotationValue').textContent = state.watermark.text.rotation + '°';
+      updateRangeTrack($(id));
+      leaveComparison();
+      requestRender();
+    });
+  });
+  ['wmText', 'wmSize', 'wmOpacity', 'wmRotation', 'wmPosition', 'wmColor'].forEach(id => {
+    $(id).addEventListener('change', () => {
+      if (!state || busy) return;
+      readTextWatermark();
+      commit();
+      syncWatermark();
+    });
+  });
+  $('wmColor').addEventListener('input', () => {
+    if (!state || busy) return;
+    readTextWatermark();
+    $('wmColorValue').textContent = state.watermark.text.color.toUpperCase();
+    leaveComparison();
+    requestRender();
+  });
+  $('wmPosition').addEventListener('change', () => {
+    if (!state || busy) return;
+    readTextWatermark(); leaveComparison(); requestRender();
+  });
+  $('wmLogoPick').addEventListener('click', () => $('wmLogo').click());
+  $('wmLogo').addEventListener('change', async event => {
+    const file = event.target.files[0];
+    event.target.value = '';
+    if (!file || !state || busy) return;
+    if (file.size > MAX_IMAGE_INPUT_BYTES) return status('로고 이미지는 최대 25MB까지 올릴 수 있습니다.', true);
+    let url;
+    try {
+      const bytes = await file.arrayBuffer();
+      const valid = validateImageBuffer(bytes, file.name, ['png', 'jpeg', 'webp', 'avif', 'bmp']);
+      if (!valid.ok) throw new Error('PNG·JPEG·WebP·AVIF·BMP 로고를 선택해 주세요.');
+      url = URL.createObjectURL(file);
+      const img = new Image();
+      img.src = url;
+      await img.decode();
+      const longest = Math.max(img.naturalWidth, img.naturalHeight);
+      const ratio = longest > 1600 ? 1600 / longest : 1;
+      const logo = makeCanvas(Math.max(1, Math.round(img.naturalWidth * ratio)), Math.max(1, Math.round(img.naturalHeight * ratio)));
+      logo.getContext('2d').drawImage(img, 0, 0, logo.width, logo.height);
+      commit();
+      leaveComparison();
+      state.watermark.logo.canvas = logo;
+      state.watermark.logo.name = file.name;
+      commit();
+      syncWatermark();
+      requestRender();
+      status('로고 워터마크를 올렸습니다. 미리보기와 저장 파일에 함께 들어갑니다.');
+    } catch (error) {
+      status(error.message || '로고 이미지를 열 수 없습니다. 다른 파일을 선택해 주세요.', true);
+    } finally { if (url) URL.revokeObjectURL(url); }
+  });
+  function readLogoWatermark() {
+    const logo = state.watermark.logo;
+    logo.scale = clamp(Number($('wmLogoScale').value) || 20, 5, 80) / 100;
+    logo.opacity = clamp(Number($('wmLogoOpacity').value) || 0, 0, 100) / 100;
+    logo.position = $('wmLogoPosition').value;
+  }
+  ['wmLogoScale', 'wmLogoOpacity'].forEach(id => {
+    $(id).addEventListener('input', () => {
+      if (!state || busy || !state.watermark.logo.canvas) return;
+      readLogoWatermark();
+      $('wmLogoScaleValue').textContent = Math.round(state.watermark.logo.scale * 100) + '%';
+      $('wmLogoOpacityValue').textContent = Math.round(state.watermark.logo.opacity * 100) + '%';
+      updateRangeTrack($(id));
+      leaveComparison();
+      requestRender();
+    });
+    $(id).addEventListener('change', () => { if (!state || busy) return; readLogoWatermark(); commit(); });
+  });
+  $('wmLogoPosition').addEventListener('change', () => {
+    if (!state || busy || !state.watermark.logo.canvas) return;
+    readLogoWatermark(); commit(); leaveComparison(); requestRender();
+  });
+  $('wmLogoClear').addEventListener('click', () => {
+    if (!state || busy || !state.watermark.logo.canvas) return;
+    commit();
+    leaveComparison();
+    state.watermark.logo.canvas = null;
+    state.watermark.logo.name = '';
+    commit();
+    syncWatermark();
+    requestRender();
+    status('로고 워터마크를 뺐습니다. 실행 취소로 되돌릴 수 있습니다.');
+  });
+  function showCutoutProgress(info) {
+    const fill = $('cutoutProgressFill');
+    let message = '';
+    if (info.phase === 'runtime' || info.phase === 'model') {
+      const pct = info.total ? Math.min(100, Math.round(info.loaded / info.total * 100)) : 0;
+      fill.style.width = pct + '%';
+      message = info.phase === 'runtime' ? `실행 엔진을 받는 중입니다… ${pct}%` : `배경 분리 모델을 받는 중입니다… ${pct}%`;
+    } else if (info.phase === 'prepare') {
+      fill.style.width = '100%';
+      message = '모델을 준비하고 있습니다. 처음 실행은 조금 더 걸립니다.';
+    } else if (info.phase === 'fallback') {
+      message = '그래픽 가속을 쓰지 못해 기본 엔진으로 바꿉니다. 처리가 더 걸릴 수 있습니다.';
+    } else if (info.phase === 'run') {
+      fill.style.width = '100%';
+      message = '브라우저에서 배경을 분리하는 중입니다. 이 화면을 닫지 마세요.';
+    }
+    $('cutoutProgressText').textContent = message;
+    if (message) status(message);
+  }
+  function flattenedPhoto() {
+    return renderImage(makeCanvas(1, 1), { base: state.base, adjustments: state.adjustments, texts: [], watermark: defaultWatermark(1) });
+  }
+  $('cutoutFill').addEventListener('input', () => { $('cutoutFillValue').textContent = $('cutoutFill').value.toUpperCase(); });
+  $('removeBackground').addEventListener('click', async () => {
+    if (!state || busy) return;
+    const gen = ++cutoutGen;
+    const token = state.base;
+    const lowMemory = navigator.deviceMemory && navigator.deviceMemory <= 2;
+    setBusy(true);
+    $('cutoutProgress').hidden = false;
+    $('cutoutProgressFill').style.width = '0%';
+    if (lowMemory) status('메모리가 넉넉하지 않은 기기입니다. 사진을 줄여 계산하며, 실패하면 더 작은 이미지로 다시 시도해 주세요.');
+    try {
+      const flat = flattenedPhoto();
+      const result = await removeBackground(flat, { onProgress: showCutoutProgress });
+      if (gen !== cutoutGen || !state || state.base !== token) {
+        status('이미지가 바뀌어 배경 제거 결과를 적용하지 않았습니다.');
+        return;
+      }
+      const texts = state.texts.map(t => ({ ...t }));
+      const watermark = cloneWatermark(state.watermark);
+      comparing = false;
+      commit();
+      state = { base: result.canvas, adjustments: { ...adjustmentDefaults }, texts, watermark };
+      selectedText = texts.some(t => t.id === selectedText) ? selectedText : (texts.at(-1)?.id || '');
+      commit();
+      syncAll();
+      requestRender();
+      $('exportFormat').value = 'png';
+      $('exportFormat').dispatchEvent(new Event('change'));
+      status('배경을 투명하게 만들었습니다. 실행 취소로 되돌릴 수 있고, 원본 비교로 처음 사진과 견줘 볼 수 있습니다. 빈 곳을 유지하려면 PNG로 저장하세요.');
+    } catch (error) {
+      if (gen === cutoutGen) status(error.message || '배경을 제거하지 못했습니다. 잠시 후 다시 시도해 주세요.', true);
+    } finally {
+      $('cutoutProgress').hidden = true;
+      setBusy(false);
+    }
+  });
+  $('applyCutoutFill').addEventListener('click', () => {
+    if (!state || busy) return;
+    const flat = flattenedPhoto();
+    const filled = makeCanvas(flat.width, flat.height);
+    const ctx = filled.getContext('2d');
+    ctx.fillStyle = $('cutoutFill').value;
+    ctx.fillRect(0, 0, filled.width, filled.height);
+    ctx.drawImage(flat, 0, 0);
+    const texts = state.texts.map(t => ({ ...t }));
+    const watermark = cloneWatermark(state.watermark);
+    comparing = false;
+    commit();
+    state = { base: filled, adjustments: { ...adjustmentDefaults }, texts, watermark };
+    commit();
+    syncAll();
+    requestRender();
+    status('투명한 영역을 선택한 색으로 채웠습니다. 실행 취소로 되돌릴 수 있습니다.');
+  });
   $('exportFormat').addEventListener('change', () => {
     $('exportQualityGroup').hidden = $('exportFormat').value === 'png';
     $('exportBackgroundGroup').hidden = $('exportFormat').value !== 'jpeg';
   });
   updateRangeTrack($('exportQuality'));
+  ['wmSize', 'wmOpacity', 'wmRotation', 'wmLogoScale', 'wmLogoOpacity'].forEach(id => updateRangeTrack($(id)));
   $('exportQuality').addEventListener('input', () => { $('exportQualityValue').value = $('exportQuality').value + '%'; updateRangeTrack($('exportQuality')); });
   ['Width', 'Height'].forEach(axis => $('export' + axis).addEventListener('input', () => {
     if (!$('exportAspect').checked || !$('export' + axis).value) return;
@@ -540,24 +851,34 @@ if (typeof document !== 'undefined') document.addEventListener('DOMContentLoaded
     try { localStorage.removeItem(settingsKey); settingsMessage('저장한 설정을 삭제했습니다. 현재 편집은 유지됩니다.'); }
     catch { settingsMessage('저장된 설정을 삭제하지 못했습니다.'); }
   });
-  $('exportImage').addEventListener('click', async () => {
-    const w = Number($('exportWidth').value), h = Number($('exportHeight').value), format = $('exportFormat').value;
-    if (![w, h].every(n => Number.isInteger(n) && n > 0 && n <= MAX_IMAGE_DIMENSION) || w * h > MAX_IMAGE_PIXELS) return status('저장 크기는 가로·세로 1~4,096px, 1,600만 픽셀 이내의 정수로 입력해 주세요.', true);
-    commit(); $('exportImage').disabled = true; status('저장할 이미지를 만드는 중입니다…');
-    const filename = sourceName.replace(/\.[^.]+$/, '') + '-edited.' + (format === 'jpeg' ? 'jpg' : format);
+  async function saveImage({ width, height, format, quality, background, suffix, button }) {
+    if (!state || busy) return;
+    if (![width, height].every(n => Number.isInteger(n) && n > 0 && n <= MAX_IMAGE_DIMENSION) || width * height > MAX_IMAGE_PIXELS) return status('저장 크기는 가로·세로 1~4,096px, 1,600만 픽셀 이내의 정수로 입력해 주세요.', true);
+    commit();
+    button.disabled = true;
+    status('저장할 이미지를 만드는 중입니다…');
+    const filename = sourceName.replace(/\.[^.]+$/, '') + suffix + '.' + (format === 'jpeg' ? 'jpg' : format);
     try {
-      const flat = renderImage(makeCanvas(1, 1), state), output = makeCanvas(w, h), ctx = output.getContext('2d');
-      if (format === 'jpeg') { ctx.fillStyle = $('exportBackground').value; ctx.fillRect(0, 0, w, h); }
-      ctx.imageSmoothingEnabled = true; ctx.imageSmoothingQuality = 'high'; ctx.drawImage(flat, 0, 0, w, h);
+      const flat = renderImage(makeCanvas(1, 1), state), output = makeCanvas(width, height), ctx = output.getContext('2d');
+      if (format === 'jpeg') { ctx.fillStyle = background; ctx.fillRect(0, 0, width, height); }
+      ctx.imageSmoothingEnabled = true; ctx.imageSmoothingQuality = 'high'; ctx.drawImage(flat, 0, 0, width, height);
       const mime = 'image/' + format;
-      const blob = await new Promise(resolve => output.toBlob(resolve, mime, Number($('exportQuality').value) / 100));
+      const blob = await new Promise(resolve => output.toBlob(resolve, mime, quality));
       if (!blob || blob.type !== mime) throw new Error('이 브라우저에서 선택한 포맷으로 저장할 수 없습니다. PNG를 이용해 주세요.');
       const url = URL.createObjectURL(blob); downloadUrls.add(url);
       const link = document.createElement('a'); link.href = url; link.download = filename; document.body.append(link); link.click(); link.remove();
       setTimeout(() => { URL.revokeObjectURL(url); downloadUrls.delete(url); }, 60000);
-      status(`${w} × ${h}px ${format.toUpperCase()} 이미지를 저장했습니다. (${(blob.size / 1024).toFixed(1)}KB)`);
+      status(`${width} × ${height}px ${format.toUpperCase()} 이미지를 저장했습니다. (${(blob.size / 1024).toFixed(1)}KB)`);
     } catch (error) { status(error.message || '저장하지 못했습니다. 크기를 줄여 다시 시도해 주세요.', true); }
-    finally { $('exportImage').disabled = false; }
+    finally { button.disabled = false; }
+  }
+  $('downloadCutoutPng').addEventListener('click', () => {
+    if (!state) return;
+    saveImage({ width: state.base.width, height: state.base.height, format: 'png', quality: 1, background: '#ffffff', suffix: '-배경제거', button: $('downloadCutoutPng') });
   });
+  $('exportImage').addEventListener('click', () => saveImage({
+    width: Number($('exportWidth').value), height: Number($('exportHeight').value), format: $('exportFormat').value,
+    quality: Number($('exportQuality').value) / 100, background: $('exportBackground').value, suffix: '-edited', button: $('exportImage')
+  }));
   window.addEventListener('beforeunload', () => { downloadUrls.forEach(url => URL.revokeObjectURL(url)); });
 });

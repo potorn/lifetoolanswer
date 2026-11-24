@@ -3,6 +3,7 @@ import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
 import vm from 'node:vm';
 import { adjustPixels } from '../js/image-editor.js';
+import { applyAlphaMatte, modnetDimensions } from '../js/background-removal.js';
 import * as validation from '../js/file-validation.js';
 import * as magick from '../vendor/magick/index.js';
 
@@ -25,6 +26,15 @@ for (const [pixel, values, expected] of [
   [[255, 0, 0, 22], { thresholdOn: true }, [0, 0, 0, 22]]
 ]) assert.deepEqual([...adjustPixels(new Uint8ClampedArray(pixel), values)], expected);
 console.log('PASS: 263 pixel checks, including alpha preservation');
+
+const mattePixels = new Uint8ClampedArray([10, 20, 30, 255, 4, 5, 6, 128, 7, 8, 9, 0]);
+applyAlphaMatte(mattePixels, new Uint8Array([128, 0, 255]));
+assert.deepEqual([...mattePixels], [10, 20, 30, 128, 4, 5, 6, 0, 7, 8, 9, 0]);
+assert.deepEqual(modnetDimensions(640, 640, 512), [512, 512]);
+assert.deepEqual(modnetDimensions(640, 959, 768), [512, 768]);
+assert.deepEqual(modnetDimensions(640, 480, 768), [672, 512]);
+assert.ok(Math.max(...modnetDimensions(4000, 1000, 512)) <= 512);
+console.log('PASS: matte multiply and MODNet input sizing');
 
 class Element {
   constructor() {

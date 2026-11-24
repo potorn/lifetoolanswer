@@ -6,21 +6,21 @@
      crossorigin="anonymous"></script>
   <script src="../js/theme.js?v=20261019-theme1"></script>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>이미지 편집기 - 크기 프리셋·보정 설정 저장 | 생활도구</title>
-  <meta name="description" content="증명사진 비율·프로필·썸네일 크기 프리셋으로 이미지를 편집하세요. 크롭·색상 보정·텍스트와 자주 쓰는 보정·출력 설정 저장을 무료로 제공합니다.">
+  <title>이미지 편집기 - 배경 제거·워터마크 | 생활도구</title>
+  <meta name="description" content="브라우저에서 사진 배경을 투명하게 걷어 내고, 글자와 로고 워터마크를 올린 뒤 PNG·JPEG·WebP로 저장하세요. 크롭, 색 보정, 증명사진 크기 프리셋과 실행 취소도 함께 제공합니다.">
   <meta name="robots" content="index,follow">
   <link rel="canonical" href="https://lifetoolanswer.com/tools/image-editor">
-  <meta property="og:title" content="이미지 편집기 - 크기 프리셋·보정 설정 저장">
-  <meta property="og:description" content="크기 프리셋, 크롭·색상 보정·텍스트와 편집 설정 저장을 브라우저에서 이용하세요.">
+  <meta property="og:title" content="이미지 편집기 - 배경 제거·워터마크">
+  <meta property="og:description" content="사진을 서버에 올리지 않고 배경을 제거한 뒤, 글자·로고 워터마크와 함께 저장하세요.">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://lifetoolanswer.com/tools/image-editor">
   <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🔧</text></svg>">
   <link rel="icon" href="/favicon.ico" sizes="32x32">
   <link rel="stylesheet" href="../css/style.css">
-  <link rel="stylesheet" href="../css/tool.css?v=20261019-media1">
+  <link rel="stylesheet" href="../css/tool.css?v=20261124-cutout1">
 
   <script type="application/ld+json">
-{"@context": "https://schema.org", "@graph": [{"@context": "https://schema.org", "@type": "WebApplication", "name": "이미지 편집기", "url": "https://lifetoolanswer.com/tools/image-editor", "description": "증명사진 비율·프로필·썸네일 크기 프리셋으로 이미지를 편집하세요. 크롭·색상 보정·텍스트와 자주 쓰는 보정·출력 설정 저장을 무료로 제공합니다.", "applicationCategory": "MultimediaApplication", "operatingSystem": "Web", "offers": {"@type": "Offer", "price": "0", "priceCurrency": "KRW"}}, {"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "홈", "item": "https://lifetoolanswer.com/"}, {"@type": "ListItem", "position": 2, "name": "이미지 편집기", "item": "https://lifetoolanswer.com/tools/image-editor"}]}]}
+{"@context": "https://schema.org", "@graph": [{"@context": "https://schema.org", "@type": "WebApplication", "name": "이미지 편집기", "url": "https://lifetoolanswer.com/tools/image-editor", "description": "브라우저에서 사진 배경을 투명하게 걷어 내고, 글자와 로고 워터마크를 올린 뒤 PNG·JPEG·WebP로 저장하세요. 크롭, 색 보정, 증명사진 크기 프리셋과 실행 취소도 함께 제공합니다.", "applicationCategory": "MultimediaApplication", "operatingSystem": "Web", "offers": {"@type": "Offer", "price": "0", "priceCurrency": "KRW"}}, {"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "홈", "item": "https://lifetoolanswer.com/"}, {"@type": "ListItem", "position": 2, "name": "이미지 편집기", "item": "https://lifetoolanswer.com/tools/image-editor"}]}]}
   </script>
 
 <meta name="color-scheme" content="light dark">
@@ -36,7 +36,7 @@
 <main class="tool-page editor-page">
   <nav class="breadcrumb"><a href="/">홈</a><span class="breadcrumb-sep">›</span><span>이미지 편집기</span></nav>
   <div class="tool-header editor-heading">
-    <div><span class="editor-eyebrow">생활도구 IMAGE STUDIO</span><h1>이미지 편집기<span class="editor-title-dot">.</span></h1><p>사진 한 장에, 원하는 만큼의 변화.</p></div>
+    <div><span class="editor-eyebrow">생활도구 IMAGE STUDIO</span><h1>이미지 편집기<span class="editor-title-dot">.</span></h1><p>사진 한 장에, 원하는 만큼의 변화. 배경을 걷어 내고 워터마크를 올리는 일도 이 화면에서 끝납니다.</p></div>
     <span class="editor-local-badge"><svg class="editor-icon" aria-hidden="true"><use href="../img/editor-icons.svg#shield"/></svg>파일 전송 없이, 내 브라우저에서</span>
   </div>
   <div class="editor-upload card" id="editorUpload">
@@ -50,7 +50,7 @@
   </div>
   <p class="img-status" id="editorStatus" role="status" aria-live="polite" hidden></p>
   <section class="editor-workbench" id="editorWorkbench" aria-label="이미지 편집 작업 공간" hidden>
-    <div class="editor-toolbar">
+    <div class="editor-toolbar" id="editorToolbar">
       <div class="editor-document"><span class="editor-document-icon"><svg class="editor-icon" aria-hidden="true"><use href="../img/editor-icons.svg#file"/></svg></span><div class="editor-file-info"><strong id="editorFilename"></strong><span id="editorDimensions"></span></div><button type="button" class="editor-change-file" id="changeImage" aria-label="다른 이미지 선택" title="다른 이미지 선택"><svg class="editor-icon" aria-hidden="true"><use href="../img/editor-icons.svg#upload"/></svg></button></div>
       <div class="editor-actions">
         <div class="editor-history-actions"><button type="button" id="editorUndo" title="실행 취소 (Ctrl/⌘+Z)" aria-label="실행 취소"><svg class="editor-icon" aria-hidden="true"><use href="../img/editor-icons.svg#undo"/></svg></button><button type="button" id="editorRedo" title="다시 실행 (Ctrl/⌘+Shift+Z)" aria-label="다시 실행"><svg class="editor-icon" aria-hidden="true"><use href="../img/editor-icons.svg#redo"/></svg></button></div>
@@ -60,11 +60,13 @@
       </div>
     </div>
     <div class="editor-layout">
-      <aside class="editor-sidebar">
+      <aside class="editor-sidebar" id="editorSidebar">
         <div class="editor-tabs" role="tablist" aria-label="편집 도구">
           <button type="button" role="tab" id="tab-crop" aria-controls="panel-crop" aria-selected="true" data-tab="crop"><svg class="editor-icon" aria-hidden="true"><use href="../img/editor-icons.svg#crop"/></svg>자르기</button>
           <button type="button" role="tab" id="tab-adjust" aria-controls="panel-adjust" aria-selected="false" tabindex="-1" data-tab="adjust"><svg class="editor-icon" aria-hidden="true"><use href="../img/editor-icons.svg#adjust"/></svg>보정</button>
           <button type="button" role="tab" id="tab-text" aria-controls="panel-text" aria-selected="false" tabindex="-1" data-tab="text"><svg class="editor-icon" aria-hidden="true"><use href="../img/editor-icons.svg#text"/></svg>텍스트</button>
+          <button type="button" role="tab" id="tab-cutout" aria-controls="panel-cutout" aria-selected="false" tabindex="-1" data-tab="cutout"><svg class="editor-icon" aria-hidden="true"><use href="../img/editor-icons.svg#cutout"/></svg>배경</button>
+          <button type="button" role="tab" id="tab-watermark" aria-controls="panel-watermark" aria-selected="false" tabindex="-1" data-tab="watermark"><svg class="editor-icon" aria-hidden="true"><use href="../img/editor-icons.svg#watermark"/></svg>워터마크</button>
           <button type="button" role="tab" id="tab-save" aria-controls="panel-save" aria-selected="false" tabindex="-1" data-tab="save"><svg class="editor-icon" aria-hidden="true"><use href="../img/editor-icons.svg#download"/></svg>저장</button>
         </div>
         <div class="editor-panel" role="tabpanel" id="panel-crop" aria-labelledby="tab-crop">
@@ -95,7 +97,7 @@
             <button type="button" data-transform="left"><svg class="editor-icon" aria-hidden="true"><use href="../img/editor-icons.svg#left"/></svg>왼쪽 90°</button><button type="button" data-transform="right"><svg class="editor-icon" aria-hidden="true"><use href="../img/editor-icons.svg#right"/></svg>오른쪽 90°</button>
             <button type="button" data-transform="horizontal"><svg class="editor-icon" aria-hidden="true"><use href="../img/editor-icons.svg#flip-x"/></svg>좌우 뒤집기</button><button type="button" data-transform="vertical"><svg class="editor-icon" aria-hidden="true"><use href="../img/editor-icons.svg#flip-y"/></svg>상하 뒤집기</button>
           </div>
-          <p class="editor-help">자르기·회전·뒤집기를 적용하면 현재 보정과 텍스트가 이미지에 합쳐집니다. 실행 취소로 되돌릴 수 있습니다.</p>
+          <p class="editor-help">자르기·회전·뒤집기를 적용하면 현재 보정, 텍스트, 워터마크가 이미지에 합쳐집니다. 실행 취소로 되돌릴 수 있습니다.</p>
         </div>
         <div class="editor-panel" role="tabpanel" id="panel-adjust" aria-labelledby="tab-adjust" hidden>
           <div class="editor-panel-heading"><span class="editor-panel-kicker">COLOR &amp; LIGHT</span><h2>빛과 색을 섬세하게</h2><p>슬라이더로 사진의 분위기를 조절하세요.</p></div>
@@ -126,15 +128,82 @@
           </fieldset>
           <p class="editor-help">미리보기의 텍스트를 드래그해 위치를 옮기세요. 글꼴은 기기에 설치된 글꼴을 사용하며 기기마다 다르게 보일 수 있습니다. 최대 20개까지 추가할 수 있습니다.</p>
         </div>
+        <div class="editor-panel" role="tabpanel" id="panel-cutout" aria-labelledby="tab-cutout" hidden>
+          <div class="editor-panel-heading"><span class="editor-panel-kicker">CUTOUT</span><h2>배경을 걷어 내기</h2><p>인물 사진의 배경을 이 브라우저에서 투명하게 만듭니다. 처음 한 번은 분리 모델과 실행 엔진을 받습니다.</p></div>
+          <button type="button" class="editor-primary" id="removeBackground"><svg class="editor-icon" aria-hidden="true"><use href="../img/editor-icons.svg#cutout"/></svg>배경 제거</button>
+          <div class="editor-progress" id="cutoutProgress" hidden>
+            <div class="editor-progress-track" aria-hidden="true"><span id="cutoutProgressFill"></span></div>
+            <p id="cutoutProgressText"></p>
+          </div>
+          <p class="editor-help">사진 픽셀은 서버로 나가지 않습니다. 받는 파일은 Hugging Face CDN의 MODNet 모델(약 6.6MB)과 jsDelivr의 ONNX Runtime Web입니다. WebGPU를 쓸 수 있으면 그쪽으로, 아니면 WASM으로 계산합니다. 인물과 배경이 구분될수록 경계가 깔끔하고, 사물 사진은 가장자리가 거칠 수 있습니다.</p>
+          <label for="cutoutFill">걷어 낸 자리에 넣을 색</label>
+          <span class="editor-color-control"><input type="color" id="cutoutFill" value="#ffffff"><output id="cutoutFillValue" aria-hidden="true">#FFFFFF</output></span>
+          <button type="button" id="applyCutoutFill">이 색으로 배경 채우기</button>
+          <button type="button" id="downloadCutoutPng"><svg class="editor-icon" aria-hidden="true"><use href="../img/editor-icons.svg#download"/></svg>투명 PNG 다운로드</button>
+          <p class="editor-help">배경 제거와 색 채우기는 현재 색 보정을 사진에 합칩니다. 텍스트와 워터마크는 그대로 둡니다. 실행 취소로 되돌리고, 상단의 원본 비교로 처음 사진과 견줘 볼 수 있습니다. 채우지 않은 투명 영역은 PNG로 저장할 때만 남습니다.</p>
+        </div>
+        <div class="editor-panel" role="tabpanel" id="panel-watermark" aria-labelledby="tab-watermark" hidden>
+          <div class="editor-panel-heading"><span class="editor-panel-kicker">WATERMARK</span><h2>사진 위에 표식 올리기</h2><p>글자나 로고를 올리면 미리보기에 바로 보이고, 저장하는 파일에도 들어갑니다.</p></div>
+          <h3>글자 워터마크</h3>
+          <label for="wmText">문구</label>
+          <textarea id="wmText" rows="2" maxlength="80" placeholder="예: 생활도구"></textarea>
+          <label class="editor-range-label" for="wmSize">글자 크기 <output id="wmSizeValue" for="wmSize">48px</output></label>
+          <input type="range" id="wmSize" min="12" max="280" value="48">
+          <label for="wmColor">색상</label>
+          <span class="editor-color-control"><input type="color" id="wmColor" value="#ffffff"><output id="wmColorValue" aria-hidden="true">#FFFFFF</output></span>
+          <label class="editor-range-label" for="wmOpacity">불투명도 <output id="wmOpacityValue" for="wmOpacity">45%</output></label>
+          <input type="range" id="wmOpacity" min="0" max="100" value="45">
+          <label class="editor-range-label" for="wmRotation">회전 <output id="wmRotationValue" for="wmRotation">-24°</output></label>
+          <input type="range" id="wmRotation" min="-180" max="180" value="-24">
+          <label for="wmPosition">위치</label>
+          <select id="wmPosition">
+            <option value="center">정가운데</option>
+            <option value="tl">왼쪽 위</option>
+            <option value="tc">위 가운데</option>
+            <option value="tr">오른쪽 위</option>
+            <option value="ml">왼쪽 가운데</option>
+            <option value="mr">오른쪽 가운데</option>
+            <option value="bl">왼쪽 아래</option>
+            <option value="bc">아래 가운데</option>
+            <option value="br">오른쪽 아래</option>
+            <option value="tile">바둑판 반복</option>
+          </select>
+          <div class="editor-divider"></div>
+          <h3>로고 워터마크</h3>
+          <button type="button" id="wmLogoPick"><svg class="editor-icon" aria-hidden="true"><use href="../img/editor-icons.svg#upload"/></svg>로고 이미지 올리기</button>
+          <input class="editor-sr-only" type="file" id="wmLogo" accept="image/png,image/jpeg,image/webp,image/avif,image/bmp">
+          <p class="editor-help" id="wmLogoName">선택한 로고가 없습니다.</p>
+          <div id="wmLogoControls" class="is-disabled">
+            <label class="editor-range-label" for="wmLogoScale">로고 크기 <output id="wmLogoScaleValue" for="wmLogoScale">20%</output></label>
+            <input type="range" id="wmLogoScale" min="5" max="80" value="20" disabled>
+            <label class="editor-range-label" for="wmLogoOpacity">불투명도 <output id="wmLogoOpacityValue" for="wmLogoOpacity">55%</output></label>
+            <input type="range" id="wmLogoOpacity" min="0" max="100" value="55" disabled>
+            <label for="wmLogoPosition">위치</label>
+            <select id="wmLogoPosition" disabled>
+              <option value="br">오른쪽 아래</option>
+              <option value="bc">아래 가운데</option>
+              <option value="bl">왼쪽 아래</option>
+              <option value="mr">오른쪽 가운데</option>
+              <option value="center">정가운데</option>
+              <option value="ml">왼쪽 가운데</option>
+              <option value="tr">오른쪽 위</option>
+              <option value="tc">위 가운데</option>
+              <option value="tl">왼쪽 위</option>
+              <option value="tile">바둑판 반복</option>
+            </select>
+            <button type="button" class="editor-delete-button" id="wmLogoClear" disabled>로고 제거</button>
+          </div>
+          <p class="editor-help">글자 크기·회전·불투명도와 로고 크기·불투명도·위치를 바꾸면 미리보기가 바로 따라갑니다. 바둑판 반복은 사진 전체에 같은 표식을 되풀이합니다. 워터마크는 텍스트보다 위에 그려지며, 문구와 로고는 설정 저장에 넣지 않습니다.</p>
+        </div>
         <div class="editor-panel" role="tabpanel" id="panel-save" aria-labelledby="tab-save" hidden>
           <div class="editor-panel-heading"><span class="editor-panel-kicker">EXPORT</span><h2>완성한 이미지 저장하기</h2><p>용도에 맞는 포맷과 크기로 내보내세요.</p></div>
-          <details class="editor-details"><summary>자주 쓰는 설정 저장</summary><p class="editor-help">보정값과 출력 포맷·품질·크기·배경색 한 세트를 저장합니다. 사진·텍스트·자르기 위치는 저장하지 않습니다. 다음 이미지에서 직접 불러오세요. 비율 유지 설정은 현재 사진을 저장 크기 안에 맞춥니다.</p><button type="button" id="saveEditorSettings">현재 설정 저장</button><button type="button" id="loadEditorSettings">저장한 설정 불러오기</button><button type="button" id="deleteEditorSettings">저장한 설정 삭제</button><p id="savedSettingsStatus" class="editor-help" role="status" aria-live="polite"></p></details><label for="exportFormat">저장 포맷</label><select id="exportFormat"><option value="png">PNG · 투명 배경 유지</option><option value="jpeg">JPEG · 사진에 적합</option><option value="webp">WebP · 작은 용량</option></select>
+          <details class="editor-details"><summary>자주 쓰는 설정 저장</summary><p class="editor-help">보정값과 출력 포맷·품질·크기·배경색 한 세트를 저장합니다. 사진, 텍스트, 워터마크, 자르기 위치는 저장하지 않습니다. 다음 이미지에서 직접 불러오세요. 비율 유지 설정은 현재 사진을 저장 크기 안에 맞춥니다.</p><button type="button" id="saveEditorSettings">현재 설정 저장</button><button type="button" id="loadEditorSettings">저장한 설정 불러오기</button><button type="button" id="deleteEditorSettings">저장한 설정 삭제</button><p id="savedSettingsStatus" class="editor-help" role="status" aria-live="polite"></p></details><label for="exportFormat">저장 포맷</label><select id="exportFormat"><option value="png">PNG · 투명 배경 유지</option><option value="jpeg">JPEG · 사진에 적합</option><option value="webp">WebP · 작은 용량</option></select>
           <div id="exportQualityGroup" hidden><label for="exportQuality">품질 <output id="exportQualityValue">90%</output></label><input type="range" id="exportQuality" min="10" max="100" value="90"></div>
           <div id="exportBackgroundGroup" hidden><label for="exportBackground">투명 영역 배경색</label><input type="color" id="exportBackground" value="#ffffff"></div>
           <div class="editor-two-col"><label>너비 (px)<input type="number" id="exportWidth" min="1" max="4096" step="1"></label><label>높이 (px)<input type="number" id="exportHeight" min="1" max="4096" step="1"></label></div>
           <label class="editor-check"><input type="checkbox" id="exportAspect" checked> 원본 비율 유지</label>
           <button type="button" class="editor-primary" id="exportImage"><svg class="editor-icon" aria-hidden="true"><use href="../img/editor-icons.svg#download"/></svg>이미지 다운로드</button>
-          <p class="editor-help">미리보기는 화면에 맞게 축소됩니다. 저장 시 지정한 픽셀 크기로 보정과 텍스트를 다시 그립니다. 최대 4,096px · 1,600만 픽셀. GIF 제작은 <a href="/tools/gif-maker">GIF 만들기</a>를 이용하세요.</p>
+          <p class="editor-help">미리보기는 화면에 맞게 축소됩니다. 저장 시 지정한 픽셀 크기로 보정, 텍스트, 워터마크를 다시 그립니다. PNG는 투명 영역을 유지하고 JPEG는 아래 배경색으로 빈 곳을 메웁니다. 최대 4,096px · 1,600만 픽셀. GIF 제작은 <a href="/tools/gif-maker">GIF 만들기</a>를 이용하세요.</p>
         </div>
       </aside>
       <div class="editor-preview">
@@ -156,12 +225,12 @@
   </section>
 
   <div class="editor-info-grid">
-    <div class="info-card"><h2>서버 전송 없이 편집</h2><p>선택한 이미지, 텍스트와 결과는 이 브라우저 안에서만 처리합니다. 페이지를 닫거나 새로고침하면 사진과 편집 내용이 사라지므로 다운로드해 보관하세요. 직접 저장한 보정·출력 설정은 이 브라우저에 남습니다.</p></div>
-    <div class="info-card"><h2>간단한 편집부터 보정까지</h2><p>자유·고정 비율 크롭, 회전·뒤집기, 밝기·대비·노출·색조·채도·활기, 레벨·감마, 색 균형, 흑백·반전·세피아·포스터화·임계값 효과와 텍스트를 지원합니다.</p><p>정밀 커브, 마스크, PSD 레이어 편집은 지원하지 않습니다. 애니메이션 GIF는 <a href="/tools/gif-maker">GIF 만들기</a>, 기타 포맷은 <a href="/tools/image">이미지 포맷 변환기</a>를 이용하세요.</p></div>
+    <div class="info-card"><h2>서버 전송 없이 편집</h2><p>선택한 이미지, 텍스트, 워터마크와 결과는 이 브라우저 안에서만 처리합니다. 페이지를 닫거나 새로고침하면 사진과 편집 내용이 사라지므로 다운로드해 보관하세요. 직접 저장한 보정·출력 설정은 이 브라우저에 남습니다.</p><p>배경 제거를 누르면 사진이 아니라 분리에 쓰는 파일만 받습니다. 모델은 Hugging Face CDN의 MODNet(약 6.6MB)이고, 실행 엔진은 jsDelivr의 ONNX Runtime Web입니다.</p></div>
+    <div class="info-card"><h2>보정, 누끼, 워터마크</h2><p>자유·고정 비율 크롭, 회전·뒤집기, 밝기·대비·노출·색조·채도·활기, 레벨·감마, 색 균형, 흑백·반전·세피아·포스터화·임계값, 텍스트를 지원합니다. 배경 제거 뒤에는 투명 PNG로 저장하거나 원하는 색으로 빈 곳을 채울 수 있습니다.</p><p>글자 워터마크는 크기, 색, 불투명도, 회전, 위치와 바둑판 반복을 고를 수 있고 로고 이미지도 크기와 불투명도, 위치를 정해 올릴 수 있습니다. 정밀 커브, 마스크, PSD 레이어 편집은 지원하지 않습니다. 애니메이션 GIF는 <a href="/tools/gif-maker">GIF 만들기</a>, 기타 포맷은 <a href="/tools/image">이미지 포맷 변환기</a>를 이용하세요.</p></div>
   </div>
-<div class="info-card"><h2>크기 프리셋과 설정 저장 사용법</h2><ol class="tool-steps"><li>이미지를 열고 자르기 탭에서 용도별 크기를 선택합니다.</li><li>가운데 자르기를 적용한 뒤 보정·텍스트를 편집합니다. 저장 탭에서 실제 출력 크기를 확인하세요.</li><li>자주 쓰는 보정·출력 설정을 저장하고 다음 사진에서 불러올 수 있습니다.</li></ol><h3>증명사진을 그대로 제출할 수 있나요?</h3><p>413 × 531px는 증명사진 비율 참고용입니다. DPI 메타데이터나 제출 규격 준수를 보장하지 않습니다. 제출처의 픽셀 크기·인화 크기·배경·얼굴 위치 조건을 별도로 확인하세요.</p><h3>설정은 언제 사라지나요?</h3><p>같은 브라우저에서 재사용할 수 있지만 사이트 데이터 삭제, 비공개 창 종료 또는 다른 브라우저 사용 시 유지되지 않을 수 있습니다. 사진과 텍스트는 설정에 저장하지 않습니다.</p><p><a href="/tools/image">여러 이미지 일괄 변환</a> · <a href="/tools/gif-maker">GIF 목표 용량 조절</a></p></div>
+<div class="info-card"><h2>편집기 사용 순서</h2><ol class="tool-steps"><li>PNG·JPEG·WebP·AVIF·BMP 이미지를 엽니다. 자르기 탭의 크기 프리셋으로 증명사진 비율, 프로필, 썸네일 가운데를 자를 수 있습니다.</li><li>보정 탭에서 밝기와 색을 맞추고, 필요하면 텍스트를 올립니다.</li><li>배경 탭에서 배경 제거를 누릅니다. 처음에는 모델과 실행 엔진을 받으며 진행률이 표시됩니다. 끝난 뒤 색을 채워 넣거나 투명 PNG로 저장합니다.</li><li>워터마크 탭에서 문구의 크기·색·불투명도·회전·위치를 정합니다. 화면 전체에 반복하려면 바둑판 반복을 고르고, 로고는 이미지를 올려 크기와 위치를 맞춥니다.</li><li>저장 탭에서 PNG·JPEG·WebP와 출력 크기를 확인하고 다운로드합니다. 자주 쓰는 보정·출력 설정은 저장해 다음 사진에서 불러올 수 있습니다.</li></ol><h3>증명사진을 그대로 제출할 수 있나요?</h3><p>413 × 531px는 증명사진 비율 참고용입니다. DPI 메타데이터나 제출 규격 준수를 보장하지 않습니다. 배경색을 채운 결과도 제출처의 픽셀 크기, 인화 크기, 배경, 얼굴 위치 조건을 따로 확인해야 합니다.</p><h3>배경 제거는 어떤 사진에 잘 맞나요?</h3><p>인물과 배경이 구분되는 사진에서 가장 안정적입니다. 머리카락처럼 가는 경계는 대략적으로 남고, 배경이 복잡하거나 피사체가 사물인 경우에는 가장자리가 거칠 수 있습니다. 쓰는 모델은 인물 매팅에 맞춰진 MODNet입니다. 결과가 마음에 들지 않으면 실행 취소로 바로 되돌리세요.</p><h3>사진은 서버로 나가나요?</h3><p>나가지 않습니다. 분리 계산은 연 브라우저 안에서 끝납니다. 기능을 처음 쓸 때만 Hugging Face CDN에서 모델 파일을, jsDelivr에서 실행 엔진을 받습니다. 그 파일에는 이용자의 사진이 들어 있지 않습니다.</p><h3>워터마크는 저장 파일에도 들어가나요?</h3><p>글자와 로고는 미리보기와 다운로드 파일에 같은 위치와 불투명도로 들어갑니다. 문구를 비우거나 로고를 제거하면 미리보기에서도 빠집니다. JPEG는 투명도를 담지 못하므로, 배경을 비워 둔 채 JPEG로 저장하면 저장 탭의 배경색이 빈 곳을 메웁니다.</p><h3>휴대폰이나 오래된 컴퓨터에서도 되나요?</h3><p>가능하면 시도합니다. 메모리가 작으면 사진을 더 줄여 계산하고, 그래픽 가속이 없으면 기본 엔진으로 바꿉니다. 받거나 계산하는 과정이 실패하면 이유를 화면에 적습니다. 그 경우에는 더 작은 이미지로 다시 시도해 주세요.</p><h3>설정은 언제 사라지나요?</h3><p>저장한 보정·출력 설정은 같은 브라우저에서 다시 쓸 수 있지만, 사이트 데이터 삭제나 비공개 창 종료, 다른 브라우저에서는 남지 않을 수 있습니다. 사진, 텍스트, 워터마크 문구와 로고는 설정에 저장하지 않습니다.</p><p><a href="/tools/image">여러 이미지 일괄 변환</a> · <a href="/tools/gif-maker">GIF 목표 용량 조절</a></p></div>
 </main>
 <footer><div class="container"><div class="footer-inner"><div class="footer-logo">🔧 생활도구</div><div>자주 쓰는 온라인 도구를 무료로 제공합니다.</div><div class="footer-links"><a href="/">홈으로</a><a href="/tools/privacy">개인정보처리방침</a><a href="/tools/disclaimer">면책 조항</a></div><div style="margin-top:8px;">© 2026 생활도구. All rights reserved.</div></div></div></footer>
-<script type="module" src="../js/image-editor.js?v=20261019-media1"></script>
+<script type="module" src="../js/image-editor.js?v=20261124-cutout1"></script>
 </body>
 </html>
