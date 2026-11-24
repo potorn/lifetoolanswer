@@ -26,7 +26,7 @@ Built with plain HTML + CSS + JS. No framework, package manager, or required bui
 | [기초대사량·칼로리 계산기](tools/bmr.html) | 휴식 시·활동량별 하루 소모 열량 추정 | Energy Calculator | Adult REE estimates and illustrative activity factors |
 | [걷기·달리기 페이스 계산기](tools/pace.html) | 거리·시간·페이스 상호 계산, km·마일 지원 | Pace Calculator | Pace, time, distance and speed conversions |
 | [이미지 포맷 변환기](tools/image.html) | PNG · JPG · WebP · BMP · ICO · AVIF · TGA 출력 (GIF 입력 지원) | Image Format Converter | Convert image formats locally; GIF output belongs to GIF Maker |
-| [이미지 편집기](tools/image-editor.html) | 자유·비율 크롭, 색상·레벨 보정, 텍스트, 회전·뒤집기 | Image Editor | Local canvas editing, undo/redo and PNG/JPEG/WebP export |
+| [이미지 편집기](tools/image-editor.html) | 크롭·보정·텍스트, 브라우저 배경 제거, 글자·로고 워터마크 | Image Editor | Local editing, MODNet cutout, watermark, undo/redo and PNG/JPEG/WebP export |
 | [GIF 만들기](tools/gif-maker.html) | 사진 여러 장·짧은 동영상으로 GIF 만들기 | GIF Maker | Create GIFs from photos or short videos in the browser |
 | [대출 계산기](tools/loan.html) | 원리금균등 / 원금균등 / 만기일시 상환 | Loan Calculator | Equal payment / Equal principal / Bullet repayment |
 | [단위 변환기](tools/unit.html) | 길이 · 무게 · 온도 · 넓이 · 부피 | Unit Converter | Length, weight, temperature, area, volume |

@@ -1391,8 +1391,8 @@
 .editor-actions .editor-icon { width: 16px; height: 16px; }
 .editor-layout { display: grid; grid-template-columns: 332px minmax(0, 1fr); }
 .editor-sidebar { min-width: 0; border-right: 1px solid #e8edf4; background: white; }
-.editor-tabs { display: grid; grid-template-columns: repeat(4, 1fr); gap: 4px; padding: 5px; margin: 18px 18px 0; border-radius: 12px; background: #f1f4f9; }
-.editor-tabs button { flex-direction: column; gap: 7px; padding: 12px 3px 10px; border: 1px solid transparent; border-radius: 9px; background: transparent; color: #7c8ba2; font-size: .73rem; font-weight: 600; }
+.editor-tabs { display: grid; grid-template-columns: repeat(3, 1fr); gap: 4px; padding: 5px; margin: 18px 18px 0; border-radius: 12px; background: #f1f4f9; }
+.editor-tabs button { flex-direction: column; gap: 5px; padding: 10px 2px 8px; border: 1px solid transparent; border-radius: 9px; background: transparent; color: #7c8ba2; font-size: .68rem; font-weight: 600; white-space: nowrap; }
 .editor-tabs .editor-icon { width: 20px; height: 20px; }
 .editor-tabs button[aria-selected="true"] { border-color: #dce7fa; background: white; color: #2d6de2; box-shadow: 0 2px 7px #304c7e0c; }
 .editor-tabs button:hover:not(:disabled) { border-color: transparent; background: #e8eef8; }
@@ -1452,6 +1452,13 @@
 .editor-two-col button { min-height: 42px; font-size: .67rem; background: #fcfdff; }
 .editor-two-col button .editor-icon { width: 16px; height: 16px; }
 .editor-help { margin: 12px 0 0; color: #8090a7; font-size: .68rem; line-height: 1.9; }
+.editor-progress { margin-top: 14px; }
+.editor-progress-track { height: 6px; overflow: hidden; border-radius: 99px; background: #e7ecf4; }
+.editor-progress-track span { display: block; height: 100%; width: 0; border-radius: inherit; background: #3b78ea; }
+.editor-progress p { margin: 8px 0 0; color: #5c718f; font-size: .68rem; line-height: 1.7; }
+.editor-workbench.is-busy .editor-preview { cursor: progress; }
+#wmLogoControls.is-disabled { opacity: .45; }
+#wmText { min-height: 64px; }
 .editor-help a, .editor-info-grid a { color: #5684d5; text-decoration-color: #b7cbec; text-underline-offset: 3px; }
 .editor-divider { height: 1px; margin: 23px 0; background: #edf0f6; }
 .editor-details { margin-top: 20px; padding-top: 17px; border-top: 1px solid #e9edf4; }
